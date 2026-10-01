@@ -45,8 +45,8 @@ npm run build
 
 ## GitHub Pages
 
-1. В Settings → Pages выберите Source: **GitHub Actions**.
+1. В Settings → Pages выберите Source: **GitHub Actions**. Это обязательная одноразовая настройка до первого запуска workflow.
 2. В Settings → Secrets and variables → Actions → Variables добавьте `VITE_STORAGE_BASE_URL` и, при необходимости, `VITE_PORTFOLIO_PREFIX`.
 3. Выполните push в `main` — workflow соберёт и опубликует `dist/`.
 
-Если репозиторий называется не `portfolio`, измените `base` в `vite.config.ts`.
+Production-путь определяется автоматически из метаданных GitHub Pages. `VITE_BASE_PATH` нужен только для локальной или нестандартной сборки.
