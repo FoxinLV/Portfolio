@@ -17,13 +17,14 @@ export function Filters({ projects, filters, setFilters, mobileOpen, closeMobile
     {mobileOpen && <button className="filter-backdrop" onClick={closeMobile} aria-label="Закрыть фильтры" />}
     <aside className={`filters-panel ${mobileOpen ? 'filters-panel--open' : ''}`} aria-label="Фильтры проектов">
       <div className="filter-mobile-title"><strong>Фильтры</strong><button onClick={closeMobile} aria-label="Закрыть фильтры"><Icon name="close" /></button></div>
+      <div className="filter-panel-title"><h2><Icon name="search" />Фильтры</h2><button disabled={!active} onClick={() => setFilters({ query: '', year: '', type: '', technology: '', direction: '' })}>Сбросить</button></div>
       <label className="search-field"><span>Поиск</span><div><Icon name="search"/><input value={filters.query} onChange={(event) => update('query', event.target.value)} placeholder="Название или технология" /></div></label>
       <Select label="Год" value={filters.year} onChange={(value) => update('year', value)} options={years.map(String)} names={years.map(String)} all="Все годы" />
       <Select label="Тип системы" value={filters.type} onChange={(value) => update('type', value)} options={types.map((item) => item.id)} names={types.map((item) => item.name)} all="Все типы" />
       <Select label="Технология" value={filters.technology} onChange={(value) => update('technology', value)} options={technologies} names={technologies} all="Все технологии" />
       <Select label="Направление" value={filters.direction} onChange={(value) => update('direction', value)} options={directions.map((item) => item.id)} names={directions.map((item) => item.name)} all="Все направления" />
       <button className="reset-button" disabled={!active} onClick={() => setFilters({ query: '', year: '', type: '', technology: '', direction: '' })}>Сбросить фильтры</button>
-      <button className="button button--primary apply-mobile" onClick={closeMobile}>Показать проекты</button>
+      <button className="button button--primary filter-submit" onClick={closeMobile}><Icon name="search" />Показать проекты<Icon name="arrow" /></button>
     </aside>
   </>;
 }

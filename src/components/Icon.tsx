@@ -30,6 +30,10 @@ const paths: Record<string, React.ReactNode> = {
   rocket: <><path d="M14 6c3.5-3.5 6.5-3.5 7-3 .5.5.5 3.5-3 7l-4 4-4-4 4-4Z"/><path d="m10 10-4 1-3 3 6 1M14 14l-1 4-3 3-1-6M6 18c-1 2-3 3-4 3 0-1 1-3 3-4"/></>,
   calendar: <><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></>,
   share: <><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></>
+  ,folder: <path d="M3 5h7l2 2h9v12H3V5Z"/>
+  ,cube: <><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 7 9 5 9-5M12 12v10M3 7v10l9 5 9-5V7"/></>
+  ,list: <><path d="M9 6h12M9 12h12M9 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></>
+  ,timeline: <><path d="M5 3v18"/><circle cx="5" cy="7" r="2"/><circle cx="5" cy="17" r="2"/><path d="M9 7h11M9 17h11"/></>
 };
 
 export function Icon({ name, ...props }: SVGProps<SVGSVGElement> & { name: string }) {
