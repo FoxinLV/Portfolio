@@ -24,8 +24,8 @@ export function ProjectPage() {
   if (projectsError) return <div className="page detail-page"><ErrorState title="Не удалось загрузить проект" message="Данные проекта сейчас недоступны." onRetry={retryProjects} /></div>;
   if (!project) return <div className="page detail-page"><div className="state-card"><span className="state-code">404</span><h1>Проект не найден</h1><p>Возможно, он был скрыт или удалён.</p><Link className="button button--primary" to="/projects">К проектам</Link></div></div>;
 
-  const cover = projectAssetUrl(project.storagePath, project.cover);
-  const images = [cover, ...(project.gallery?.map((path) => projectAssetUrl(project.storagePath, path)) ?? [])]
+  const cover = project.cover ? projectAssetUrl(project.storagePath, project.cover) : '';
+  const images = [...(cover ? [cover] : []), ...(project.gallery?.map((path) => projectAssetUrl(project.storagePath, path)) ?? [])]
     .filter((image, index, list) => list.indexOf(image) === index);
   const primaryFile = project.files?.[0];
 
@@ -52,7 +52,10 @@ export function ProjectPage() {
     </div>
 
     <div className="detail-showcase-grid">
-      <div className="project-gallery"><Gallery images={images} title={project.title} featured /></div>
+      <div className="project-gallery">{images.length
+        ? <Gallery images={images} title={project.title} featured />
+        : <div className="project-gallery-empty"><Icon name="image" /><span>Изображения проекта пока не добавлены</span></div>}
+      </div>
       <aside className="project-side-stack">
         <section className="project-tech-card">
           <h2>Ключевые технологии</h2>

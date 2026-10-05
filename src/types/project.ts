@@ -16,7 +16,7 @@ export interface Project {
   type: ProjectClassifier;
   direction: ProjectClassifier;
   technologies: (string | ProjectTechnology)[];
-  cover: string;
+  cover?: string;
   gallery?: string[];
   files?: ProjectFile[];
   links?: ProjectLink[];

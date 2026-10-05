@@ -10,7 +10,7 @@ const typeClass = (id: string) => `type-dot type-dot--${id.replace(/[^a-z0-9-]/g
 export function ProjectCard({ project }: { project: Project }) {
   return <Link to={`/projects/${project.id}`} className="project-card" aria-label={`Открыть проект ${project.title}`}>
     <div className="project-cover">
-      <SmartImage src={projectAssetUrl(project.storagePath, project.cover)} alt={`Обложка проекта «${project.title}»`} loading="lazy" />
+      <SmartImage src={project.cover ? projectAssetUrl(project.storagePath, project.cover) : undefined} alt={`Обложка проекта «${project.title}»`} loading="lazy" />
       <span className="direction-badge">{project.direction.name}</span>
     </div>
     <div className="project-card-body">

@@ -391,6 +391,7 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
 .project-info-row small, .project-info-row strong { display: block; }.project-info-row small { margin-bottom: 4px; color: #8490a0; font-size: 10px; }.project-info-row strong { font-size: 12px; }
 .detail-showcase-grid { display: grid; grid-template-columns: minmax(0, 1fr) 310px; gap: 34px; align-items: start; margin-top: 24px; }
 .project-gallery { min-width: 0; }.gallery-grid--featured { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.project-gallery-empty { display: grid; min-height: 420px; place-items: center; align-content: center; gap: 14px; border: 1px dashed #cbd7e4; border-radius: 13px; color: #8090a2; background: linear-gradient(135deg, #edf2f7, #f8fafc); font-size: 13px; }.project-gallery-empty svg { width: 42px; height: 42px; color: #9babbc; }
 .gallery-grid--featured button { border: 2px solid transparent; border-radius: 10px; background: #e4eaf0; }.gallery-grid--featured button:first-child { grid-column: 1 / -1; border-color: #d9e2ec; }.gallery-grid--featured button:first-child img, .gallery-grid--featured button:first-child .image-placeholder { aspect-ratio: 16/8.7; }
 .gallery-grid--featured button:not(:first-child) img, .gallery-grid--featured button:not(:first-child) .image-placeholder { aspect-ratio: 16/9; }
 .gallery-grid--featured button:focus-visible, .gallery-grid--featured button:hover { border-color: #1b6fff; }
