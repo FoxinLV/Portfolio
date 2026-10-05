@@ -163,6 +163,39 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .process-step { position: relative; display: grid; justify-items: center; gap: 6px; color: #c7d2df; }
 .process-step > span { display: grid; place-items: center; width: 27px; height: 27px; color: #3087ff; }.process-step svg { width: 18px; height: 18px; }.process-step small { font-size: 6px; }.process-step i { position: absolute; top: 7px; right: -6px; color: #7690aa; font-size: 11px; font-style: normal; }
 
+/* Desktop typography stays readable even when Windows display scaling reduces CSS viewport width. */
+@media (min-width: 1200px) {
+  body { text-rendering: optimizeLegibility; }
+  .brand strong { font-size: 16px; }.brand span { font-size: 12px; }
+  .main-nav a { font-size: 15px; }.sidebar-footer > p { font-size: 11px; }.sidebar-footer small { font-size: 10px; }
+
+  .about-hero, .about-photo-wrap { min-height: 590px; }
+  .about-kicker { padding: 7px 12px; font-size: 11px; }
+  .about-copy h2 { font-size: 22px; }
+  .about-description { max-width: 720px; font-size: 16px; line-height: 1.68; }
+  .contact-buttons a { min-width: 145px; padding: 13px 16px; font-size: 13px; }
+  .about-highlights article { min-height: 88px; padding: 15px; }
+  .about-highlights strong { font-size: 14px; }.about-highlights article:first-child strong { font-size: 22px; }.about-highlights span { font-size: 10px; }
+  .about-location { font-size: 11px; }.availability strong { font-size: 11px; }.availability small { font-size: 9px; }
+
+  .section-kicker { font-size: 11px; }
+  .about-intro h2 { font-size: 36px; }
+  .about-intro > p:last-child { font-size: 14px; line-height: 1.7; }
+  .work-grid article { min-height: 105px; padding: 20px; }
+  .work-grid h3 { font-size: 15px; }.work-grid p { font-size: 12px; line-height: 1.55; }
+  .work-grid article > span { width: 45px; height: 45px; }.work-grid svg { width: 23px; height: 23px; }
+  .stack-card h2, .approach-card h2 { font-size: 28px; }
+  .stack-cloud span { padding: 8px 11px; font-size: 11px; }
+  .approach-card > p:not(.section-kicker) { font-size: 12px; line-height: 1.65; }
+  .process-step small { font-size: 9px; }.process-step > span { width: 34px; height: 34px; }.process-step svg { width: 22px; height: 22px; }
+
+  .hero-copy > p:last-child { font-size: 15px; }.stat span { font-size: 11px; }
+  .project-type { font-size: 10px; }.project-card-body > p { font-size: 13px; }.technology-list span { font-size: 10px; }
+  .file-link { font-size: 10px; }.filters-panel label > span, .search-field input, .select-field select, .reset-button { font-size: 11px; }
+  .detail-meta, .detail-hero time { font-size: 11px; }.detail-aside span { font-size: 10px; }.detail-aside strong { font-size: 12px; }
+  .files-list strong, .files-list small, .external-links a { font-size: 11px; }
+}
+
 /* Large desktop: comfortable reading distance at 1920px wide */
 @media (min-width: 1600px) {
   .sidebar { width: 264px; padding: 38px 25px 30px; }
@@ -180,29 +213,29 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .about-copy h2 { margin: 14px 0 19px; font-size: 23px; }
   .about-description { max-width: 730px; font-size: 15px; line-height: 1.7; }
   .contact-buttons { gap: 11px; margin-top: 24px; }
-  .contact-buttons a { grid-template-columns: 19px auto 16px; min-width: 150px; padding: 14px 17px; font-size: 12px; }
+  .contact-buttons a { grid-template-columns: 19px auto 16px; min-width: 150px; padding: 14px 17px; font-size: 13px; }
   .contact-buttons svg { width: 18px; height: 18px; }.contact-buttons svg:last-child { width: 14px; }
   .about-highlights { gap: 12px; margin-top: 32px; }
   .about-highlights article { gap: 15px; min-height: 90px; padding: 16px; border-radius: 11px; }
   .about-highlights svg { width: 29px; height: 29px; }
-  .about-highlights strong { font-size: 13px; }.about-highlights article:first-child strong { font-size: 21px; }.about-highlights span { margin-top: 4px; font-size: 9px; }
+  .about-highlights strong { font-size: 14px; }.about-highlights article:first-child strong { font-size: 22px; }.about-highlights span { margin-top: 4px; font-size: 10px; }
   .about-photo-wrap { min-height: 620px; margin-left: -62px; }
   .about-location { top: 31px; right: 30px; gap: 9px; padding: 11px 14px; font-size: 10px; }.about-location svg { width: 16px; height: 16px; }
   .availability { right: 28px; bottom: 29px; min-width: 285px; gap: 14px; padding: 15px 17px; }
-  .availability > i { width: 10px; height: 10px; }.availability strong { font-size: 10px; }.availability small { margin-top: 6px; font-size: 8px; }
+  .availability > i { width: 10px; height: 10px; }.availability strong { font-size: 11px; }.availability small { margin-top: 6px; font-size: 9px; }
 
   .about-content { max-width: 1640px; padding: 42px 88px 70px; }
   .about-overview { grid-template-columns: minmax(380px, 42%) 1fr; gap: 70px; }
   .section-kicker { margin-bottom: 13px; font-size: 10px; }
-  .about-intro h2 { font-size: 35px; }.about-intro > p:last-child { margin-top: 15px; font-size: 13px; line-height: 1.75; }
+  .about-intro h2 { font-size: 36px; }.about-intro > p:last-child { margin-top: 15px; font-size: 14px; line-height: 1.75; }
   .work-grid { border-radius: 13px; }.work-grid article { gap: 17px; min-height: 104px; padding: 21px; }
   .work-grid article > span { width: 46px; height: 46px; border-radius: 11px; }.work-grid svg { width: 23px; height: 23px; }
-  .work-grid h3 { margin: 3px 0 7px; font-size: 13px; }.work-grid p { font-size: 10px; line-height: 1.55; }
+  .work-grid h3 { margin: 3px 0 7px; font-size: 15px; }.work-grid p { font-size: 12px; line-height: 1.55; }
   .about-details { gap: 18px; margin-top: 24px; }
   .stack-card, .approach-card { min-height: 340px; padding: 28px; border-radius: 13px; }
   .stack-card h2, .approach-card h2 { font-size: 27px; }
-  .stack-cloud { gap: 9px; margin-top: 22px; }.stack-cloud span { padding: 8px 11px; border-radius: 7px; font-size: 10px; }
-  .approach-card > p:not(.section-kicker) { max-width: 690px; margin: 13px 0 22px; font-size: 11px; line-height: 1.65; }
+  .stack-cloud { gap: 9px; margin-top: 22px; }.stack-cloud span { padding: 8px 11px; border-radius: 7px; font-size: 11px; }
+  .approach-card > p:not(.section-kicker) { max-width: 690px; margin: 13px 0 22px; font-size: 12px; line-height: 1.65; }
   .process-flow { gap: 7px; padding-top: 19px; }.process-step { gap: 9px; }.process-step > span { width: 34px; height: 34px; }.process-step svg { width: 22px; height: 22px; }.process-step small { font-size: 8px; }.process-step i { top: 9px; right: -7px; font-size: 14px; }
 
   .projects-hero { min-height: 460px; }.hero-copy h1 { font-size: 64px; }.hero-copy > p:last-child { font-size: 15px; }.stat strong { font-size: 28px; }.stat span { font-size: 11px; }
@@ -229,5 +262,38 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 @media (max-width: 480px) {
   .about-highlights { grid-template-columns: 1fr; }.contact-buttons a { min-width: calc(50% - 5px); }.contact-buttons a:first-child { width: 100%; }.about-photo-wrap { min-height: 320px; }.about-location { top: 18px; right: 16px; }.availability { right: 16px; bottom: 16px; left: 16px; min-width: 0; }.stack-card, .approach-card { padding: 18px; }
+}
+@media (max-width: 767px) {
+  .brand strong { font-size: 16px; }.brand span { font-size: 12px; }.main-nav a { font-size: 15px; }
+  .sidebar-footer > p { font-size: 11px; }.sidebar-footer small { font-size: 10px; }
+
+  .about-kicker { padding: 7px 11px; font-size: 11px; }
+  .about-copy h2 { font-size: 19px; line-height: 1.4; }
+  .about-description { font-size: 15px; line-height: 1.7; }
+  .contact-buttons a { min-height: 48px; padding: 12px 14px; font-size: 13px; }
+  .about-highlights article { min-height: 88px; padding: 15px; }
+  .about-highlights strong { font-size: 14px; }.about-highlights article:first-child strong { font-size: 22px; }.about-highlights span { font-size: 11px; }
+  .about-location { font-size: 11px; }.availability strong { font-size: 11px; }.availability small { font-size: 10px; line-height: 1.4; }
+
+  .section-kicker { font-size: 11px; }
+  .about-intro h2 { font-size: 30px; }.about-intro > p:last-child { font-size: 15px; line-height: 1.7; }
+  .work-grid article { min-height: 112px; padding: 19px; }
+  .work-grid h3 { font-size: 16px; }.work-grid p { font-size: 13px; line-height: 1.55; }
+  .work-grid article > span { width: 44px; height: 44px; }.work-grid svg { width: 22px; height: 22px; }
+  .stack-card h2, .approach-card h2 { font-size: 25px; }
+  .stack-cloud span { padding: 8px 10px; font-size: 12px; }
+  .approach-card > p:not(.section-kicker) { font-size: 14px; line-height: 1.65; }
+  .process-step small { font-size: 10px; }.process-step > span { width: 34px; height: 34px; }.process-step svg { width: 22px; height: 22px; }
+
+  .project-type { font-size: 11px; }.project-card-body > p { font-size: 14px; }.technology-list span { padding: 6px 8px; font-size: 11px; }
+  .file-link { font-size: 11px; }.state-card p { font-size: 14px; }.filter-button { font-size: 12px; }
+  .filters-panel label > span, .search-field input, .select-field select, .reset-button { font-size: 13px; }
+  .detail-meta, .detail-hero time { font-size: 11px; }.detail-aside span { font-size: 11px; }.detail-aside strong { font-size: 13px; }
+  .files-list strong, .files-list small, .external-links a { font-size: 12px; }
+}
+@media (min-width: 1200px) {
+  .about-highlights span, .availability small, .section-kicker, .process-step small { font-size: 11px; }
+  .work-grid p, .approach-card > p:not(.section-kicker) { font-size: 13px; }
+  .stack-cloud span { font-size: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
