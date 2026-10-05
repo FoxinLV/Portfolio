@@ -36,6 +36,35 @@ portfolio/
 
 Контракты `project.json` и `profile.json` приведены в [TZ.md](./TZ.md). Все пути к медиа в JSON относительные.
 
+### Технологии в profile.json
+
+Рекомендуемый формат группирует технологии по категориям. `icon` может содержать относительный путь внутри `portfolio/` или абсолютный HTTPS URL. Поле `url` необязательное и делает элемент кликабельным.
+
+```json
+{
+  "technologies": [
+    {
+      "category": "Frontend",
+      "items": [
+        { "name": "React", "icon": "icons/react.svg", "url": "https://react.dev" },
+        { "name": "Next.js", "icon": "icons/nextjs.svg", "url": "https://nextjs.org" },
+        { "name": "TypeScript", "icon": "icons/typescript.svg" }
+      ]
+    },
+    {
+      "category": "Backend",
+      "items": [
+        { "name": "NestJS", "icon": "icons/nestjs.svg" },
+        { "name": "Node.js", "icon": "icons/nodejs.svg" },
+        "REST API"
+      ]
+    }
+  ]
+}
+```
+
+Старый формат массива строк также поддерживается.
+
 ## Проверка
 
 ```bash

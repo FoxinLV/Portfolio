@@ -10,7 +10,8 @@ const navItems = [{ to: '/about', label: 'Обо мне', icon: 'user' }, { to: 
 function Contact({ type, value }: { type: string; value?: string }) {
   if (!value) return null;
   const href = type === 'email' ? `mailto:${value}` : value.startsWith('http') ? value : type === 'telegram' ? `https://t.me/${value.replace('@', '')}` : value;
-  return <a className="social-link" href={href} target={type === 'email' ? undefined : '_blank'} rel="noopener noreferrer" aria-label={type}><Icon name={type} /></a>;
+  const icon = type === 'email' ? 'mail' : type;
+  return <a className="social-link" href={href} target={type === 'email' ? undefined : '_blank'} rel="noopener noreferrer" aria-label={type}><Icon name={icon} /></a>;
 }
 
 export function Layout() {

@@ -3,19 +3,41 @@ import { ErrorState, Loader } from '../components/Feedback';
 import { Icon } from '../components/Icon';
 import { SmartImage } from '../components/SmartImage';
 import { usePortfolio } from '../context/PortfolioContext';
+import type { TechnologyGroup, TechnologyItem } from '../types/profile';
 import { portfolioAssetUrl } from '../utils/storageUrl';
 
 const workIcons = ['compass', 'database', 'chart', 'users'];
 
-function technologyItems(items: string[]) {
-  return items.flatMap((item) => item.endsWith(':')
-    ? []
-    : item.split(',').map((technology) => technology.trim()).filter(Boolean));
+function technologyGroups(items: string[] | TechnologyGroup[]): TechnologyGroup[] {
+  if (items.length === 0) return [];
+  if (typeof items[0] !== 'string') return items as TechnologyGroup[];
+
+  const groups: TechnologyGroup[] = [];
+  for (const value of items as string[]) {
+    if (value.trim().endsWith(':')) {
+      groups.push({ category: value.trim().replace(/:$/, ''), items: [] });
+      continue;
+    }
+    if (groups.length === 0) groups.push({ category: 'Технологии', items: [] });
+    groups.at(-1)?.items.push(...value.split(',').map((item) => item.trim()).filter(Boolean));
+  }
+  return groups;
 }
 
-function approachSummary(value?: string) {
-  if (!value) return 'Сначала разбираюсь в задаче, затем проектирую архитектуру, создаю продукт и довожу его до стабильной эксплуатации.';
-  return value.split(/\n\s*\n/).slice(0, 2).join(' ');
+function technologyValue(item: string | TechnologyItem): TechnologyItem {
+  return typeof item === 'string' ? { name: item } : item;
+}
+
+function technologyIconUrl(icon: string) {
+  return /^https?:\/\//i.test(icon) ? icon : portfolioAssetUrl(icon);
+}
+
+function approachItems(value?: string) {
+  const source = value || 'Сначала задача — потом технология.\nСначала разбираюсь в задаче, затем проектирую архитектуру, создаю продукт и довожу его до стабильной эксплуатации.';
+  return source.split(/\n\s*\n/).map((block) => {
+    const [heading, ...description] = block.split('\n').map((line) => line.trim()).filter(Boolean);
+    return { title: heading.replace(/\.$/, ''), description: description.join(' ') };
+  }).filter((item) => item.title);
 }
 
 export function AboutPage() {
@@ -29,8 +51,9 @@ export function AboutPage() {
   if (profileLoading) return <div className="page about-page"><Loader cards={2} /></div>;
   if (profileError || !profile) return <div className="page about-page"><ErrorState title="Не удалось загрузить профиль" message={profileError === 'Адрес Object Storage не настроен' ? 'Укажите адрес Object Storage в переменной VITE_STORAGE_BASE_URL.' : 'Проверьте подключение и повторите попытку.'} onRetry={retryProfile} /></div>;
 
-  const technologies = technologyItems(profile.technologies);
-  const projectCount = projects.length ? `${projects.length}+` : '10+';
+  const technologies = technologyGroups(profile.technologies);
+  const projectCount = projects.length;
+  const principles = approachItems(profile.approach);
 
   return <div className="page about-page">
     <header className="about-hero">
@@ -79,14 +102,28 @@ export function AboutPage() {
         <article className="stack-card">
           <p className="section-kicker">Технологический стек</p>
           <h2>Инструменты, с которыми я работаю</h2>
-          <div className="stack-cloud">{technologies.map((item) => <span key={item}>{item}</span>)}</div>
+          <div className="technology-groups">{technologies.map((group) => <section className="technology-group" key={group.category}>
+            <h3>{group.category}</h3>
+            <div className="technology-items">{group.items.map((source, index) => {
+              const item = technologyValue(source);
+              const content = <>{item.icon && <SmartImage className="technology-icon" src={technologyIconUrl(item.icon)} alt="" />}<span>{item.name}</span></>;
+              return item.url
+                ? <a className="technology-chip" href={item.url} target="_blank" rel="noopener noreferrer" key={`${item.name}-${index}`}>{content}</a>
+                : <span className="technology-chip" key={`${item.name}-${index}`}>{content}</span>;
+            })}</div>
+          </section>)}</div>
         </article>
 
         <article className="approach-card">
           <div className="approach-grid" aria-hidden="true" />
           <p className="section-kicker section-kicker--dark">Подход к проектам</p>
           <h2>От идеи — к работающему решению</h2>
-          <p>{approachSummary(profile.approach)}</p>
+          <div className="approach-principles">
+            {principles.map((item, index) => <article key={`${item.title}-${index}`}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <div><h3>{item.title}</h3>{item.description && <p>{item.description}</p>}</div>
+            </article>)}
+          </div>
           <div className="process-flow">
             {[['idea', 'Идея'], ['file', 'Анализ'], ['layers', 'Проектирование'], ['code', 'Разработка'], ['rocket', 'Запуск'], ['chart', 'Развитие']].map(([icon, label], index, list) => <div className="process-step" key={label}>
               <span><Icon name={icon} /></span><small>{label}</small>{index < list.length - 1 && <i>→</i>}

@@ -136,10 +136,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .about-photo.avatar--letters { display: grid; place-items: center; font-size: 80px; }
 .about-location { position: absolute; top: 27px; right: 25px; display: flex; align-items: center; gap: 7px; padding: 9px 11px; border: 1px solid #ffffff32; border-radius: 8px; color: #eef5fc; background: #0c1823a8; font-size: 8px; backdrop-filter: blur(9px); }
 .about-location svg { width: 13px; height: 13px; }
-.availability { position: absolute; right: 22px; bottom: 24px; display: flex; align-items: center; gap: 12px; min-width: 240px; padding: 12px 14px; border: 1px solid #ffffff33; border-radius: 9px; color: #e9f1fa; background: #081521d9; backdrop-filter: blur(10px); }
+.availability { position: absolute; right: 22px; bottom: 24px; display: flex; align-items: center; gap: 12px; min-width: 315px; padding: 14px 16px; border: 1px solid #ffffff33; border-radius: 9px; color: #e9f1fa; background: #081521d9; backdrop-filter: blur(10px); }
 .availability > i { flex: none; width: 9px; height: 9px; border-radius: 50%; background: #16dc8d; box-shadow: 0 0 0 5px #16dc8d20, 0 0 15px #16dc8d; }
 .availability strong, .availability small { display: block; }
-.availability strong { font-size: 8px; }.availability small { margin-top: 5px; color: #8fa0b0; font-size: 7px; }
+.availability strong { font-size: 14px; line-height: 1.35; }.availability small { margin-top: 6px; color: #aab8c6; font-size: 12px; line-height: 1.4; }
 .about-content { max-width: 1500px; margin: 0 auto; padding: 24px clamp(30px, 6vw, 78px) 48px; }
 .about-overview { display: grid; grid-template-columns: minmax(260px, 42%) 1fr; gap: 52px; align-items: center; }
 .section-kicker { margin: 0 0 10px; color: #1766ed; font-size: 8px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
@@ -156,9 +156,21 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .stack-card h2, .approach-card h2 { font-size: 21px; }
 .stack-cloud { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 17px; }
 .stack-cloud span { padding: 6px 9px; border: 1px solid #dce4ed; border-radius: 6px; color: #344357; background: #fbfcfe; font-size: 8px; font-weight: 600; }
+.technology-groups { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; margin-top: 20px; }
+.technology-group h3 { margin: 0 0 8px; color: #6e7e91; font-size: 9px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.technology-items { display: flex; flex-wrap: wrap; gap: 6px; }
+.technology-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 6px 9px; border: 1px solid #dce4ed; border-radius: 6px; color: #344357; background: #fbfcfe; font-size: 9px; font-weight: 600; transition: border-color .2s, transform .2s; }
+a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
+.technology-icon { width: 15px; height: 15px; object-fit: contain; }
+.technology-icon.image-placeholder { color: #7d8ea1; background: transparent; }.technology-icon.image-placeholder svg { width: 13px; height: 13px; }
 .approach-card { position: relative; overflow: hidden; color: #fff; border-color: #183d65; background: radial-gradient(circle at 100% 0, #27336e88, transparent 42%), linear-gradient(135deg, #09223b, #101d3d); }
 .approach-grid { position: absolute; top: 0; right: 0; width: 170px; height: 90px; opacity: .18; background-image: radial-gradient(#4d83ff 1px, transparent 1px); background-size: 10px 10px; }
-.section-kicker--dark { color: #3b9cff; }.approach-card h2 { position: relative; color: #fff; }.approach-card > p:not(.section-kicker) { position: relative; margin: 9px 0 17px; color: #b2c0d0; font-size: 8px; line-height: 1.55; }
+.section-kicker--dark { color: #3b9cff; }.approach-card h2 { position: relative; color: #fff; }
+.approach-principles { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0 20px; }
+.approach-principles article { display: grid; grid-template-columns: 25px 1fr; gap: 9px; padding: 10px; border: 1px solid #ffffff14; border-radius: 8px; background: #ffffff08; }
+.approach-principles article > span { color: #338bff; font-size: 8px; font-weight: 800; }
+.approach-principles h3 { margin: 0 0 5px; color: #eef5fc; font-size: 10px; line-height: 1.35; }
+.approach-principles p { margin: 0; color: #aebdcd; font-size: 8px; line-height: 1.5; }
 .process-flow { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; align-items: start; padding-top: 13px; border-top: 1px solid #ffffff1c; }
 .process-step { position: relative; display: grid; justify-items: center; gap: 6px; color: #c7d2df; }
 .process-step > span { display: grid; place-items: center; width: 27px; height: 27px; color: #3087ff; }.process-step svg { width: 18px; height: 18px; }.process-step small { font-size: 6px; }.process-step i { position: absolute; top: 7px; right: -6px; color: #7690aa; font-size: 11px; font-style: normal; }
@@ -186,7 +198,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .work-grid article > span { width: 45px; height: 45px; }.work-grid svg { width: 23px; height: 23px; }
   .stack-card h2, .approach-card h2 { font-size: 28px; }
   .stack-cloud span { padding: 8px 11px; font-size: 11px; }
-  .approach-card > p:not(.section-kicker) { font-size: 12px; line-height: 1.65; }
+  .technology-groups { gap: 18px 22px; }.technology-group h3 { font-size: 12px; }.technology-chip { min-height: 34px; padding: 8px 11px; font-size: 12px; }.technology-icon { width: 18px; height: 18px; }
+  .approach-principles article { grid-template-columns: 30px 1fr; padding: 13px; }.approach-principles article > span { font-size: 11px; }.approach-principles h3 { font-size: 14px; }.approach-principles p { font-size: 12px; }
   .process-step small { font-size: 9px; }.process-step > span { width: 34px; height: 34px; }.process-step svg { width: 22px; height: 22px; }
 
   .hero-copy > p:last-child { font-size: 15px; }.stat span { font-size: 11px; }
@@ -221,8 +234,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .about-highlights strong { font-size: 14px; }.about-highlights article:first-child strong { font-size: 22px; }.about-highlights span { margin-top: 4px; font-size: 10px; }
   .about-photo-wrap { min-height: 620px; margin-left: -62px; }
   .about-location { top: 31px; right: 30px; gap: 9px; padding: 11px 14px; font-size: 10px; }.about-location svg { width: 16px; height: 16px; }
-  .availability { right: 28px; bottom: 29px; min-width: 285px; gap: 14px; padding: 15px 17px; }
-  .availability > i { width: 10px; height: 10px; }.availability strong { font-size: 11px; }.availability small { margin-top: 6px; font-size: 9px; }
+  .availability { right: 28px; bottom: 29px; min-width: 340px; gap: 14px; padding: 16px 18px; }
+  .availability > i { width: 10px; height: 10px; }.availability strong { font-size: 14px; }.availability small { margin-top: 6px; font-size: 12px; }
 
   .about-content { max-width: 1640px; padding: 42px 88px 70px; }
   .about-overview { grid-template-columns: minmax(380px, 42%) 1fr; gap: 70px; }
@@ -235,7 +248,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .stack-card, .approach-card { min-height: 340px; padding: 28px; border-radius: 13px; }
   .stack-card h2, .approach-card h2 { font-size: 27px; }
   .stack-cloud { gap: 9px; margin-top: 22px; }.stack-cloud span { padding: 8px 11px; border-radius: 7px; font-size: 11px; }
-  .approach-card > p:not(.section-kicker) { max-width: 690px; margin: 13px 0 22px; font-size: 12px; line-height: 1.65; }
+  .technology-groups { gap: 18px 24px; margin-top: 24px; }.technology-group h3 { font-size: 12px; }.technology-chip { min-height: 35px; padding: 8px 11px; font-size: 12px; }
+  .approach-principles { gap: 10px; margin: 20px 0 24px; }.approach-principles article { grid-template-columns: 31px 1fr; padding: 14px; }.approach-principles article > span { font-size: 11px; }.approach-principles h3 { font-size: 14px; }.approach-principles p { font-size: 12px; }
   .process-flow { gap: 7px; padding-top: 19px; }.process-step { gap: 9px; }.process-step > span { width: 34px; height: 34px; }.process-step svg { width: 22px; height: 22px; }.process-step small { font-size: 8px; }.process-step i { top: 9px; right: -7px; font-size: 14px; }
 
   .projects-hero { min-height: 460px; }.hero-copy h1 { font-size: 64px; }.hero-copy > p:last-child { font-size: 15px; }.stat strong { font-size: 28px; }.stat span { font-size: 11px; }
@@ -273,7 +287,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .contact-buttons a { min-height: 48px; padding: 12px 14px; font-size: 13px; }
   .about-highlights article { min-height: 88px; padding: 15px; }
   .about-highlights strong { font-size: 14px; }.about-highlights article:first-child strong { font-size: 22px; }.about-highlights span { font-size: 11px; }
-  .about-location { font-size: 11px; }.availability strong { font-size: 11px; }.availability small { font-size: 10px; line-height: 1.4; }
+  .about-location { font-size: 11px; }.availability strong { font-size: 14px; }.availability small { font-size: 12px; line-height: 1.4; }
 
   .section-kicker { font-size: 11px; }
   .about-intro h2 { font-size: 30px; }.about-intro > p:last-child { font-size: 15px; line-height: 1.7; }
@@ -281,7 +295,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .work-grid h3 { font-size: 16px; }.work-grid p { font-size: 13px; line-height: 1.55; }
   .work-grid article > span { width: 44px; height: 44px; }.work-grid svg { width: 22px; height: 22px; }
   .stack-card h2, .approach-card h2 { font-size: 25px; }
+  .approach-principles { grid-template-columns: 1fr; }.approach-principles article { padding: 13px; }.approach-principles article > span { font-size: 11px; }.approach-principles h3 { font-size: 15px; }.approach-principles p { font-size: 13px; }
   .stack-cloud span { padding: 8px 10px; font-size: 12px; }
+  .technology-groups { grid-template-columns: 1fr; gap: 18px; }.technology-group h3 { font-size: 12px; }.technology-chip { min-height: 35px; padding: 8px 11px; font-size: 12px; }
   .approach-card > p:not(.section-kicker) { font-size: 14px; line-height: 1.65; }
   .process-step small { font-size: 10px; }.process-step > span { width: 34px; height: 34px; }.process-step svg { width: 22px; height: 22px; }
 
@@ -292,8 +308,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .files-list strong, .files-list small, .external-links a { font-size: 12px; }
 }
 @media (min-width: 1200px) {
-  .about-highlights span, .availability small, .section-kicker, .process-step small { font-size: 11px; }
-  .work-grid p, .approach-card > p:not(.section-kicker) { font-size: 13px; }
+  .about-highlights span, .section-kicker, .process-step small { font-size: 11px; }
+  .work-grid p { font-size: 13px; }
   .stack-cloud span { font-size: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
