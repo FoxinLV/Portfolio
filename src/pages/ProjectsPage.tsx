@@ -41,7 +41,7 @@ export function ProjectsPage() {
           <ViewButton active={view === 'grid'} icon="projects" label="Сетка" onClick={() => setView('grid')} />
           <ViewButton active={view === 'timeline'} icon="timeline" label="Таймлайн" onClick={() => setView('timeline')} />
         </div>
-        <button className="filter-button" onClick={() => setMobileFilters(true)}><Icon name="filter" />Фильтры{Object.values(filters).filter(Boolean).length > 0 && <span>{Object.values(filters).filter(Boolean).length}</span>}</button>
+        <button className="filter-button" aria-expanded={mobileFilters} aria-controls="projects-filters" onClick={() => setMobileFilters((open) => !open)}><Icon name="filter" />{mobileFilters ? 'Скрыть фильтры' : 'Фильтры'}{Object.values(filters).filter(Boolean).length > 0 && <span>{Object.values(filters).filter(Boolean).length}</span>}</button>
       </div>
     </div>
 

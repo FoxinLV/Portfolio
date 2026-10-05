@@ -14,8 +14,7 @@ export function Filters({ projects, filters, setFilters, mobileOpen, closeMobile
   const update = (key: keyof ProjectFilters, value: string) => setFilters({ ...filters, [key]: value });
   const active = Object.values(filters).some(Boolean);
   return <>
-    {mobileOpen && <button className="filter-backdrop" onClick={closeMobile} aria-label="Закрыть фильтры" />}
-    <aside className={`filters-panel ${mobileOpen ? 'filters-panel--open' : ''}`} aria-label="Фильтры проектов">
+    <aside id="projects-filters" className={`filters-panel ${mobileOpen ? 'filters-panel--open' : ''}`} aria-label="Фильтры проектов">
       <div className="filter-mobile-title"><strong>Фильтры</strong><button onClick={closeMobile} aria-label="Закрыть фильтры"><Icon name="close" /></button></div>
       <div className="filter-panel-title"><h2><Icon name="search" />Фильтры</h2><button disabled={!active} onClick={() => setFilters({ query: '', year: '', type: '', technology: '', direction: '' })}>Сбросить</button></div>
       <label className="search-field"><span>Поиск</span><div><Icon name="search"/><input value={filters.query} onChange={(event) => update('query', event.target.value)} placeholder="Название или технология" /></div></label>
