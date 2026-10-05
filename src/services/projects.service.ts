@@ -1,5 +1,6 @@
 import { STORAGE_CONFIG } from '../config/environment';
 import type { Project } from '../types/project';
+import { isTechnology } from '../utils/projectTechnology';
 import { getJson, listObjects } from './storage.service';
 
 const isText = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0;
@@ -12,7 +13,7 @@ export function isValidProject(value: unknown): value is Omit<Project, 'storageP
   return typeof p.schemaVersion === 'number' && isText(p.id) && ['draft', 'published', 'archived'].includes(String(p.status)) &&
     isText(p.title) && isText(p.shortDescription) && /^\d{4}-\d{2}-\d{2}$/.test(String(p.date)) &&
     !Number.isNaN(Date.parse(`${p.date}T00:00:00Z`)) && classifier(p.type) && classifier(p.direction) &&
-    Array.isArray(p.technologies) && p.technologies.every(isText) && isText(p.cover);
+    Array.isArray(p.technologies) && p.technologies.every(isTechnology) && isText(p.cover);
 }
 
 export async function loadProjects(): Promise<Project[]> {

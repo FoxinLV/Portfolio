@@ -1,6 +1,7 @@
 import type { Project, ProjectFilters } from '../types/project';
 import { projectYear } from '../utils/dates';
 import { uniqueBy } from '../utils/projects';
+import { technologyName } from '../utils/projectTechnology';
 import { Icon } from './Icon';
 
 interface Props { projects: Project[]; filters: ProjectFilters; setFilters: (value: ProjectFilters) => void; mobileOpen: boolean; closeMobile: () => void }
@@ -9,7 +10,7 @@ export function Filters({ projects, filters, setFilters, mobileOpen, closeMobile
   const years = [...new Set(projects.map((project) => projectYear(project.date)))].sort((a, b) => b - a);
   const types = uniqueBy(projects.map((project) => project.type), (item) => item.id).sort((a, b) => a.name.localeCompare(b.name, 'ru'));
   const directions = uniqueBy(projects.map((project) => project.direction), (item) => item.id).sort((a, b) => a.name.localeCompare(b.name, 'ru'));
-  const technologies = [...new Set(projects.flatMap((project) => project.technologies))].sort((a, b) => a.localeCompare(b, 'ru'));
+  const technologies = [...new Set(projects.flatMap((project) => project.technologies.map(technologyName)))].sort((a, b) => a.localeCompare(b, 'ru'));
   const update = (key: keyof ProjectFilters, value: string) => setFilters({ ...filters, [key]: value });
   const active = Object.values(filters).some(Boolean);
   return <>

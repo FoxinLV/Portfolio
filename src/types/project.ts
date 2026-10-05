@@ -3,6 +3,7 @@ export type ProjectStatus = 'draft' | 'published' | 'archived';
 export interface ProjectClassifier { id: string; name: string }
 export interface ProjectFile { name: string; path: string; description?: string; type?: string }
 export interface ProjectLink { type: string; title: string; url: string }
+export interface ProjectTechnology { name: string; icon?: string; url?: string }
 
 export interface Project {
   schemaVersion: number;
@@ -14,7 +15,7 @@ export interface Project {
   date: string;
   type: ProjectClassifier;
   direction: ProjectClassifier;
-  technologies: string[];
+  technologies: (string | ProjectTechnology)[];
   cover: string;
   gallery?: string[];
   files?: ProjectFile[];

@@ -27,7 +27,9 @@ const paths: Record<string, React.ReactNode> = {
   idea: <><path d="M9 18h6M10 22h4"/><path d="M8.5 15.5A7 7 0 1 1 15.5 15.5c-.9.7-1.5 1.5-1.5 2.5h-4c0-1-.6-1.8-1.5-2.5Z"/></>,
   file: <><path d="M6 2h8l4 4v16H6V2Z"/><path d="M14 2v5h5M9 12h6M9 16h6"/></>,
   code: <><path d="m8 9-4 3 4 3M16 9l4 3-4 3M14 5l-4 14"/></>,
-  rocket: <><path d="M14 6c3.5-3.5 6.5-3.5 7-3 .5.5.5 3.5-3 7l-4 4-4-4 4-4Z"/><path d="m10 10-4 1-3 3 6 1M14 14l-1 4-3 3-1-6M6 18c-1 2-3 3-4 3 0-1 1-3 3-4"/></>
+  rocket: <><path d="M14 6c3.5-3.5 6.5-3.5 7-3 .5.5.5 3.5-3 7l-4 4-4-4 4-4Z"/><path d="m10 10-4 1-3 3 6 1M14 14l-1 4-3 3-1-6M6 18c-1 2-3 3-4 3 0-1 1-3 3-4"/></>,
+  calendar: <><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></>,
+  share: <><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></>
 };
 
 export function Icon({ name, ...props }: SVGProps<SVGSVGElement> & { name: string }) {

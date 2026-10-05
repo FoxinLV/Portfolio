@@ -65,6 +65,27 @@ portfolio/
 
 Старый формат массива строк также поддерживается.
 
+### Ключевые технологии в project.json
+
+Для технологий проекта поддерживаются строки и объекты. Абсолютный `icon` загружается напрямую, относительный — из папки проекта. `url` необязателен.
+
+```json
+{
+  "technologies": [
+    {
+      "name": "Python",
+      "icon": "https://api.iconify.design/simple-icons:python.svg",
+      "url": "https://www.python.org"
+    },
+    {
+      "name": "PostgreSQL",
+      "icon": "https://api.iconify.design/simple-icons:postgresql.svg"
+    },
+    "REST API"
+  ]
+}
+```
+
 ## Проверка
 
 ```bash

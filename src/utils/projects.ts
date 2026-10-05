@@ -1,15 +1,16 @@
 import type { Project, ProjectFilters } from '../types/project';
 import { projectYear } from './dates';
+import { technologyName } from './projectTechnology';
 
 export function applyFilters(projects: Project[], filters: ProjectFilters) {
   const query = filters.query.trim().toLocaleLowerCase('ru-RU');
   return projects.filter((project) => {
     const haystack = [project.title, project.shortDescription, project.description ?? '', project.type.name,
-      project.direction.name, ...project.technologies].join(' ').toLocaleLowerCase('ru-RU');
+      project.direction.name, ...project.technologies.map(technologyName)].join(' ').toLocaleLowerCase('ru-RU');
     return (!query || haystack.includes(query)) &&
       (!filters.year || String(projectYear(project.date)) === filters.year) &&
       (!filters.type || project.type.id === filters.type) &&
-      (!filters.technology || project.technologies.includes(filters.technology)) &&
+      (!filters.technology || project.technologies.some((technology) => technologyName(technology) === filters.technology)) &&
       (!filters.direction || project.direction.id === filters.direction);
   });
 }
@@ -30,7 +31,7 @@ export function statistics(projects: Project[]) {
   return {
     projects: projects.length,
     types: new Set(projects.map((project) => project.type.id)).size,
-    technologies: new Set(projects.flatMap((project) => project.technologies)).size,
+    technologies: new Set(projects.flatMap((project) => project.technologies.map(technologyName))).size,
     period: years.length ? `${Math.min(...years)}${Math.min(...years) === Math.max(...years) ? '' : `–${Math.max(...years)}`}` : '—'
   };
 }
