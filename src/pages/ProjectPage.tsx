@@ -7,7 +7,7 @@ import { SmartImage } from '../components/SmartImage';
 import { usePortfolio } from '../context/PortfolioContext';
 import type { ProjectTechnology } from '../types/project';
 import { longDate } from '../utils/dates';
-import { technologyValue } from '../utils/projectTechnology';
+import { technologyIconUrl, technologyValue } from '../utils/projectTechnology';
 import { projectAssetUrl } from '../utils/storageUrl';
 
 export function ProjectPage() {
@@ -38,7 +38,7 @@ export function ProjectPage() {
     <div className="detail-heading-grid">
       <header className="detail-hero">
         <div className="detail-meta"><span>{project.type.name}</span><i /><span>{project.direction.name}</span></div>
-        <div className="detail-title-row"><span className="detail-title-icon"><Icon name="projects" /></span><div><h1>{project.title}</h1><time dateTime={project.date}>{longDate(project.date)}</time></div></div>
+        <div className="detail-title-row"><div><h1>{project.title}</h1><time dateTime={project.date}>{longDate(project.date)}</time></div></div>
         <p>{project.shortDescription}</p>
         <div className="detail-tech-strip">{project.technologies.map((technology, index) => <TechnologyChip key={`${technologyValue(technology).name}-${index}`} technology={technologyValue(technology)} storagePath={project.storagePath} />)}</div>
       </header>
@@ -87,9 +87,7 @@ export function ProjectPage() {
 }
 
 function TechnologyChip({ technology, storagePath }: { technology: ProjectTechnology; storagePath: string }) {
-  const icon = technology.icon
-    ? (/^https?:\/\//i.test(technology.icon) ? technology.icon : projectAssetUrl(storagePath, technology.icon))
-    : '';
+  const icon = technology.icon ? technologyIconUrl(technology.icon, storagePath) : '';
   const content = <>{icon && <SmartImage className="project-tech-icon" src={icon} alt="" />}<span>{technology.name}</span></>;
   return technology.url
     ? <a className="project-tech-chip" href={technology.url} target="_blank" rel="noopener noreferrer">{content}</a>

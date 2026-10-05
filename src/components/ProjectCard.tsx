@@ -3,7 +3,7 @@ import type { Project } from '../types/project';
 import { projectAssetUrl } from '../utils/storageUrl';
 import { Icon } from './Icon';
 import { SmartImage } from './SmartImage';
-import { technologyName, technologyValue } from '../utils/projectTechnology';
+import { technologyIconUrl, technologyName, technologyValue } from '../utils/projectTechnology';
 
 const typeClass = (id: string) => `type-dot type-dot--${id.replace(/[^a-z0-9-]/g, '')}`;
 
@@ -19,7 +19,7 @@ export function ProjectCard({ project }: { project: Project }) {
       <p>{project.shortDescription}</p>
       <div className="technology-list">{project.technologies.slice(0, 5).map((technology, index) => {
         const item = technologyValue(technology);
-        const icon = item.icon ? (/^https?:\/\//i.test(item.icon) ? item.icon : projectAssetUrl(project.storagePath, item.icon)) : '';
+        const icon = item.icon ? technologyIconUrl(item.icon, project.storagePath) : '';
         return <span key={`${technologyName(technology)}-${index}`}>{icon && <SmartImage className="card-tech-icon" src={icon} alt="" />}{item.name}</span>;
       })}{project.technologies.length > 5 && <span>+{project.technologies.length - 5}</span>}</div>
       <div className="project-card-footer">
