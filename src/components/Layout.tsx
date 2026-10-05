@@ -5,7 +5,7 @@ import { portfolioAssetUrl } from '../utils/storageUrl';
 import { Icon } from './Icon';
 import { SmartImage } from './SmartImage';
 
-const navItems = [{ to: '/projects', label: 'Проекты', icon: 'projects' }, { to: '/about', label: 'Обо мне', icon: 'user' }];
+const navItems = [{ to: '/about', label: 'Обо мне', icon: 'user' }, { to: '/projects', label: 'Проекты', icon: 'projects' }];
 
 function Contact({ type, value }: { type: string; value?: string }) {
   if (!value) return null;
