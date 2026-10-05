@@ -8,11 +8,11 @@ import { technologyName, technologyValue } from '../utils/projectTechnology';
 const typeClass = (id: string) => `type-dot type-dot--${id.replace(/[^a-z0-9-]/g, '')}`;
 
 export function ProjectCard({ project }: { project: Project }) {
-  return <Link to={`/projects/${project.id}`} className="project-card" aria-label={`Открыть проект ${project.title}`}>
-    <div className="project-cover">
+  return <Link to={`/projects/${project.id}`} className={`project-card ${project.cover ? '' : 'project-card--without-cover'}`} aria-label={`Открыть проект ${project.title}`}>
+    {project.cover && <div className="project-cover">
       <SmartImage src={project.cover ? projectAssetUrl(project.storagePath, project.cover) : undefined} alt={`Обложка проекта «${project.title}»`} loading="lazy" />
       <span className="direction-badge">{project.direction.name}</span>
-    </div>
+    </div>}
     <div className="project-card-body">
       <div className="project-type"><span className={typeClass(project.type.id)} />{project.type.name}</div>
       <h3>{project.title}</h3>
