@@ -110,6 +110,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 /* About */
 .about-page { color: #102033; background: #f7f9fc; }
 .about-hero { position: relative; display: grid; grid-template-columns: minmax(0, 61%) minmax(360px, 39%); overflow: hidden; min-height: 510px; color: #fff; background: radial-gradient(circle at 42% 18%, #173f6c 0, transparent 40%), linear-gradient(118deg, #07182a, #0b2239 70%, #0d2947); }
+.about-hero--without-photo { grid-template-columns: 1fr; }.about-hero--without-photo .about-copy { width: 100%; max-width: 1180px; }.about-hero--without-photo .about-hero-glow { right: 0; opacity: .3; }
 .about-hero-glow { position: absolute; z-index: 0; inset: 0 34% 0 auto; width: 310px; opacity: .55; background: linear-gradient(108deg, transparent 0 35%, #075fff35 35.2% 42%, transparent 42.2% 53%, #1268ff20 53.2% 60%, transparent 60.2%); transform: skewX(-5deg); }
 .about-copy { position: relative; z-index: 2; align-self: center; padding: 46px clamp(36px, 6vw, 82px) 26px; }
 .about-kicker { display: inline-flex; align-items: center; gap: 7px; margin: 0 0 12px; padding: 5px 10px; border: 1px solid #4c92df55; border-radius: 99px; color: #43a1ff; font-size: 9px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }

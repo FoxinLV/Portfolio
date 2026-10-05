@@ -68,7 +68,7 @@ export function ProjectPage() {
       </aside>
     </div>
 
-    {(project.tasks?.length || project.features?.length || project.results?.length) && <section className="project-outcomes-grid">
+    {Boolean(project.tasks?.length || project.features?.length || project.results?.length) && <section className="project-outcomes-grid">
       {project.tasks?.length ? <ContentCard title="Основные задачи" icon="compass"><NumberedList items={project.tasks} /></ContentCard> : null}
       {project.features?.length ? <ContentCard title="Функциональные возможности" icon="gear"><CheckList items={project.features} /></ContentCard> : null}
       {project.results?.length ? <ContentCard title="Результаты" icon="chart"><CheckList items={project.results} /></ContentCard> : null}
@@ -79,7 +79,7 @@ export function ProjectPage() {
       {project.role && <ContentCard title="Моя роль" icon="user"><p className="role-text">{project.role}</p></ContentCard>}
     </section>}
 
-    {((project.files?.length ?? 0) > 1 || project.links?.length) && <section className="project-resources-grid">
+    {Boolean((project.files?.length ?? 0) > 1 || project.links?.length) && <section className="project-resources-grid">
       {(project.files?.length ?? 0) > 1 && <ContentCard title="Файлы проекта" icon="download"><div className="files-list">{project.files?.slice(1).map((file) => <a key={file.path} href={projectAssetUrl(project.storagePath, file.path)} download><Icon name="download" /><span><strong>{file.name}</strong><small>{file.description || file.type || 'Файл проекта'}</small></span><b>Скачать</b></a>)}</div></ContentCard>}
       {project.links?.length ? <ContentCard title="Ссылки" icon="link"><div className="external-links">{project.links.map((link) => <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer"><Icon name="link" />{link.title}<Icon name="external" /></a>)}</div></ContentCard> : null}
     </section>}

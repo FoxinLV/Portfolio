@@ -25,7 +25,7 @@ export function Layout() {
     <aside className={`sidebar ${menuOpen ? 'sidebar--open' : ''}`}>
       <button className="sidebar-close" onClick={() => setMenuOpen(false)} aria-label="Закрыть меню"><Icon name="close" /></button>
       <div className="brand">
-        {avatar ? <SmartImage src={avatar} alt={profile?.name ?? 'Виталий Лифанов'} className="avatar" /> : <div className="avatar avatar--letters">VL</div>}
+        {avatar && <SmartImage src={avatar} alt={profile?.name ?? 'Виталий Лифанов'} className="avatar" />}
         <div><strong>{profile?.name ?? 'Виталий Лифанов'}</strong><span>Портфолио проектов</span></div>
       </div>
       <nav className="main-nav" aria-label="Основная навигация">{navItems.map((item) =>

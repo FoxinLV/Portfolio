@@ -56,7 +56,7 @@ export function AboutPage() {
   const principles = approachItems(profile.approach);
 
   return <div className="page about-page">
-    <header className="about-hero">
+    <header className={`about-hero ${profile.avatar ? '' : 'about-hero--without-photo'}`}>
       <div className="about-hero-glow" aria-hidden="true" />
       <div className="about-copy">
         <p className="about-kicker"><span /> Обо мне</p>
@@ -73,13 +73,11 @@ export function AboutPage() {
         </div>
       </div>
 
-      <div className="about-photo-wrap">
-        {profile.avatar
-          ? <SmartImage src={portfolioAssetUrl(profile.avatar)} alt={profile.name} className="about-photo" />
-          : <div className="about-photo avatar--letters">VL</div>}
+      {profile.avatar && <div className="about-photo-wrap">
+        <SmartImage src={portfolioAssetUrl(profile.avatar)} alt={profile.name} className="about-photo" />
         <span className="about-location"><Icon name="pin" /> Москва, РФ</span>
         <span className="availability"><i /> <span><strong>Открыт к интересным проектам</strong><small>Веб-разработка • Аналитика • Интеграции</small></span></span>
-      </div>
+      </div>}
     </header>
 
     <main className="about-content">
