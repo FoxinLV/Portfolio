@@ -340,7 +340,18 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
 .timeline--timeline .timeline-date { border-left-width: 2px; }.timeline--timeline .timeline-date i { box-shadow: 0 0 0 4px #dceaff; }
 
 @media (min-width: 1600px) {
-  .projects-hero { min-height: 390px; padding-inline: 80px; }.projects-hero .stats-row { right: 80px; left: 80px; }.projects-hero .stat { min-height: 98px; }.projects-hero .stat strong { font-size: 30px; }.projects-hero .stat span:not(.stat-icon) { font-size: 12px; }.page-toolbar { padding: 42px 80px 18px; }.projects-layout { grid-template-columns: minmax(0, 1fr) 330px; padding-inline: 80px; }.project-card { grid-template-columns: 260px minmax(0,1fr); min-height: 178px; }.project-cover { min-height: 178px; }.project-card h3 { font-size: 23px; }.project-card-body > p { font-size: 14px; }.technology-list span { font-size: 11px; }.filters-panel label > span, .search-field input, .select-field select { font-size: 13px; }
+  .projects-hero { min-height: 410px; padding-inline: 80px; }
+  .projects-hero .eyebrow { font-size: 12px; }.projects-hero .hero-copy h1 { font-size: 76px; }.projects-hero .hero-copy > p:last-child { font-size: 18px; line-height: 1.55; }
+  .projects-hero .stats-row { right: 80px; left: 80px; }.projects-hero .stat { min-height: 104px; padding: 18px 22px; }.projects-hero .stat strong { font-size: 32px; }.projects-hero .stat span:not(.stat-icon) { font-size: 13px; }
+  .stat-icon { width: 48px; height: 48px; }.stat-icon svg { width: 27px; height: 27px; }
+  .page-toolbar { padding: 44px 80px 20px; }.page-toolbar .eyebrow { font-size: 11px; }.page-toolbar h2 { font-size: 36px; }
+  .view-switcher button { min-height: 44px; padding-inline: 17px; font-size: 13px; }
+  .projects-layout { grid-template-columns: minmax(0, 1fr) 350px; gap: 42px; padding-inline: 80px; }
+  .timeline-year { grid-template-columns: 58px minmax(0, 1fr); }.timeline-year > h2 { font-size: 17px; }.timeline-item { grid-template-columns: 72px minmax(0, 1fr); }.timeline-date span { font-size: 12px; }
+  .project-card { grid-template-columns: 280px minmax(0,1fr); min-height: 190px; }.project-cover { min-height: 190px; }.project-card--without-cover { grid-template-columns: minmax(0, 1fr); }.project-card--without-cover .project-card-body { min-height: 190px; }
+  .project-card-body { padding: 21px 62px 18px 24px; }.project-type { font-size: 12px; }.project-card h3 { margin-top: 9px; font-size: 26px; }.project-card-body > p { max-width: 960px; font-size: 16px; line-height: 1.6; }
+  .technology-list span { min-height: 32px; padding: 6px 10px; font-size: 13px; }.card-tech-icon { width: 18px; height: 18px; }.round-arrow { width: 40px; height: 40px; }
+  .filter-panel-title h2 { font-size: 21px; }.filter-panel-title button { font-size: 12px; }.filters-panel label > span { font-size: 14px; }.search-field input, .select-field select { height: 46px; font-size: 14px; }.search-field svg { top: 15px; }.filter-submit { min-height: 52px; font-size: 14px; }
 }
 @media (max-width: 1100px) {
   .projects-layout { grid-template-columns: minmax(0, 1fr) 250px; gap: 22px; padding-inline: 30px; }.page-toolbar, .projects-hero { padding-inline: 30px; }.projects-hero .stats-row { right: 30px; left: 30px; }.view-switcher button { padding-inline: 10px; }.project-card { grid-template-columns: 185px minmax(0, 1fr); }
