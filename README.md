@@ -19,7 +19,7 @@ VITE_PORTFOLIO_PREFIX=portfolio
 
 ## Object Storage
 
-Bucket должен разрешать анонимное чтение объектов и List Objects. CORS должен разрешать `GET` и `HEAD` с `http://localhost:5173` и production-домена GitHub Pages.
+Bucket должен разрешать анонимное чтение объектов и List Objects. CORS должен разрешать `GET` и `HEAD` с `http://localhost:5173` и production-домена GitHub Pages. 
 
 Ожидаемая структура:
 
