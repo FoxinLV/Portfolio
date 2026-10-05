@@ -163,6 +163,60 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .process-step { position: relative; display: grid; justify-items: center; gap: 6px; color: #c7d2df; }
 .process-step > span { display: grid; place-items: center; width: 27px; height: 27px; color: #3087ff; }.process-step svg { width: 18px; height: 18px; }.process-step small { font-size: 6px; }.process-step i { position: absolute; top: 7px; right: -6px; color: #7690aa; font-size: 11px; font-style: normal; }
 
+/* Large desktop: comfortable reading distance at 1920px wide */
+@media (min-width: 1600px) {
+  .sidebar { width: 264px; padding: 38px 25px 30px; }
+  .main-content { margin-left: 264px; }
+  .brand { gap: 14px; }.brand strong { font-size: 16px; }.brand span { font-size: 11px; }.avatar { width: 52px; height: 52px; }
+  .main-nav { gap: 9px; margin-top: 72px; }.main-nav a { gap: 15px; padding: 16px 17px; font-size: 14px; }.main-nav svg { width: 20px; height: 20px; }
+  .sidebar-footer > p { font-size: 10px; }.social-link, .social-placeholder { width: 38px; height: 38px; }.sidebar-footer small { font-size: 9px; }
+
+  .about-hero { grid-template-columns: minmax(0, 60%) minmax(500px, 40%); min-height: 620px; }
+  .about-hero-glow { right: 35%; width: 390px; }
+  .about-copy { padding: 62px clamp(58px, 5.2vw, 92px) 38px; }
+  .about-kicker { gap: 8px; margin-bottom: 16px; padding: 7px 12px; font-size: 11px; }
+  .about-kicker span { width: 6px; height: 6px; }
+  .about-copy h1 { font-size: clamp(72px, 4.6vw, 88px); }
+  .about-copy h2 { margin: 14px 0 19px; font-size: 23px; }
+  .about-description { max-width: 730px; font-size: 15px; line-height: 1.7; }
+  .contact-buttons { gap: 11px; margin-top: 24px; }
+  .contact-buttons a { grid-template-columns: 19px auto 16px; min-width: 150px; padding: 14px 17px; font-size: 12px; }
+  .contact-buttons svg { width: 18px; height: 18px; }.contact-buttons svg:last-child { width: 14px; }
+  .about-highlights { gap: 12px; margin-top: 32px; }
+  .about-highlights article { gap: 15px; min-height: 90px; padding: 16px; border-radius: 11px; }
+  .about-highlights svg { width: 29px; height: 29px; }
+  .about-highlights strong { font-size: 13px; }.about-highlights article:first-child strong { font-size: 21px; }.about-highlights span { margin-top: 4px; font-size: 9px; }
+  .about-photo-wrap { min-height: 620px; margin-left: -62px; }
+  .about-location { top: 31px; right: 30px; gap: 9px; padding: 11px 14px; font-size: 10px; }.about-location svg { width: 16px; height: 16px; }
+  .availability { right: 28px; bottom: 29px; min-width: 285px; gap: 14px; padding: 15px 17px; }
+  .availability > i { width: 10px; height: 10px; }.availability strong { font-size: 10px; }.availability small { margin-top: 6px; font-size: 8px; }
+
+  .about-content { max-width: 1640px; padding: 42px 88px 70px; }
+  .about-overview { grid-template-columns: minmax(380px, 42%) 1fr; gap: 70px; }
+  .section-kicker { margin-bottom: 13px; font-size: 10px; }
+  .about-intro h2 { font-size: 35px; }.about-intro > p:last-child { margin-top: 15px; font-size: 13px; line-height: 1.75; }
+  .work-grid { border-radius: 13px; }.work-grid article { gap: 17px; min-height: 104px; padding: 21px; }
+  .work-grid article > span { width: 46px; height: 46px; border-radius: 11px; }.work-grid svg { width: 23px; height: 23px; }
+  .work-grid h3 { margin: 3px 0 7px; font-size: 13px; }.work-grid p { font-size: 10px; line-height: 1.55; }
+  .about-details { gap: 18px; margin-top: 24px; }
+  .stack-card, .approach-card { min-height: 340px; padding: 28px; border-radius: 13px; }
+  .stack-card h2, .approach-card h2 { font-size: 27px; }
+  .stack-cloud { gap: 9px; margin-top: 22px; }.stack-cloud span { padding: 8px 11px; border-radius: 7px; font-size: 10px; }
+  .approach-card > p:not(.section-kicker) { max-width: 690px; margin: 13px 0 22px; font-size: 11px; line-height: 1.65; }
+  .process-flow { gap: 7px; padding-top: 19px; }.process-step { gap: 9px; }.process-step > span { width: 34px; height: 34px; }.process-step svg { width: 22px; height: 22px; }.process-step small { font-size: 8px; }.process-step i { top: 9px; right: -7px; font-size: 14px; }
+
+  .projects-hero { min-height: 460px; }.hero-copy h1 { font-size: 64px; }.hero-copy > p:last-child { font-size: 15px; }.stat strong { font-size: 28px; }.stat span { font-size: 11px; }
+  .page-toolbar h2 { font-size: 31px; }.project-card h3 { font-size: 21px; }.project-card-body > p { font-size: 12px; }.technology-list span { font-size: 9px; }
+  .detail-hero > p, .prose p, .role-text { font-size: 15px; }.numbered-list p { font-size: 14px; }.check-list li { font-size: 13px; }
+}
+
+@media (min-width: 1600px) and (min-height: 1200px) {
+  .about-hero, .about-photo-wrap { min-height: 690px; }
+  .about-content { display: grid; grid-template-rows: auto minmax(420px, 1fr); min-height: calc(100vh - 690px); }
+  .about-details { min-height: 420px; }.stack-card, .approach-card { height: 100%; }
+  .approach-card { display: flex; flex-direction: column; }.approach-card .process-flow { margin-top: auto; }
+}
+
 @media (max-width: 1199px) {
   .sidebar { width: 220px; padding-inline: 18px; }.main-content { margin-left: 220px; }.projects-hero, .page-toolbar { padding-right: 35px; padding-left: 35px; }.stats-row { right: 35px; left: 35px; }.projects-layout { grid-template-columns: minmax(0,1fr) 220px; gap: 25px; padding-inline: 35px; }.project-card { grid-template-columns: 160px minmax(0,1fr); }.timeline-year { grid-template-columns: 42px 1fr; gap: 12px; }.timeline-item { grid-template-columns: 50px minmax(0,1fr); }.project-card-body { padding: 19px; }
   .about-copy { padding-inline: 38px; }.about-highlights { grid-template-columns: 1fr 1fr; }.about-photo-wrap { margin-left: -35px; }.about-overview { gap: 30px; }
