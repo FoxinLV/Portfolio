@@ -131,6 +131,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .about-highlights strong { font-size: 10px; line-height: 1.35; }
 .about-highlights article:first-child strong { font-size: 16px; }
 .about-highlights span { margin-top: 2px; color: #92a3b5; font-size: 7px; line-height: 1.35; }
+.about-highlights article:not(:first-child) span { margin-top: 5px; font-size: 13px; line-height: 1.45; }
 .about-photo-wrap { position: relative; z-index: 1; overflow: hidden; min-height: 510px; margin-left: -52px; background: #14283b; clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%); }
 .about-photo { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .about-photo.avatar--letters { display: grid; place-items: center; font-size: 80px; }
@@ -150,7 +151,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .work-grid article:nth-child(odd) { border-right: 1px solid #e7ebf1; }.work-grid article:nth-child(-n+2) { border-bottom: 1px solid #e7ebf1; }
 .work-grid article > span { display: grid; flex: none; place-items: center; width: 36px; height: 36px; border-radius: 9px; color: #1569ff; background: #edf4ff; }
 .work-grid svg { width: 19px; height: 19px; }
-.work-grid h3 { margin: 2px 0 5px; font-size: 10px; }.work-grid p { margin: 0; color: #8390a0; font-size: 8px; line-height: 1.45; }
+.work-grid h3 { margin: 2px 0 5px; font-size: 10px; }.work-grid p { margin: 0; color: #788799; font-size: 14px; line-height: 1.65; }
 .about-details { display: grid; grid-template-columns: 1.02fr .98fr; gap: 14px; margin-top: 14px; }
 .stack-card, .approach-card { min-width: 0; min-height: 245px; padding: 20px; border: 1px solid #e0e6ed; border-radius: 11px; background: #fff; }
 .stack-card h2, .approach-card h2 { font-size: 21px; }
@@ -168,12 +169,12 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
 .section-kicker--dark { color: #3b9cff; }.approach-card h2 { position: relative; color: #fff; }
 .approach-principles { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0 20px; }
 .approach-principles article { display: grid; grid-template-columns: 25px 1fr; gap: 9px; padding: 10px; border: 1px solid #ffffff14; border-radius: 8px; background: #ffffff08; }
-.approach-principles article > span { color: #338bff; font-size: 8px; font-weight: 800; }
-.approach-principles h3 { margin: 0 0 5px; color: #eef5fc; font-size: 10px; line-height: 1.35; }
-.approach-principles p { margin: 0; color: #aebdcd; font-size: 8px; line-height: 1.5; }
+.approach-principles article > span { color: #338bff; font-size: 12px; font-weight: 800; }
+.approach-principles h3 { margin: 0 0 7px; color: #eef5fc; font-size: 15px; line-height: 1.4; }
+.approach-principles p { margin: 0; color: #b8c5d3; font-size: 13px; line-height: 1.6; }
 .process-flow { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; align-items: start; padding-top: 13px; border-top: 1px solid #ffffff1c; }
 .process-step { position: relative; display: grid; justify-items: center; gap: 6px; color: #c7d2df; }
-.process-step > span { display: grid; place-items: center; width: 27px; height: 27px; color: #3087ff; }.process-step svg { width: 18px; height: 18px; }.process-step small { font-size: 6px; }.process-step i { position: absolute; top: 7px; right: -6px; color: #7690aa; font-size: 11px; font-style: normal; }
+.process-step > span { display: grid; place-items: center; width: 32px; height: 32px; color: #3087ff; }.process-step svg { width: 21px; height: 21px; }.process-step small { font-size: 11px; font-weight: 600; }.process-step i { position: absolute; top: 8px; right: -6px; color: #7690aa; font-size: 14px; font-style: normal; }
 
 /* Desktop typography stays readable even when Windows display scaling reduces CSS viewport width. */
 @media (min-width: 1200px) {
@@ -187,19 +188,19 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
   .about-description { max-width: 720px; font-size: 16px; line-height: 1.68; }
   .contact-buttons a { min-width: 145px; padding: 13px 16px; font-size: 13px; }
   .about-highlights article { min-height: 88px; padding: 15px; }
-  .about-highlights strong { font-size: 14px; }.about-highlights article:first-child strong { font-size: 22px; }.about-highlights span { font-size: 10px; }
+  .about-highlights strong { font-size: 14px; }.about-highlights article:first-child strong { font-size: 22px; }.about-highlights span { font-size: 10px; }.about-highlights article:not(:first-child) span { font-size: 13px; }
   .about-location { font-size: 11px; }.availability strong { font-size: 11px; }.availability small { font-size: 9px; }
 
   .section-kicker { font-size: 11px; }
   .about-intro h2 { font-size: 36px; }
   .about-intro > p:last-child { font-size: 14px; line-height: 1.7; }
   .work-grid article { min-height: 105px; padding: 20px; }
-  .work-grid h3 { font-size: 15px; }.work-grid p { font-size: 12px; line-height: 1.55; }
+  .work-grid h3 { font-size: 15px; }.work-grid p { font-size: 15px; line-height: 1.65; }
   .work-grid article > span { width: 45px; height: 45px; }.work-grid svg { width: 23px; height: 23px; }
   .stack-card h2, .approach-card h2 { font-size: 28px; }
   .stack-cloud span { padding: 8px 11px; font-size: 11px; }
   .technology-groups { gap: 18px 22px; }.technology-group h3 { font-size: 12px; }.technology-chip { min-height: 34px; padding: 8px 11px; font-size: 12px; }.technology-icon { width: 18px; height: 18px; }
-  .approach-principles article { grid-template-columns: 30px 1fr; padding: 13px; }.approach-principles article > span { font-size: 11px; }.approach-principles h3 { font-size: 14px; }.approach-principles p { font-size: 12px; }
+  .approach-principles article { grid-template-columns: 34px 1fr; padding: 15px; }.approach-principles article > span { font-size: 14px; }.approach-principles h3 { font-size: 17px; }.approach-principles p { font-size: 14px; }
   .process-step small { font-size: 9px; }.process-step > span { width: 34px; height: 34px; }.process-step svg { width: 22px; height: 22px; }
 
   .hero-copy > p:last-child { font-size: 15px; }.stat span { font-size: 11px; }
@@ -231,7 +232,7 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
   .about-highlights { gap: 12px; margin-top: 32px; }
   .about-highlights article { gap: 15px; min-height: 90px; padding: 16px; border-radius: 11px; }
   .about-highlights svg { width: 29px; height: 29px; }
-  .about-highlights strong { font-size: 14px; }.about-highlights article:first-child strong { font-size: 22px; }.about-highlights span { margin-top: 4px; font-size: 10px; }
+  .about-highlights strong { font-size: 14px; }.about-highlights article:first-child strong { font-size: 22px; }.about-highlights span { margin-top: 4px; font-size: 10px; }.about-highlights article:not(:first-child) span { margin-top: 5px; font-size: 13px; }
   .about-photo-wrap { min-height: 620px; margin-left: -62px; }
   .about-location { top: 31px; right: 30px; gap: 9px; padding: 11px 14px; font-size: 10px; }.about-location svg { width: 16px; height: 16px; }
   .availability { right: 28px; bottom: 29px; min-width: 340px; gap: 14px; padding: 16px 18px; }
@@ -243,14 +244,14 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
   .about-intro h2 { font-size: 36px; }.about-intro > p:last-child { margin-top: 15px; font-size: 14px; line-height: 1.75; }
   .work-grid { border-radius: 13px; }.work-grid article { gap: 17px; min-height: 104px; padding: 21px; }
   .work-grid article > span { width: 46px; height: 46px; border-radius: 11px; }.work-grid svg { width: 23px; height: 23px; }
-  .work-grid h3 { margin: 3px 0 7px; font-size: 15px; }.work-grid p { font-size: 12px; line-height: 1.55; }
+  .work-grid h3 { margin: 3px 0 7px; font-size: 15px; }.work-grid p { font-size: 15px; line-height: 1.65; }
   .about-details { gap: 18px; margin-top: 24px; }
   .stack-card, .approach-card { min-height: 340px; padding: 28px; border-radius: 13px; }
   .stack-card h2, .approach-card h2 { font-size: 27px; }
   .stack-cloud { gap: 9px; margin-top: 22px; }.stack-cloud span { padding: 8px 11px; border-radius: 7px; font-size: 11px; }
   .technology-groups { gap: 18px 24px; margin-top: 24px; }.technology-group h3 { font-size: 12px; }.technology-chip { min-height: 35px; padding: 8px 11px; font-size: 12px; }
-  .approach-principles { gap: 10px; margin: 20px 0 24px; }.approach-principles article { grid-template-columns: 31px 1fr; padding: 14px; }.approach-principles article > span { font-size: 11px; }.approach-principles h3 { font-size: 14px; }.approach-principles p { font-size: 12px; }
-  .process-flow { gap: 7px; padding-top: 19px; }.process-step { gap: 9px; }.process-step > span { width: 34px; height: 34px; }.process-step svg { width: 22px; height: 22px; }.process-step small { font-size: 8px; }.process-step i { top: 9px; right: -7px; font-size: 14px; }
+  .approach-principles { gap: 12px; margin: 22px 0 28px; }.approach-principles article { grid-template-columns: 35px 1fr; padding: 16px; }.approach-principles article > span { font-size: 14px; }.approach-principles h3 { font-size: 17px; }.approach-principles p { font-size: 14px; }
+  .process-flow { gap: 8px; padding-top: 22px; }.process-step { gap: 10px; }.process-step > span { width: 38px; height: 38px; }.process-step svg { width: 25px; height: 25px; }.process-step small { font-size: 12px; }.process-step i { top: 10px; right: -7px; font-size: 16px; }
 
   .projects-hero { min-height: 460px; }.hero-copy h1 { font-size: 64px; }.hero-copy > p:last-child { font-size: 15px; }.stat strong { font-size: 28px; }.stat span { font-size: 11px; }
   .page-toolbar h2 { font-size: 31px; }.project-card h3 { font-size: 21px; }.project-card-body > p { font-size: 12px; }.technology-list span { font-size: 9px; }
@@ -286,20 +287,20 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
   .about-description { font-size: 15px; line-height: 1.7; }
   .contact-buttons a { min-height: 48px; padding: 12px 14px; font-size: 13px; }
   .about-highlights article { min-height: 88px; padding: 15px; }
-  .about-highlights strong { font-size: 14px; }.about-highlights article:first-child strong { font-size: 22px; }.about-highlights span { font-size: 11px; }
+  .about-highlights strong { font-size: 14px; }.about-highlights article:first-child strong { font-size: 22px; }.about-highlights span { font-size: 11px; }.about-highlights article:not(:first-child) span { font-size: 13px; }
   .about-location { font-size: 11px; }.availability strong { font-size: 14px; }.availability small { font-size: 12px; line-height: 1.4; }
 
   .section-kicker { font-size: 11px; }
   .about-intro h2 { font-size: 30px; }.about-intro > p:last-child { font-size: 15px; line-height: 1.7; }
   .work-grid article { min-height: 112px; padding: 19px; }
-  .work-grid h3 { font-size: 16px; }.work-grid p { font-size: 13px; line-height: 1.55; }
+  .work-grid h3 { font-size: 16px; }.work-grid p { font-size: 15px; line-height: 1.65; }
   .work-grid article > span { width: 44px; height: 44px; }.work-grid svg { width: 22px; height: 22px; }
   .stack-card h2, .approach-card h2 { font-size: 25px; }
-  .approach-principles { grid-template-columns: 1fr; }.approach-principles article { padding: 13px; }.approach-principles article > span { font-size: 11px; }.approach-principles h3 { font-size: 15px; }.approach-principles p { font-size: 13px; }
+  .approach-principles { grid-template-columns: 1fr; }.approach-principles article { grid-template-columns: 34px 1fr; padding: 15px; }.approach-principles article > span { font-size: 13px; }.approach-principles h3 { font-size: 17px; }.approach-principles p { font-size: 15px; }
   .stack-cloud span { padding: 8px 10px; font-size: 12px; }
   .technology-groups { grid-template-columns: 1fr; gap: 18px; }.technology-group h3 { font-size: 12px; }.technology-chip { min-height: 35px; padding: 8px 11px; font-size: 12px; }
   .approach-card > p:not(.section-kicker) { font-size: 14px; line-height: 1.65; }
-  .process-step small { font-size: 10px; }.process-step > span { width: 34px; height: 34px; }.process-step svg { width: 22px; height: 22px; }
+  .process-step small { font-size: 12px; }.process-step > span { width: 38px; height: 38px; }.process-step svg { width: 25px; height: 25px; }
 
   .project-type { font-size: 11px; }.project-card-body > p { font-size: 14px; }.technology-list span { padding: 6px 8px; font-size: 11px; }
   .file-link { font-size: 11px; }.state-card p { font-size: 14px; }.filter-button { font-size: 12px; }
@@ -308,8 +309,8 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
   .files-list strong, .files-list small, .external-links a { font-size: 12px; }
 }
 @media (min-width: 1200px) {
-  .about-highlights span, .section-kicker, .process-step small { font-size: 11px; }
-  .work-grid p { font-size: 13px; }
+  .about-highlights span, .section-kicker { font-size: 11px; }.process-step small { font-size: 12px; }
+  .work-grid p { font-size: 15px; }
   .stack-cloud span { font-size: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
