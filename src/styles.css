@@ -403,7 +403,8 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
 .chronology-projects a { display: grid; grid-template-columns: 1fr 18px; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 8px; color: #26374a; font-size: 13px; font-weight: 700; line-height: 1.35; transition: .2s; }
 .chronology-projects a:hover { color: #105fe9; background: #f0f5ff; }.chronology-projects svg { width: 15px; color: #4380e8; }
 .chronology-tags { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 7px; }
-.chronology-tags span { padding: 6px 9px; border: 1px solid #dce5ef; border-radius: 7px; color: #526174; background: #f8fafc; font-size: 11px; line-height: 1.25; }
+.chronology-tags span { display: inline-flex; align-items: center; gap: 6px; padding: 6px 9px; border: 1px solid #dce5ef; border-radius: 7px; color: #526174; background: #f8fafc; font-size: 11px; line-height: 1.25; }
+.chronology-tech-icon { flex: none; width: 16px; height: 16px; object-fit: contain; }.chronology-tech-icon.image-placeholder { background: transparent; }.chronology-tech-icon.image-placeholder svg { width: 13px; height: 13px; }
 .chronology-tags--types span { color: #165fcf; border-color: #d4e2fa; background: #f0f5ff; }
 @media (min-width: 1600px) {
   .chronology-table-head, .chronology-row { grid-template-columns: 130px minmax(280px, 1.2fr) minmax(220px, .8fr) minmax(320px, 1.3fr); }
