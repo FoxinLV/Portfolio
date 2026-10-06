@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { usePortfolio } from '../context/PortfolioContext';
 import { portfolioAssetUrl } from '../utils/storageUrl';
 import { Icon } from './Icon';
@@ -16,8 +16,15 @@ function Contact({ type, value }: { type: string; value?: string }) {
 
 export function Layout() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { pathname } = useLocation();
   const { profile } = usePortfolio();
   useEffect(() => { document.body.style.overflow = menuOpen ? 'hidden' : ''; return () => { document.body.style.overflow = ''; }; }, [menuOpen]);
+  useLayoutEffect(() => {
+    const previousBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    document.documentElement.style.scrollBehavior = previousBehavior;
+  }, [pathname]);
   const avatar = profile?.avatar ? portfolioAssetUrl(profile.avatar) : '';
   return <div className="app-shell">
     <button className="mobile-menu-button" onClick={() => setMenuOpen(true)} aria-label="Открыть меню"><Icon name="menu" /></button>
