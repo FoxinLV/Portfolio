@@ -1,0 +1,64 @@
+import { useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { ErrorState, Loader } from '../components/Feedback';
+import { Icon } from '../components/Icon';
+import { usePortfolio } from '../context/PortfolioContext';
+import type { Project } from '../types/project';
+import { groupByYear } from '../utils/projects';
+import { technologyName } from '../utils/projectTechnology';
+
+const uniqueNames = (values: string[]) => [...new Map(values.map((value) => {
+  const name = value.trim();
+  return [name.toLocaleLowerCase('ru-RU'), name];
+})).values()];
+
+const sortProjects = (projects: Project[]) => [...projects]
+  .sort((first, second) => Date.parse(second.date) - Date.parse(first.date));
+
+export function ChronologyPage() {
+  const { projects, projectsLoading, projectsError, retryProjects } = usePortfolio();
+  const years = useMemo(() => Object.entries(groupByYear(projects))
+    .sort(([first], [second]) => Number(second) - Number(first))
+    .map(([year, yearProjects]) => ({
+      year,
+      projects: sortProjects(yearProjects),
+      types: uniqueNames(yearProjects.map((project) => project.type.name)),
+      technologies: uniqueNames(yearProjects.flatMap((project) => project.technologies.map(technologyName)))
+    })), [projects]);
+
+  useEffect(() => {
+    document.title = 'Хронология проектов — Виталий Лифанов';
+    return () => { document.title = 'Виталий Лифанов — Проекты'; };
+  }, []);
+
+  return <div className="page chronology-page">
+    <header className="chronology-hero">
+      <p className="eyebrow eyebrow--dark">Портфолио по годам</p>
+      <h1>Хронология проектов</h1>
+      <p>Проекты, типы систем и ключевые технологии в разрезе каждого года.</p>
+    </header>
+
+    <section className="chronology-content" aria-live="polite">
+      {projectsLoading && <Loader cards={3} />}
+      {!projectsLoading && projectsError && <ErrorState title="Не удалось загрузить хронологию" message="Данные проектов сейчас недоступны." onRetry={retryProjects} />}
+      {!projectsLoading && !projectsError && years.length === 0 && <div className="state-card"><span className="state-code">0</span><h2>Проекты пока не добавлены</h2></div>}
+      {!projectsLoading && !projectsError && years.length > 0 && <div className="chronology-table">
+        <div className="chronology-table-head" aria-hidden="true">
+          <span>Год</span><span>Проекты</span><span>Типы систем</span><span>Ключевые технологии</span>
+        </div>
+        {years.map((item) => <article className="chronology-row" key={item.year}>
+          <h2>{item.year}</h2>
+          <div className="chronology-cell chronology-projects" data-label="Проекты">
+            {item.projects.map((project) => <Link key={project.id} to={`/projects/${project.id}`}><span>{project.title}</span><Icon name="arrow" /></Link>)}
+          </div>
+          <div className="chronology-cell" data-label="Типы систем">
+            <div className="chronology-tags chronology-tags--types">{item.types.map((type) => <span key={type}>{type}</span>)}</div>
+          </div>
+          <div className="chronology-cell" data-label="Ключевые технологии">
+            <div className="chronology-tags">{item.technologies.map((technology) => <span key={technology}>{technology}</span>)}</div>
+          </div>
+        </article>)}
+      </div>}
+    </section>
+  </div>;
+}

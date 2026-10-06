@@ -51,11 +51,8 @@ export function ProjectPage() {
       </aside>
     </div>
 
-    <div className="detail-showcase-grid">
-      <div className="project-gallery">{images.length
-        ? <Gallery images={images} title={project.title} featured />
-        : <div className="project-gallery-empty"><Icon name="image" /><span>Изображения проекта пока не добавлены</span></div>}
-      </div>
+    <div className={`detail-showcase-grid ${images.length ? '' : 'detail-showcase-grid--without-images'}`}>
+      {images.length > 0 && <div className="project-gallery"><Gallery images={images} title={project.title} featured /></div>}
       <aside className="project-side-stack">
         <section className="project-tech-card">
           <h2>Ключевые технологии</h2>
