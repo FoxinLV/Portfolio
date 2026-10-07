@@ -36,6 +36,7 @@ const paths: Record<string, React.ReactNode> = {
   ,list: <><path d="M9 6h12M9 12h12M9 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></>
   ,timeline: <><path d="M5 3v18"/><circle cx="5" cy="7" r="2"/><circle cx="5" cy="17" r="2"/><path d="M9 7h11M9 17h11"/></>
   ,career: <><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V4h8v3M3 12h18M10 12v2h4v-2"/></>
+  ,education: <><path d="m2 8 10-5 10 5-10 5L2 8Z"/><path d="M6 10.5V16c3 2.4 9 2.4 12 0v-5.5M22 8v7"/></>
 };
 
 export function Icon({ name, ...props }: SVGProps<SVGSVGElement> & { name: string }) {

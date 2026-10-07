@@ -5,7 +5,8 @@ import { ChronologyPage } from './pages/ChronologyPage';
 import { ProjectPage } from './pages/ProjectPage';
 import { ProjectsPage } from './pages/ProjectsPage';
 import { CareerPage } from './pages/CareerPage';
+import { EducationPage } from './pages/EducationPage';
 
 export function App() {
-  return <Routes><Route element={<Layout />}><Route index element={<Navigate to="/projects" replace />} /><Route path="projects" element={<ProjectsPage />} /><Route path="projects/:projectId" element={<ProjectPage />} /><Route path="chronology" element={<ChronologyPage />} /><Route path="career" element={<CareerPage />} /><Route path="about" element={<AboutPage />} /><Route path="*" element={<Navigate to="/projects" replace />} /></Route></Routes>;
+  return <Routes><Route element={<Layout />}><Route index element={<Navigate to="/projects" replace />} /><Route path="projects" element={<ProjectsPage />} /><Route path="projects/:projectId" element={<ProjectPage />} /><Route path="chronology" element={<ChronologyPage />} /><Route path="career" element={<CareerPage />} /><Route path="education" element={<EducationPage />} /><Route path="about" element={<AboutPage />} /><Route path="*" element={<Navigate to="/projects" replace />} /></Route></Routes>;
 }

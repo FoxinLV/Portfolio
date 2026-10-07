@@ -2,7 +2,9 @@ import { createContext, useCallback, useContext, useEffect, useState, type React
 import { loadProjects } from '../services/projects.service';
 import { loadProfile } from '../services/profile.service';
 import { loadCareer } from '../services/career.service';
+import { loadEducation } from '../services/education.service';
 import type { Career } from '../types/career';
+import type { Education } from '../types/education';
 import type { Project } from '../types/project';
 import type { Profile } from '../types/profile';
 
@@ -10,15 +12,19 @@ interface PortfolioState {
   projects: Project[];
   profile: Profile | null;
   career: Career | null;
+  education: Education | null;
   projectsLoading: boolean;
   profileLoading: boolean;
   careerLoading: boolean;
+  educationLoading: boolean;
   projectsError: string;
   profileError: string;
   careerError: string;
+  educationError: string;
   retryProjects: () => void;
   retryProfile: () => void;
   retryCareer: () => void;
+  retryEducation: () => void;
 }
 
 const PortfolioContext = createContext<PortfolioState | null>(null);
@@ -27,12 +33,15 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
   const [projects, setProjects] = useState<Project[]>([]);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [career, setCareer] = useState<Career | null>(null);
+  const [education, setEducation] = useState<Education | null>(null);
   const [projectsLoading, setProjectsLoading] = useState(true);
   const [profileLoading, setProfileLoading] = useState(true);
   const [careerLoading, setCareerLoading] = useState(true);
+  const [educationLoading, setEducationLoading] = useState(true);
   const [projectsError, setProjectsError] = useState('');
   const [profileError, setProfileError] = useState('');
   const [careerError, setCareerError] = useState('');
+  const [educationError, setEducationError] = useState('');
 
   const retryProjects = useCallback(() => {
     setProjectsLoading(true); setProjectsError('');
@@ -51,8 +60,14 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
       .finally(() => setCareerLoading(false));
   }, []);
 
-  useEffect(() => { retryProjects(); retryProfile(); retryCareer(); }, [retryProjects, retryProfile, retryCareer]);
-  return <PortfolioContext.Provider value={{ projects, profile, career, projectsLoading, profileLoading, careerLoading, projectsError, profileError, careerError, retryProjects, retryProfile, retryCareer }}>{children}</PortfolioContext.Provider>;
+  const retryEducation = useCallback(() => {
+    setEducationLoading(true); setEducationError('');
+    loadEducation().then(setEducation).catch((error: unknown) => setEducationError(error instanceof Error ? error.message : 'Неизвестная ошибка'))
+      .finally(() => setEducationLoading(false));
+  }, []);
+
+  useEffect(() => { retryProjects(); retryProfile(); retryCareer(); retryEducation(); }, [retryProjects, retryProfile, retryCareer, retryEducation]);
+  return <PortfolioContext.Provider value={{ projects, profile, career, education, projectsLoading, profileLoading, careerLoading, educationLoading, projectsError, profileError, careerError, educationError, retryProjects, retryProfile, retryCareer, retryEducation }}>{children}</PortfolioContext.Provider>;
 }
 
 export function usePortfolio() {
