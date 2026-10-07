@@ -1,0 +1,94 @@
+[
+  {
+    "category": "Frontend",
+    "items": [
+      { "name": "React", "icon": "icons/react-original.svg" },
+      { "name": "Next.js", "icon": "icons/nextjs-original.svg" },
+      { "name": "TypeScript", "icon": "icons/typescript-original.svg" },
+      { "name": "JavaScript", "icon": "icons/javascript-original.svg" },
+      { "name": "HTML", "icon": "icons/html5-original.svg" },
+      { "name": "CSS", "icon": "icons/css3-original.svg" }
+    ]
+  },
+  {
+    "category": "Backend",
+    "items": [
+      { "name": "NestJS", "icon": "icons/nestjs-original.svg" },
+      { "name": "Node.js", "icon": "icons/nodejs-original.svg" },
+      { "name": "Python", "icon": "icons/python.svg" }
+    ]
+  },
+  {
+    "category": "Базы данных",
+    "items": [
+      { "name": "PostgreSQL", "icon": "icons/postgresql-original.svg" },
+      { "name": "ClickHouse", "icon": "icons/clickhouse-original.svg" },
+      { "name": "Redis", "icon": "icons/redis-original.svg" },
+      { "name": "SQL", "icon": "https://api.iconify.design/mdi:database.svg" }
+    ]
+  },
+  {
+    "category": "Аналитика и BI",
+    "items": [
+      { "name": "Yandex DataLens", "icon": "icons/yandex-cloud.svg" },
+      { "name": "Chart Editor", "icon": "https://api.iconify.design/mdi:chart-box.svg" },
+      { "name": "D3.js", "icon": "icons/d3js-original.svg" },
+      { "name": "Обработка и визуализация данных", "icon": "https://api.iconify.design/mdi:chart-areaspline.svg" }
+    ]
+  },
+  {
+    "category": "Инфраструктура",
+    "items": [
+      { "name": "Docker", "icon": "icons/docker-original.svg" },
+      { "name": "Docker Compose", "icon": "icons/docker-original.svg" },
+      { "name": "Nginx", "icon": "icons/nginx-original.svg" },
+      { "name": "Linux", "icon": "icons/linux-original.svg" },
+      { "name": "Ubuntu", "icon": "icons/ubuntu-original.svg" }
+    ]
+  },
+  {
+    "category": "Cloud",
+    "items": [
+      { "name": "Yandex Cloud", "icon": "icons/yandex-cloud.svg" },
+      { "name": "Object Storage S3", "icon": "icons/yandex-cloud.svg" },
+      { "name": "Yandex Functions", "icon": "icons/yandex-cloud.svg" },
+      { "name": "Compute Cloud", "icon": "icons/yandex-cloud.svg" }
+    ]
+  },
+  {
+    "category": "DevOps",
+    "items": [
+      { "name": "Git", "icon": "icons/git-original.svg" },
+      { "name": "GitHub", "icon": "icons/github-original.svg" },
+      { "name": "GitHub Actions", "icon": "icons/githubactions-original.svg" },
+      { "name": "CI/CD", "icon": "icons/githubactions-original.svg" }
+    ]
+  },
+  {
+    "category": "Мобильная разработка",
+    "items": [
+      { "name": "Android", "icon": "icons/android-original.svg" },
+      { "name": "Локальные базы данных", "icon": "icons/sqlite-original.svg" },
+      { "name": "Offline-first архитектура", "icon": "https://api.iconify.design/mdi:cloud-off-outline.svg" },
+      { "name": "Синхронизация данных", "icon": "https://api.iconify.design/mdi:sync.svg" }
+    ]
+  },
+  {
+    "category": "Интеграции",
+    "items": [
+      { "name": "REST API", "icon": "icons/api.png" },
+      { "name": "Webhooks", "icon": "icons/api.png" },
+      { "name": "Telegram Bot API", "icon": "icons/telegram.svg" },
+      { "name": "Внешние API и сервисы", "icon": "icons/api.png" }
+    ]
+  },
+  {
+    "category": "Дополнительно",
+    "items": [
+      { "name": "JWT", "icon": "icons/jwt-original.svg" },
+      { "name": "RBAC", "icon": "icons/oauth-original.svg" },
+      { "name": "SSL/TLS", "icon": "https://api.iconify.design/mdi:lock-check.svg" },
+      { "name": "Авторизация и управление доступом", "icon": "icons/oauth-original.svg" }
+    ]
+  }
+]

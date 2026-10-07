@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { ErrorState, Loader } from '../components/Feedback';
 import { Icon } from '../components/Icon';
 import { SmartImage } from '../components/SmartImage';
+import { EXTERNAL_LINKS } from '../config/externalLinks';
 import { usePortfolio } from '../context/PortfolioContext';
 import type { TechnologyGroup, TechnologyItem } from '../types/profile';
 import { portfolioAssetUrl } from '../utils/storageUrl';
@@ -137,6 +138,7 @@ function ContactButtons({ contacts }: { contacts: { telegram?: string; github?: 
   const items = [
     contacts.telegram && { label: 'Telegram', href: contacts.telegram.startsWith('http') ? contacts.telegram : `https://t.me/${contacts.telegram.replace('@', '')}`, icon: 'telegram', primary: true },
     contacts.github && { label: 'GitHub', href: contacts.github, icon: 'github' },
+    { label: 'Steam', href: EXTERNAL_LINKS.steam, icon: 'steam' },
     contacts.email && { label: 'Email', href: `mailto:${contacts.email}`, icon: 'mail' }
   ].filter(Boolean) as { label: string; href: string; icon: string; primary?: boolean }[];
 

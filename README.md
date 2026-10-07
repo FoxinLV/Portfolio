@@ -1,5 +1,13 @@
 # Portfolio 1.0
 
+## Технические задания
+
+- [Основное публичное портфолио](./TZ.md)
+- [Локальная административная система](./ADMIN_TZ.md)
+- [Контракт данных раздела «Карьера»](./CAREER_DATA_CONTRACT.md)
+- [Локальный редактор карьеры](./CAREER_ADMIN_TZ.md)
+- [Публичная страница «Карьера»](./CAREER_PUBLIC_TZ.md)
+
 Статическое портфолио на React, Vite и TypeScript. Приложение размещается на GitHub Pages, а проекты и профиль получает напрямую из публичного Yandex Object Storage.
 
 ## Локальный запуск
@@ -26,6 +34,10 @@ Bucket должен разрешать анонимное чтение объе�
 ```text
 portfolio/
 ├── profile.json
+├── career/
+│   ├── career.json
+│   └── resume/
+│       └── resume.pdf
 └── projects/
     └── project-id/
         ├── project.json
@@ -34,7 +46,7 @@ portfolio/
         └── files/
 ```
 
-Контракты `project.json` и `profile.json` приведены в [TZ.md](./TZ.md). Все пути к медиа в JSON относительные.
+Контракты `project.json` и `profile.json` приведены в [TZ.md](./TZ.md), а `career.json` — в [CAREER_DATA_CONTRACT.md](./CAREER_DATA_CONTRACT.md). Все пути к медиа в JSON относительные.
 
 ### Технологии в profile.json
 

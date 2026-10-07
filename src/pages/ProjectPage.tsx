@@ -6,13 +6,14 @@ import { Icon } from '../components/Icon';
 import { SmartImage } from '../components/SmartImage';
 import { usePortfolio } from '../context/PortfolioContext';
 import type { ProjectTechnology } from '../types/project';
+import type { CareerEngagement, CareerOrganization, CareerProjectAssignment } from '../types/career';
 import { longDate } from '../utils/dates';
 import { technologyIconUrl, technologyValue } from '../utils/projectTechnology';
 import { projectAssetUrl } from '../utils/storageUrl';
 
 export function ProjectPage() {
   const { projectId } = useParams();
-  const { projects, projectsLoading, projectsError, retryProjects } = usePortfolio();
+  const { projects, projectsLoading, projectsError, retryProjects, career } = usePortfolio();
   const project = projects.find((item) => item.id === projectId);
 
   useEffect(() => {
@@ -28,6 +29,12 @@ export function ProjectPage() {
   const images = [...(cover ? [cover] : []), ...(project.gallery?.map((path) => projectAssetUrl(project.storagePath, path)) ?? [])]
     .filter((image, index, list) => list.indexOf(image) === index);
   const primaryFile = project.files?.[0];
+  const careerContexts = career?.projectAssignments.flatMap((assignment) => {
+    if (assignment.projectId !== project.id) return [];
+    const engagement = career.engagements.find((item) => item.id === assignment.engagementId);
+    const organization = engagement ? career.organizations.find((item) => item.id === engagement.organizationId) : undefined;
+    return engagement && organization ? [{ assignment, engagement, organization }] : [];
+  }) ?? [];
 
   return <article className="page detail-page">
     <div className="detail-topbar">
@@ -76,11 +83,33 @@ export function ProjectPage() {
       {project.role && <ContentCard title="Моя роль" icon="user"><p className="role-text">{project.role}</p></ContentCard>}
     </section>}
 
+    {careerContexts.length > 0 && <section className="project-career-section">
+      <div className="project-career-heading"><p className="eyebrow eyebrow--dark">Карьера</p><h2>Контекст работы</h2><p>Где и в какой роли был реализован этот проект.</p></div>
+      <div className="project-career-grid">{careerContexts.map((context) => <ProjectCareerCard key={context.assignment.id} {...context} />)}</div>
+    </section>}
+
     {Boolean((project.files?.length ?? 0) > 1 || project.links?.length) && <section className="project-resources-grid">
       {(project.files?.length ?? 0) > 1 && <ContentCard title="Файлы проекта" icon="download"><div className="files-list">{project.files?.slice(1).map((file) => <a key={file.path} href={projectAssetUrl(project.storagePath, file.path)} download><Icon name="download" /><span><strong>{file.name}</strong><small>{file.description || file.type || 'Файл проекта'}</small></span><b>Скачать</b></a>)}</div></ContentCard>}
       {project.links?.length ? <ContentCard title="Ссылки" icon="link"><div className="external-links">{project.links.map((link) => <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer"><Icon name="link" />{link.title}<Icon name="external" /></a>)}</div></ContentCard> : null}
     </section>}
   </article>;
+}
+
+function ProjectCareerCard({ assignment, engagement, organization }: { assignment: CareerProjectAssignment; engagement: CareerEngagement; organization: CareerOrganization }) {
+  const period = assignment.startDate
+    ? `${shortCareerDate(assignment.startDate)} — ${assignment.endDate ? shortCareerDate(assignment.endDate) : 'настоящее время'}`
+    : `${shortCareerDate(engagement.startDate)} — ${engagement.endDate ? shortCareerDate(engagement.endDate) : 'настоящее время'}`;
+  return <article className="project-career-card">
+    <div><span className="project-career-mark">{(organization.shortName || organization.name).slice(0, 2).toLocaleUpperCase()}</span><div><small>{organization.name}</small><h3>{engagement.title}</h3><time>{period}</time></div></div>
+    {assignment.role && <p><strong>{assignment.role}</strong></p>}
+    {assignment.contribution && <p>{assignment.contribution}</p>}
+    {assignment.highlights?.length ? <ul>{assignment.highlights.map((item) => <li key={item}>{item}</li>)}</ul> : null}
+    <Link to={`/career?engagement=${encodeURIComponent(engagement.id)}`}>Смотреть в карьере <Icon name="arrow" /></Link>
+  </article>;
+}
+
+function shortCareerDate(value: string) {
+  return new Intl.DateTimeFormat('ru-RU', { month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value}T00:00:00Z`));
 }
 
 function TechnologyChip({ technology, storagePath }: { technology: ProjectTechnology; storagePath: string }) {

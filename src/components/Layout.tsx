@@ -1,11 +1,12 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { usePortfolio } from '../context/PortfolioContext';
+import { EXTERNAL_LINKS } from '../config/externalLinks';
 import { portfolioAssetUrl } from '../utils/storageUrl';
 import { Icon } from './Icon';
 import { SmartImage } from './SmartImage';
 
-const navItems = [{ to: '/about', label: 'Обо мне', icon: 'user' }, { to: '/projects', label: 'Проекты', icon: 'projects' }, { to: '/chronology', label: 'Хронология', icon: 'timeline' }];
+const navItems = [{ to: '/about', label: 'Обо мне', icon: 'user' }, { to: '/projects', label: 'Проекты', icon: 'projects' }, { to: '/chronology', label: 'Хронология', icon: 'timeline' }, { to: '/career', label: 'Карьера', icon: 'career' }];
 
 function Contact({ type, value }: { type: string; value?: string }) {
   if (!value) return null;
@@ -42,6 +43,7 @@ export function Layout() {
         <div className="socials">
           <Contact type="telegram" value={profile?.contacts.telegram} />
           <Contact type="github" value={profile?.contacts.github} />
+          <Contact type="steam" value={EXTERNAL_LINKS.steam} />
           <Contact type="email" value={profile?.contacts.email} />
           {!profile && <><span className="social-placeholder"><Icon name="telegram" /></span><span className="social-placeholder"><Icon name="github" /></span><span className="social-placeholder"><Icon name="mail" /></span></>}
         </div>

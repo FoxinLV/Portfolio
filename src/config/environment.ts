@@ -8,5 +8,6 @@ export const STORAGE_CONFIG = {
   portfolioPrefix,
   projectsPrefix: `${portfolioPrefix}/projects`,
   profilePath: `${portfolioPrefix}/profile.json`,
+  careerPath: `${portfolioPrefix}/career/career.json`,
   configured: Boolean(storageBaseUrl) && !storageBaseUrl.includes('BUCKET_NAME')
 };
