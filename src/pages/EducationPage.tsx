@@ -35,7 +35,7 @@ function EducationCard({ item }: { item: EducationEntry }) {
 }
 
 function CourseCard({ item }: { item: CourseEntry }) {
-  return <article className={`course-card ${item.featured ? 'course-card--featured' : ''}`}>
+  return <article className={`course-card ${item.image ? 'course-card--with-image' : 'course-card--without-image'} ${item.featured ? 'course-card--featured' : ''}`}>
     {item.image && <SmartImage className="course-card-image" src={portfolioAssetUrl(item.image)} alt={`Сертификат: ${item.title}`} />}
     <div className="course-card-body">
       <div className="course-card-meta"><span>{item.completionYear}</span><small>Курс / повышение квалификации</small></div>
