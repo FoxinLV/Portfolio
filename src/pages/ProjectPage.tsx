@@ -47,7 +47,6 @@ export function ProjectPage() {
         <div className="detail-meta"><span>{project.type.name}</span><i /><span>{project.direction.name}</span></div>
         <div className="detail-title-row"><div><h1>{project.title}</h1><time dateTime={project.date}>{longDate(project.date)}</time></div></div>
         <p>{project.shortDescription}</p>
-        <div className="detail-tech-strip">{project.technologies.map((technology, index) => <TechnologyChip key={`${technologyValue(technology).name}-${index}`} technology={technologyValue(technology)} storagePath={project.storagePath} />)}</div>
       </header>
 
       <aside className="project-info-card">
