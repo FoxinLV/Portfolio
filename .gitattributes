@@ -1,0 +1,15 @@
+# Use Unix line endings for all text files in the repository.
+* text=auto eol=lf
+
+# Binary assets must not be modified by Git's line-ending normalization.
+*.avif binary
+*.gif binary
+*.ico binary
+*.jpeg binary
+*.jpg binary
+*.pdf binary
+*.png binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.zip binary
