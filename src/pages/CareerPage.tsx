@@ -41,10 +41,9 @@ function durationLabel(months: number) {
   return parts.join(' ') || 'менее месяца';
 }
 
-function dateLabel(value: string, precision: CareerEngagement['datePrecision']) {
+function dateLabel(value: string, _precision: CareerEngagement['datePrecision']) {
   const date = new Date(`${value}T00:00:00Z`);
-  if (precision === 'year') return String(date.getUTCFullYear());
-  return new Intl.DateTimeFormat('ru-RU', precision === 'day' ? { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' } : { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
+  return new Intl.DateTimeFormat('ru-RU', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
 }
 
 function periodLabel(item: CareerEngagement) {
