@@ -526,10 +526,33 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
 .career-resume-panel { display: flex; align-items: center; justify-content: space-between; gap: 30px; margin-top: 80px; padding: 32px; border-radius: 16px; color: #fff; background: linear-gradient(135deg, #102c48, #0d2034); }.career-resume-panel h2 { margin: 0; font-size: 28px; }.career-resume-panel p:not(.eyebrow) { margin: 8px 0 0; color: #9db0c4; font-size: 12px; }.career-resume-panel .career-actions { margin: 0; }
 .project-career-section { margin-top: 16px; padding: 25px; border: 1px solid #dfe7ef; border-radius: 14px; background: #fff; }.project-career-heading h2 { margin: 0; font-size: 24px; }.project-career-heading > p:last-child { color: #718095; font-size: 12px; }.project-career-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 18px; }.project-career-card { padding: 18px; border: 1px solid #e1e8ef; border-radius: 11px; }.project-career-card > div:first-child { display: flex; gap: 11px; }.project-career-mark { display: grid; flex: none; place-items: center; width: 42px; height: 42px; border-radius: 9px; color: #1767ef; background: #edf4ff; font-size: 11px; font-weight: 900; }.project-career-card small, .project-career-card h3, .project-career-card time { display: block; margin: 0; }.project-career-card small { color: #1766df; font-size: 9px; font-weight: 800; }.project-career-card h3 { margin: 3px 0; font-size: 16px; }.project-career-card time { color: #7c8999; font-size: 9px; }.project-career-card p, .project-career-card li { color: #5b6a7b; font-size: 11px; line-height: 1.55; }.project-career-card > a { display: inline-flex; align-items: center; gap: 7px; color: #1767ef; font-size: 11px; font-weight: 800; }.project-career-card > a svg { width: 14px; }
 
+/* Career typography follows the same readable scale as Projects and About. */
+.career-hero-copy h1 { font-size: clamp(52px, 5vw, 72px); }
+.career-hero-copy h2 { font-size: clamp(20px, 2vw, 28px); }
+.career-view-switch button strong { font-size: 13px; }.career-view-switch button small { font-size: 10px; }
+.career-section-heading h2 { font-size: clamp(28px, 3vw, 38px); }.career-section-heading > p:last-child { font-size: 15px; }
+.engagement-head p { font-size: 12px; }.engagement-head h3 { font-size: 23px; }.engagement-head span { font-size: 12px; }.engagement-head > b { font-size: 10px; }
+.engagement-summary { font-size: 15px; }.engagement-columns h4, .career-projects h4 { font-size: 13px; }.engagement-columns ul { font-size: 13px; }
+.career-tags span { font-size: 11px; }.career-project-card strong { font-size: 14px; }.career-project-card small, .career-project-card em { font-size: 11px; }
+.career-key-facts span { font-size: 10px; }.career-key-facts strong { font-size: 13px; }
+.organization-head h3 { font-size: 23px; }.organization-head span { font-size: 12px; }.organization-card > p { font-size: 14px; }
+.organization-summary strong { font-size: 16px; }.organization-summary span { font-size: 11px; }.organization-facts > span { font-size: 12px; }.organization-facts small { font-size: 10px; }
+.organization-roles h4 { font-size: 12px; }.organization-roles strong { font-size: 14px; }.organization-roles small { font-size: 11px; }.organization-roles em { font-size: 10px; }
+.organization-meta span, .organization-meta a { font-size: 12px; }.career-resume-panel p:not(.eyebrow) { font-size: 14px; }
+
 @media (max-width: 1000px) {
   .career-stats { grid-template-columns: repeat(3, 1fr); }.career-hero { min-height: 620px; }
   .career-view-switch { align-items: stretch; flex-direction: column; margin-top: -82px; }.career-view-switch > div:last-child { width: 100%; }.career-view-switch button { flex: 1; min-width: 0; }
   .engagement-columns { grid-template-columns: 1fr 1fr; }.career-projects > div { grid-template-columns: 1fr; }
+}
+@media (min-width: 1600px) {
+  .career-hero { min-height: 600px; padding-inline: 80px; }.career-hero-copy h1 { font-size: 76px; }.career-hero-copy h2 { font-size: 30px; }.career-hero-copy > p:last-of-type { font-size: 18px; }
+  .career-stats { right: 80px; left: 80px; }.career-stats > div { min-height: 104px; padding: 21px 23px; }.career-stats strong { font-size: 32px; }.career-stats span { font-size: 13px; }
+  .career-content { padding-inline: 80px; }.career-section-heading h2 { font-size: 40px; }.career-section-heading > p:last-child { font-size: 16px; }
+  .engagement-main { padding: 30px 32px; }.engagement-head h3 { font-size: 28px; }.engagement-head p, .engagement-head span { font-size: 14px; }.engagement-head > b { font-size: 12px; }
+  .engagement-summary { font-size: 17px; }.engagement-columns h4, .career-projects h4 { font-size: 15px; }.engagement-columns ul { font-size: 15px; }.career-tags span { font-size: 13px; }
+  .career-project-card strong { font-size: 16px; }.career-project-card small, .career-project-card em { font-size: 13px; }
+  .organization-head h3 { font-size: 27px; }.organization-head span { font-size: 14px; }.organization-card > p { font-size: 16px; }.organization-roles strong { font-size: 16px; }.organization-roles small { font-size: 13px; }
 }
 @media (max-width: 767px) {
   .career-hero { min-height: 760px; padding: 82px 20px 28px; }.career-hero::after { display: none; }.career-hero-copy h1 { font-size: 52px; }.career-hero-copy h2 { font-size: 24px; }
