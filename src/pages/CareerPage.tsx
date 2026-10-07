@@ -143,7 +143,7 @@ function EngagementCard({ engagement, organization, assignments, projectMap, sel
     <div className="engagement-rail"><i /><span /></div>
     <div className="engagement-main">
       {engagement.transitionFrom && <div className="position-transition"><Icon name="arrow" /><div><strong>{engagement.transitionFrom.title}</strong><span>{dateLabel(engagement.transitionFrom.date, engagement.datePrecision)}</span>{engagement.transitionFrom.description && <p>{engagement.transitionFrom.description}</p>}</div></div>}
-      <div className="engagement-head"><OrganizationMark organization={organization} /><div><p>{organization?.name || engagement.organizationId}</p><h3>{engagement.title}</h3><span>{periodLabel(engagement)} · {durationLabel(months)}</span></div><b>{employmentNames[engagement.employmentType] || engagement.employmentType}</b></div>
+      <div className="engagement-head"><OrganizationMark organization={organization} /><div><p>{organization?.name || engagement.organizationId}</p><h3>{engagement.title}</h3><div className="engagement-period"><Icon name="calendar" /><span>{periodLabel(engagement)}</span><i aria-hidden="true" /><strong>{durationLabel(months)}</strong></div></div><b>{employmentNames[engagement.employmentType] || engagement.employmentType}</b></div>
       <p className="engagement-summary">{engagement.summary}</p>
       <div className="engagement-columns">
         <CareerList title="Обязанности" items={engagement.responsibilities} />

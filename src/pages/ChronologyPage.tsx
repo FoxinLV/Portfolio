@@ -45,14 +45,36 @@ export function ChronologyPage() {
     return () => { document.title = 'Виталий Лифанов — Проекты'; };
   }, []);
 
+  const technologyCount = uniqueTechnologies(projects).length;
+  const period = years.length > 1 ? `${years.at(-1)?.year} — ${years[0]?.year}` : years[0]?.year || '—';
+
   return <div className="page chronology-page">
     <header className="chronology-hero">
-      <p className="eyebrow eyebrow--dark">Портфолио по годам</p>
-      <h1>Хронология проектов</h1>
-      <p>Проекты, типы систем и ключевые технологии в разрезе каждого года.</p>
+      <div className="chronology-hero-grid" aria-hidden="true" />
+      <div className="chronology-hero-copy">
+        <p className="eyebrow">Портфолио во времени</p>
+        <h1>Хронология<br /><span>проектов</span><i>.</i></h1>
+        <p>Профессиональный путь через реализованные системы, направления и технологии — от первых проектов к актуальным.</p>
+        <div className="chronology-hero-actions">
+          <a className="button button--primary" href="#chronology-content">Смотреть по годам <Icon name="arrow" /></a>
+          <Link to="/projects">Все проекты <Icon name="external" /></Link>
+        </div>
+      </div>
+      {years.length > 0 && <div className="chronology-year-cloud" aria-hidden="true">
+        <span className="chronology-year-line" />
+        {years.slice(0, 4).map((item, index) => <div key={item.year} style={{ '--year-index': index } as React.CSSProperties}>
+          <i /><strong>{item.year}</strong><small>{item.projects.length} проект{item.projects.length === 1 ? '' : item.projects.length < 5 ? 'а' : 'ов'}</small>
+        </div>)}
+      </div>}
+      <div className="chronology-hero-stats">
+        <article><Icon name="projects" /><div><strong>{projectsLoading ? '—' : projects.length}</strong><span>проектов в портфолио</span></div></article>
+        <article><Icon name="timeline" /><div><strong>{projectsLoading ? '—' : years.length}</strong><span>активных лет</span></div></article>
+        <article><Icon name="gear" /><div><strong>{projectsLoading ? '—' : technologyCount}</strong><span>технологий</span></div></article>
+        <article><Icon name="calendar" /><div><strong>{projectsLoading ? '—' : period}</strong><span>период проектов</span></div></article>
+      </div>
     </header>
 
-    <section className="chronology-content" aria-live="polite">
+    <section className="chronology-content" id="chronology-content" aria-live="polite">
       {projectsLoading && <Loader cards={3} />}
       {!projectsLoading && projectsError && <ErrorState title="Не удалось загрузить хронологию" message="Данные проектов сейчас недоступны." onRetry={retryProjects} />}
       {!projectsLoading && !projectsError && years.length === 0 && <div className="state-card"><span className="state-code">0</span><h2>Проекты пока не добавлены</h2></div>}
