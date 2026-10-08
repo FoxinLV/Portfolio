@@ -109,6 +109,11 @@ export function CareerPage() {
         <div role="group"><button type="button" className={activeView === 'timeline' ? 'active' : ''} aria-pressed={activeView === 'timeline'} onClick={() => setView('timeline')}><Icon name="career" /><span><strong>По должностям</strong><small>От новых к старым</small></span></button><button type="button" className={activeView === 'organizations' ? 'active' : ''} aria-pressed={activeView === 'organizations'} onClick={() => setView('organizations')}><Icon name="projects" /><span><strong>По компаниям</strong><small>Все роли вместе</small></span></button></div>
       </nav>
 
+      <section className="career-section career-gantt-section">
+        <div className="career-section-heading"><p className="eyebrow eyebrow--dark">Диаграмма Ганта</p><h2>Карьера во времени</h2><p>Продолжительность должностей и пересечения параллельной работы на одной временной шкале. Нажмите на строку, чтобы открыть подробности роли.</p></div>
+        <CareerGantt engagements={engagements} organizationMap={organizationMap} />
+      </section>
+
       {activeView === 'timeline' && <section className="career-section">
         <div className="career-section-heading"><p className="eyebrow eyebrow--dark">Хронология</p><h2>Профессиональный путь</h2><p>Параллельные роли показаны независимо, а общий стаж не суммирует пересекающиеся периоды дважды.</p></div>
         <div className="career-timeline">{engagements.map((engagement) => <EngagementCard key={engagement.id} engagement={engagement} organization={organizationMap.get(engagement.organizationId)} assignments={assignmentMap.get(engagement.id) ?? []} projectMap={projectMap} selected={selected === engagement.id} />)}</div>
@@ -138,22 +143,81 @@ function ResumeActions({ career }: { career: NonNullable<ReturnType<typeof usePo
   </div>;
 }
 
+function CareerGantt({ engagements, organizationMap }: { engagements: CareerEngagement[]; organizationMap: Map<string, CareerOrganization> }) {
+  if (!engagements.length) return null;
+  const now = new Date();
+  const currentMonth = now.getFullYear() * 12 + now.getMonth();
+  const start = Math.min(...engagements.map((item) => monthIndex(item.startDate)));
+  const end = Math.max(...engagements.map((item) => item.endDate ? monthIndex(item.endDate) : currentMonth));
+  const total = Math.max(1, end - start + 1);
+  const firstYear = Math.floor(start / 12);
+  const lastYear = Math.floor(end / 12);
+  const years = Array.from({ length: lastYear - firstYear + 1 }, (_, index) => {
+    const year = firstYear + index;
+    const segmentStart = Math.max(start, year * 12);
+    const segmentEnd = Math.min(end, year * 12 + 11);
+    return {
+      year,
+      left: ((segmentStart - start) / total) * 100,
+      width: ((segmentEnd - segmentStart + 1) / total) * 100
+    };
+  });
+
+  return <div className="career-gantt-shell">
+    <div className="career-gantt-scroll" tabIndex={0} aria-label="Диаграмма карьерных периодов. На узком экране прокручивается по горизонтали.">
+      <div className="career-gantt">
+        <div className="career-gantt-header"><strong>Должность и компания</strong><div className="career-gantt-scale">{years.map((item) => <span key={item.year} style={{ left: `${item.left}%`, width: `${item.width}%` }}>{item.year}</span>)}</div></div>
+        <div className="career-gantt-rows">{engagements.map((engagement) => {
+          const roleStart = monthIndex(engagement.startDate);
+          const roleEnd = engagement.endDate ? monthIndex(engagement.endDate) : currentMonth;
+          const organization = organizationMap.get(engagement.organizationId);
+          const left = ((roleStart - start) / total) * 100;
+          const width = Math.max(1.4, ((roleEnd - roleStart + 1) / total) * 100);
+          return <Link className="career-gantt-row" to={`/career?engagement=${encodeURIComponent(engagement.id)}`} key={engagement.id} style={{ '--career-accent': engagement.accentColor || '#1768f2' } as React.CSSProperties}>
+            <span className="career-gantt-label"><strong>{engagement.title}</strong><span>{organization?.name || engagement.organizationId}</span><small>{periodLabel(engagement)} · {durationLabel(monthsInUnion([engagement]))}</small></span>
+            <span className="career-gantt-track">
+              {years.slice(1).map((item) => <i aria-hidden="true" key={item.year} style={{ left: `${item.left}%` }} />)}
+              <b style={{ left: `${left}%`, width: `${width}%` }}><span>{engagement.endDate ? durationLabel(monthsInUnion([engagement])) : 'Сейчас'}</span></b>
+            </span>
+          </Link>;
+        })}</div>
+      </div>
+    </div>
+    <p className="career-gantt-hint"><Icon name="timeline" />На узком экране диаграмму можно прокручивать по горизонтали</p>
+  </div>;
+}
+
 function EngagementCard({ engagement, organization, assignments, projectMap, selected }: { engagement: CareerEngagement; organization?: CareerOrganization; assignments: CareerProjectAssignment[]; projectMap: Map<string, Project>; selected: boolean }) {
   const months = monthsInUnion([engagement]);
+  const [expanded, setExpanded] = useState(selected);
+  const detailsId = `career-details-${engagement.id}`;
+  const hasDetails = Boolean(
+    engagement.transitionFrom || engagement.responsibilities?.length || engagement.activities?.length ||
+    engagement.achievements?.length || engagement.technologies?.length || engagement.skills?.length ||
+    assignments.length || engagement.keyFacts?.length
+  );
+
+  useEffect(() => {
+    if (selected) setExpanded(true);
+  }, [selected]);
+
   return <article id={`career-${engagement.id}`} className={`engagement-card ${selected ? 'engagement-card--selected' : ''}`} tabIndex={-1} style={{ '--career-accent': engagement.accentColor || '#1768f2' } as React.CSSProperties}>
     <div className="engagement-rail"><i /><span /></div>
     <div className="engagement-main">
-      {engagement.transitionFrom && <div className="position-transition"><Icon name="arrow" /><div><strong>{engagement.transitionFrom.title}</strong><span>{dateLabel(engagement.transitionFrom.date, engagement.datePrecision)}</span>{engagement.transitionFrom.description && <p>{engagement.transitionFrom.description}</p>}</div></div>}
       <div className="engagement-head"><OrganizationMark organization={organization} /><div><p>{organization?.name || engagement.organizationId}</p><h3>{engagement.title}</h3><div className="engagement-period"><Icon name="calendar" /><span>{periodLabel(engagement)}</span><i aria-hidden="true" /><strong>{durationLabel(months)}</strong></div></div><b>{employmentNames[engagement.employmentType] || engagement.employmentType}</b></div>
       <p className="engagement-summary">{engagement.summary}</p>
-      <div className="engagement-columns">
-        <CareerList title="Обязанности" items={engagement.responsibilities} />
-        <CareerList title="Что делал" items={engagement.activities} />
-        <CareerList title="Результаты" items={engagement.achievements} />
-      </div>
-      {Boolean(engagement.technologies?.length || engagement.skills?.length) && <div className="career-tags">{[...(engagement.technologies ?? []), ...(engagement.skills ?? [])].filter((item, index, list) => list.indexOf(item) === index).map((item) => <span key={item}>{item}</span>)}</div>}
-      {assignments.length > 0 && <div className="career-projects"><h4>Проекты в этой роли</h4><div>{assignments.map((assignment) => { const project = projectMap.get(assignment.projectId); return project ? <CareerProject key={assignment.id} assignment={assignment} project={project} /> : null; })}</div></div>}
-      {engagement.keyFacts?.length ? <div className="career-key-facts">{engagement.keyFacts.map((fact) => <div key={`${fact.label}-${fact.value}`}><span>{fact.label}</span><strong>{fact.value}</strong></div>)}</div> : null}
+      {hasDetails && <button className="engagement-toggle" type="button" aria-expanded={expanded} aria-controls={detailsId} onClick={() => setExpanded((value) => !value)}><span>{expanded ? 'Скрыть подробности' : 'Показать всю информацию'}</span><Icon name="arrow" /></button>}
+      {hasDetails && expanded && <div className="engagement-details" id={detailsId}>
+        {engagement.transitionFrom && <div className="position-transition"><Icon name="arrow" /><div><strong>{engagement.transitionFrom.title}</strong><span>{dateLabel(engagement.transitionFrom.date, engagement.datePrecision)}</span>{engagement.transitionFrom.description && <p>{engagement.transitionFrom.description}</p>}</div></div>}
+        <div className="engagement-columns">
+          <CareerList title="Обязанности" items={engagement.responsibilities} />
+          <CareerList title="Что делал" items={engagement.activities} />
+          <CareerList title="Результаты" items={engagement.achievements} />
+        </div>
+        {Boolean(engagement.technologies?.length || engagement.skills?.length) && <div className="career-tags">{[...(engagement.technologies ?? []), ...(engagement.skills ?? [])].filter((item, index, list) => list.indexOf(item) === index).map((item) => <span key={item}>{item}</span>)}</div>}
+        {assignments.length > 0 && <div className="career-projects"><h4>Проекты в этой роли</h4><div>{assignments.map((assignment) => { const project = projectMap.get(assignment.projectId); return project ? <CareerProject key={assignment.id} assignment={assignment} project={project} /> : null; })}</div></div>}
+        {engagement.keyFacts?.length ? <div className="career-key-facts">{engagement.keyFacts.map((fact) => <div key={`${fact.label}-${fact.value}`}><span>{fact.label}</span><strong>{fact.value}</strong></div>)}</div> : null}
+      </div>}
     </div>
   </article>;
 }
