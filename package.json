@@ -11,13 +11,15 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "typescript": "latest",
+    "pdfmake": "^0.2.20",
     "react": "latest",
     "react-dom": "latest",
-    "react-router-dom": "latest"
+    "react-router-dom": "latest",
+    "typescript": "latest",
+    "vite": "latest"
   },
   "devDependencies": {
+    "@types/pdfmake": "^0.2.11",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "vitest": "latest"

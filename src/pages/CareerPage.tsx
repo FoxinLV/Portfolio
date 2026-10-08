@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ErrorState, Loader } from '../components/Feedback';
 import { Icon } from '../components/Icon';
+import { ResumeDownloadButton } from '../components/ResumeDownloadButton';
 import { SmartImage } from '../components/SmartImage';
 import { usePortfolio } from '../context/PortfolioContext';
 import type { CareerEngagement, CareerOrganization, CareerProjectAssignment } from '../types/career';
@@ -118,7 +119,7 @@ export function CareerPage() {
         <div className="organization-grid">{career.organizations.map((organization) => <OrganizationCard key={organization.id} organization={organization} engagements={engagements.filter((item) => item.organizationId === organization.id)} assignmentMap={assignmentMap} />)}</div>
       </section>}
 
-      {(career.resume?.pdf?.enabled || career.resume?.hh?.enabled) && <section className="career-resume-panel"><div><p className="eyebrow">Резюме</p><h2>Полная версия профессионального опыта</h2><p>Актуальный PDF и профиль на hh.ru управляются через локальную систему портфолио.</p></div><ResumeActions career={career} /></section>}
+      <section className="career-resume-panel"><div><p className="eyebrow">Резюме</p><h2>Полная версия профессионального опыта</h2><p>PDF автоматически собирается из актуальных разделов «Обо мне», «Карьера» и «Образование».</p></div><ResumeActions career={career} /></section>
     </main>
   </div>;
 }
@@ -130,9 +131,9 @@ function CareerStat({ value, label }: { value: string; label: string }) {
 function ResumeActions({ career }: { career: NonNullable<ReturnType<typeof usePortfolio>['career']> }) {
   const pdf = career.resume?.pdf;
   const hh = career.resume?.hh;
-  if (!pdf?.enabled && !hh?.enabled) return null;
   return <div className="career-actions">
-    {pdf?.enabled && pdf.path && <a className="button button--primary" href={portfolioAssetUrl(pdf.path)} download={pdf.fileName}><Icon name="download" />{pdf.label || 'Скачать PDF-резюме'}</a>}
+    <ResumeDownloadButton />
+    {pdf?.enabled && pdf.path && <a className="career-action-secondary" href={portfolioAssetUrl(pdf.path)} download={pdf.fileName}><Icon name="file" />{pdf.label || 'Готовое PDF-резюме'}</a>}
     {hh?.enabled && /^https:\/\/(?:[a-z0-9-]+\.)*hh\.ru\//i.test(hh.url) && <a className="career-action-secondary" href={hh.url} target="_blank" rel="noopener noreferrer">{hh.label || 'Резюме на hh.ru'}<Icon name="external" /></a>}
   </div>;
 }

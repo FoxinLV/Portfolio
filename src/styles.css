@@ -501,6 +501,7 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
 .career-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 25px; }
 .career-actions .button, .career-action-secondary { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 17px; border-radius: 9px; font-size: 12px; font-weight: 800; }
 .career-actions svg { width: 17px; }
+.resume-download-button:disabled { opacity: .62; cursor: wait; }
 .career-action-secondary { border: 1px solid #69829d; color: #e4edf7; background: #ffffff0a; }
 .career-action-secondary:hover { border-color: #8bb8f1; background: #ffffff12; }
 .career-stats { position: absolute; z-index: 2; right: clamp(28px, 6vw, 80px); bottom: 34px; left: clamp(28px, 6vw, 80px); display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
