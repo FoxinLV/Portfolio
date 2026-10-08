@@ -1,18 +1,22 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
+import bundledTechnologyCatalog from '../../technology-catalog.s3.json';
 import { loadProjects } from '../services/projects.service';
 import { loadProfile } from '../services/profile.service';
 import { loadCareer } from '../services/career.service';
 import { loadEducation } from '../services/education.service';
+import { loadTechnologyCatalog } from '../services/technologies.service';
 import type { Career } from '../types/career';
 import type { Education } from '../types/education';
 import type { Project } from '../types/project';
 import type { Profile } from '../types/profile';
+import type { TechnologyCatalog } from '../types/technology';
 
 interface PortfolioState {
   projects: Project[];
   profile: Profile | null;
   career: Career | null;
   education: Education | null;
+  technologyCatalog: TechnologyCatalog | null;
   projectsLoading: boolean;
   profileLoading: boolean;
   careerLoading: boolean;
@@ -34,6 +38,7 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [career, setCareer] = useState<Career | null>(null);
   const [education, setEducation] = useState<Education | null>(null);
+  const [technologyCatalog, setTechnologyCatalog] = useState<TechnologyCatalog | null>(bundledTechnologyCatalog as TechnologyCatalog);
   const [projectsLoading, setProjectsLoading] = useState(true);
   const [profileLoading, setProfileLoading] = useState(true);
   const [careerLoading, setCareerLoading] = useState(true);
@@ -66,8 +71,13 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
       .finally(() => setEducationLoading(false));
   }, []);
 
-  useEffect(() => { retryProjects(); retryProfile(); retryCareer(); retryEducation(); }, [retryProjects, retryProfile, retryCareer, retryEducation]);
-  return <PortfolioContext.Provider value={{ projects, profile, career, education, projectsLoading, profileLoading, careerLoading, educationLoading, projectsError, profileError, careerError, educationError, retryProjects, retryProfile, retryCareer, retryEducation }}>{children}</PortfolioContext.Provider>;
+  useEffect(() => {
+    retryProjects(); retryProfile(); retryCareer(); retryEducation();
+    loadTechnologyCatalog().then(setTechnologyCatalog).catch((error: unknown) => {
+      if (import.meta.env.DEV) console.warn('Справочник технологий недоступен, используется резервный вывод.', error);
+    });
+  }, [retryProjects, retryProfile, retryCareer, retryEducation]);
+  return <PortfolioContext.Provider value={{ projects, profile, career, education, technologyCatalog, projectsLoading, profileLoading, careerLoading, educationLoading, projectsError, profileError, careerError, educationError, retryProjects, retryProfile, retryCareer, retryEducation }}>{children}</PortfolioContext.Provider>;
 }
 
 export function usePortfolio() {

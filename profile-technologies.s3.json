@@ -1,94 +1,158 @@
 [
   {
-    "category": "Frontend",
+    "category": "Фронтенд",
     "items": [
-      { "name": "React", "icon": "icons/react-original.svg" },
-      { "name": "Next.js", "icon": "icons/nextjs-original.svg" },
-      { "name": "TypeScript", "icon": "icons/typescript-original.svg" },
-      { "name": "JavaScript", "icon": "icons/javascript-original.svg" },
-      { "name": "HTML", "icon": "icons/html5-original.svg" },
-      { "name": "CSS", "icon": "icons/css3-original.svg" }
+      { "id": "javascript", "name": "JavaScript", "icon": "icons/javascript-original.svg" },
+      { "id": "typescript", "name": "TypeScript", "icon": "icons/typescript-original.svg" },
+      { "id": "html", "name": "HTML", "icon": "icons/html5-original.svg" },
+      { "id": "css", "name": "CSS", "icon": "icons/css3-original.svg" },
+      { "id": "react", "name": "React", "icon": "icons/react-original.svg" },
+      { "id": "next-js", "name": "Next.js", "icon": "icons/nextjs-original.svg" },
+      { "id": "next-js-14", "name": "Next.js 14", "icon": "icons/nextjs-original.svg" },
+      { "id": "react-router", "name": "React Router", "icon": "icons/react-original.svg" },
+      { "id": "tailwind-css", "name": "Tailwind CSS", "icon": "icons/tailwindcss-original.svg" },
+      { "id": "jquery", "name": "jQuery", "icon": "icons/jquery-original.svg" },
+      { "id": "ejs", "name": "EJS", "icon": "icons/javascript-original.svg" },
+      { "id": "vite", "name": "Vite", "icon": "icons/vitejs-original.svg" },
+      { "id": "wordpress", "name": "WordPress", "icon": "icons/wordpress-original.svg" }
     ]
   },
   {
-    "category": "Backend",
+    "category": "Бэкенд",
     "items": [
-      { "name": "NestJS", "icon": "icons/nestjs-original.svg" },
-      { "name": "Node.js", "icon": "icons/nodejs-original.svg" },
-      { "name": "Python", "icon": "icons/python.svg" }
+      { "id": "python", "name": "Python", "icon": "icons/python.svg" },
+      { "id": "node-js", "name": "Node.js", "icon": "icons/nodejs-original.svg" },
+      { "id": "nestjs", "name": "NestJS", "icon": "icons/nestjs-original.svg" },
+      { "id": "express", "name": "Express", "icon": "icons/express-original.svg" },
+      { "id": "flask", "name": "Flask", "icon": "icons/python.svg" },
+      { "id": "fastapi", "name": "FastAPI", "icon": "icons/python.svg" },
+      { "id": "typeorm", "name": "TypeORM", "icon": "icons/typeorm.svg" },
+      { "id": "socket-io", "name": "Socket.IO", "icon": "icons/socketio-original.svg" },
+      { "id": "jwt", "name": "JWT", "icon": "icons/jwt-original.svg" },
+      { "id": "oauth", "name": "OAuth", "icon": "icons/oauth-original.svg" },
+      { "id": "helmet", "name": "Helmet", "icon": "icons/nodejs-original.svg" },
+      { "id": "zod", "name": "Zod", "icon": "icons/typescript-original.svg" },
+      { "id": "requests", "name": "Requests", "icon": "icons/python.svg" },
+      { "id": "sharp", "name": "Sharp", "icon": "icons/nodejs-original.svg" }
     ]
   },
   {
     "category": "Базы данных",
     "items": [
-      { "name": "PostgreSQL", "icon": "icons/postgresql-original.svg" },
-      { "name": "ClickHouse", "icon": "icons/clickhouse-original.svg" },
-      { "name": "Redis", "icon": "icons/redis-original.svg" },
-      { "name": "SQL", "icon": "https://api.iconify.design/mdi:database.svg" }
+      { "id": "postgresql", "name": "PostgreSQL", "icon": "icons/postgresql-original.svg" },
+      { "id": "clickhouse", "name": "ClickHouse", "icon": "icons/clickhouse-original.svg" },
+      { "id": "sqlite", "name": "SQLite", "icon": "icons/sqlite-original.svg" }
     ]
   },
   {
     "category": "Аналитика и BI",
     "items": [
-      { "name": "Yandex DataLens", "icon": "icons/yandex-cloud.svg" },
-      { "name": "Chart Editor", "icon": "https://api.iconify.design/mdi:chart-box.svg" },
-      { "name": "D3.js", "icon": "icons/d3js-original.svg" },
-      { "name": "Обработка и визуализация данных", "icon": "https://api.iconify.design/mdi:chart-areaspline.svg" }
+      { "id": "yandex-datalens", "name": "Yandex DataLens", "icon": "icons/yandex-cloud.svg" },
+      { "id": "chart-wizard", "name": "Chart Wizard", "icon": "icons/yandex-cloud.svg" },
+      { "id": "datalens-editor", "name": "DataLens Editor", "icon": "icons/javascript-original.svg" },
+      { "id": "ql-charts", "name": "QL Charts", "icon": "icons/yandex-cloud.svg" }
     ]
   },
   {
-    "category": "Инфраструктура",
+    "category": "Офисная автоматизация",
     "items": [
-      { "name": "Docker", "icon": "icons/docker-original.svg" },
-      { "name": "Docker Compose", "icon": "icons/docker-original.svg" },
-      { "name": "Nginx", "icon": "icons/nginx-original.svg" },
-      { "name": "Linux", "icon": "icons/linux-original.svg" },
-      { "name": "Ubuntu", "icon": "icons/ubuntu-original.svg" }
+      { "id": "google-apps-script", "name": "Google Apps Script", "icon": "icons/google.svg" },
+      { "id": "google-sheets", "name": "Google Sheets", "icon": "icons/google.svg" },
+      { "id": "google-slides", "name": "Google Slides", "icon": "icons/google.svg" },
+      { "id": "microsoft-excel", "name": "Microsoft Excel", "icon": "icons/excel.svg" },
+      { "id": "excel", "name": "Excel", "icon": "icons/excel.svg" },
+      { "id": "excel-algorithms", "name": "Excel Algorithms", "icon": "icons/excel.svg" },
+      { "id": "power-query", "name": "Power Query", "icon": "icons/excel.svg" },
+      { "id": "openpyxl", "name": "openpyxl", "icon": "icons/python.svg" },
+      { "id": "sheetjs", "name": "SheetJS", "icon": "icons/javascript-original.svg" },
+      { "id": "microsoft-word", "name": "Microsoft Word", "icon": "icons/word.svg" },
+      { "id": "vba", "name": "VBA", "icon": "icons/vba.png" },
+      { "id": "visual-basic-for-applications", "name": "Visual Basic for Applications", "icon": "icons/visualbasic-original.svg" },
+      { "id": "xlsm", "name": "XLSM", "icon": "icons/excel.svg" }
     ]
   },
   {
-    "category": "Cloud",
+    "category": "Искусственный интеллект и ML",
     "items": [
-      { "name": "Yandex Cloud", "icon": "icons/yandex-cloud.svg" },
-      { "name": "Object Storage S3", "icon": "icons/yandex-cloud.svg" },
-      { "name": "Yandex Functions", "icon": "icons/yandex-cloud.svg" },
-      { "name": "Compute Cloud", "icon": "icons/yandex-cloud.svg" }
+      { "id": "ollama", "name": "Ollama", "icon": "icons/ollama.webp" },
+      { "id": "faster-whisper", "name": "faster-whisper", "icon": "icons/python.svg" },
+      { "id": "agent-skills", "name": "Agent Skills", "icon": "icons/ai.png" }
     ]
   },
   {
-    "category": "DevOps",
+    "category": "Настольная и системная разработка",
     "items": [
-      { "name": "Git", "icon": "icons/git-original.svg" },
-      { "name": "GitHub", "icon": "icons/github-original.svg" },
-      { "name": "GitHub Actions", "icon": "icons/githubactions-original.svg" },
-      { "name": "CI/CD", "icon": "icons/githubactions-original.svg" }
+      { "id": "pyside6", "name": "PySide6", "icon": "icons/qt-original.svg" },
+      { "id": "pyinstaller", "name": "PyInstaller", "icon": "icons/python.svg" },
+      { "id": "tkinter", "name": "Tkinter", "icon": "icons/python.svg" },
+      { "id": "tauri-2", "name": "Tauri 2", "icon": "icons/tauri.svg" },
+      { "id": "rust", "name": "Rust", "icon": "icons/rust-original.svg" }
     ]
   },
   {
-    "category": "Мобильная разработка",
+    "category": "Встроенные системы и IoT",
     "items": [
-      { "name": "Android", "icon": "icons/android-original.svg" },
-      { "name": "Локальные базы данных", "icon": "icons/sqlite-original.svg" },
-      { "name": "Offline-first архитектура", "icon": "https://api.iconify.design/mdi:cloud-off-outline.svg" },
-      { "name": "Синхронизация данных", "icon": "https://api.iconify.design/mdi:sync.svg" }
+      { "id": "arduino", "name": "Arduino", "icon": "icons/arduino-original.svg" },
+      { "id": "cpp", "name": "C++", "icon": "icons/cplusplus-original.svg" }
     ]
   },
   {
-    "category": "Интеграции",
+    "category": "Игры и 3D",
     "items": [
-      { "name": "REST API", "icon": "icons/api.png" },
-      { "name": "Webhooks", "icon": "icons/api.png" },
-      { "name": "Telegram Bot API", "icon": "icons/telegram.svg" },
-      { "name": "Внешние API и сервисы", "icon": "icons/api.png" }
+      { "id": "unity", "name": "Unity", "icon": "icons/unity-original.svg" },
+      { "id": "csharp", "name": "C#", "icon": "icons/csharp-original.svg" },
+      { "id": "blender", "name": "Blender", "icon": "icons/blender-original.svg" },
+      { "id": "3d-modeling", "name": "3D-моделирование", "icon": "icons/blender-original.svg" },
+      { "id": "mobile-game-development", "name": "Mobile Game Development", "icon": "icons/unity-original.svg" }
     ]
   },
   {
-    "category": "Дополнительно",
+    "category": "Облако и инфраструктура",
     "items": [
-      { "name": "JWT", "icon": "icons/jwt-original.svg" },
-      { "name": "RBAC", "icon": "icons/oauth-original.svg" },
-      { "name": "SSL/TLS", "icon": "https://api.iconify.design/mdi:lock-check.svg" },
-      { "name": "Авторизация и управление доступом", "icon": "icons/oauth-original.svg" }
+      { "id": "docker", "name": "Docker", "icon": "icons/docker-original.svg" },
+      { "id": "nginx", "name": "Nginx", "icon": "icons/nginx-original.svg" },
+      { "id": "yandex-object-storage", "name": "Yandex Object Storage", "icon": "icons/yandex-cloud.svg" },
+      { "id": "yandex-object-storage-s3", "name": "Yandex Object Storage (S3)", "icon": "icons/yandex-cloud.svg" },
+      { "id": "yandex-cloud-functions", "name": "Yandex Cloud Functions", "icon": "icons/yandex-cloud.svg" },
+      { "id": "github-pages", "name": "GitHub Pages", "icon": "icons/github-original.svg" }
+    ]
+  },
+  {
+    "category": "DevOps и тестирование",
+    "items": [
+      { "id": "github-actions", "name": "GitHub Actions", "icon": "icons/github-original.svg" },
+      { "id": "vitest", "name": "Vitest", "icon": "icons/vitejs-original.svg" }
+    ]
+  },
+  {
+    "category": "Интеграции и протоколы",
+    "items": [
+      { "id": "telegram-bot-api", "name": "Telegram Bot API", "icon": "icons/telegram.svg" },
+      { "id": "telegram", "name": "Telegram", "icon": "icons/telegram.svg" },
+      { "id": "python-telegram-bot", "name": "python-telegram-bot", "icon": "icons/telegram.svg" },
+      { "id": "api", "name": "API", "icon": "icons/api.png" },
+      { "id": "api-bank-of-russia", "name": "API Банка России", "icon": "icons/api.png" },
+      { "id": "soap-api-cbr", "name": "SOAP API ЦБ РФ", "icon": "icons/api.png" },
+      { "id": "yandex-disk-rest-api", "name": "Yandex Disk REST API", "icon": "icons/api.png" },
+      { "id": "email", "name": "Email", "icon": "icons/email.png" },
+      { "id": "paramiko", "name": "Paramiko", "icon": "icons/python.svg" },
+      { "id": "tftp-tftpy", "name": "TFTP (tftpy)", "icon": "icons/python.svg" },
+      { "id": "aws-sdk-javascript", "name": "AWS SDK for JavaScript", "icon": "icons/aws-original.svg" },
+      { "id": "boto3", "name": "boto3", "icon": "icons/python.svg" }
+    ]
+  },
+  {
+    "category": "Форматы данных и документы",
+    "items": [
+      { "id": "json", "name": "JSON", "icon": "icons/json-original.svg" },
+      { "id": "csv", "name": "CSV", "icon": "icons/csv_8052754.png" },
+      { "id": "xml", "name": "XML", "icon": "icons/xml-original.svg" },
+      { "id": "yaml", "name": "YAML", "icon": "icons/yaml-original.svg" },
+      { "id": "kml", "name": "KML", "icon": "icons/xml-original.svg" },
+      { "id": "geojson", "name": "GeoJSON", "icon": "icons/json-original.svg" },
+      { "id": "markdown", "name": "Markdown", "icon": "icons/markdown-original.svg" },
+      { "id": "pdfplumber", "name": "pdfplumber", "icon": "icons/python.svg" },
+      { "id": "pymupdf", "name": "PyMuPDF", "icon": "icons/python.svg" }
     ]
   }
 ]

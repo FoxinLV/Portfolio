@@ -1,6 +1,6 @@
 export interface Specialization { id: string; title: string; description: string }
 export interface ProfileContacts { telegram?: string; github?: string; email?: string }
-export interface TechnologyItem { name: string; icon?: string; url?: string }
+export interface TechnologyItem { id?: string; name: string; icon?: string; url?: string }
 export interface TechnologyGroup { category: string; items: (string | TechnologyItem)[] }
 export interface Profile {
   schemaVersion: number;

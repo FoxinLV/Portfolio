@@ -5,11 +5,16 @@ import type { Project, ProjectTechnology } from '../types/project';
 import { technologyIconUrl, technologyValue } from './projectTechnology';
 import { projectAssetUrl } from './storageUrl';
 
+export interface ProjectPdfProgress {
+  message: string;
+  value: number;
+}
+
 interface ProjectPdfSource {
   projects: Project[];
   career: Career | null;
   profile: Profile | null;
-  onProgress?: (message: string) => void;
+  onProgress?: (progress: ProjectPdfProgress) => void;
 }
 
 interface CareerContext {
@@ -101,8 +106,7 @@ async function rasterize(url: string, icon = false): Promise<string | undefined>
   return assetCache.get(cacheKey)!;
 }
 
-async function loadAssets(project: Project, onProgress?: (message: string) => void): Promise<ProjectAssets> {
-  onProgress?.(`Подготавливаем изображения: ${project.title}`);
+async function loadAssets(project: Project): Promise<ProjectAssets> {
   const coverUrl = project.cover ? projectAssetUrl(project.storagePath, project.cover) : '';
   const galleryUrls = unique((project.gallery || []).map((path) => projectAssetUrl(project.storagePath, path))).filter((url) => url !== coverUrl);
   const cover = coverUrl ? await rasterize(coverUrl) : undefined;
@@ -277,12 +281,18 @@ export function buildProjectsPdfDefinition(source: Omit<ProjectPdfSource, 'onPro
 
 export async function downloadProjectsPdf(source: ProjectPdfSource) {
   const assets = new Map<string, ProjectAssets>();
-  for (const project of source.projects) assets.set(project.id, await loadAssets(project, source.onProgress));
-  source.onProgress?.('Собираем страницы PDF');
+  for (const [index, project] of source.projects.entries()) {
+    source.onProgress?.({ message: `Подготавливаем изображения: ${project.title}`, value: Math.round(8 + (index / source.projects.length) * 67) });
+    assets.set(project.id, await loadAssets(project));
+    source.onProgress?.({ message: `Обработано проектов: ${index + 1} из ${source.projects.length}`, value: Math.round(8 + ((index + 1) / source.projects.length) * 67) });
+  }
+  source.onProgress?.({ message: 'Собираем страницы PDF', value: 84 });
   const [pdfMakeModule, pdfFontsModule] = await Promise.all([import('pdfmake/build/pdfmake'), import('pdfmake/build/vfs_fonts')]);
   const pdfMake = pdfMakeModule.default;
   const fontFiles = pdfFontsModule.default as unknown as { vfs?: Record<string, string> } & Record<string, string>;
   pdfMake.vfs = fontFiles.vfs ?? fontFiles;
   const fileName = `Портфолио_проектов_${new Date().toISOString().slice(0, 10)}.pdf`;
+  source.onProgress?.({ message: 'Формируем файл для скачивания', value: 94 });
   await new Promise<void>((resolve) => pdfMake.createPdf(buildProjectsPdfDefinition(source, assets)).download(fileName, resolve));
+  source.onProgress?.({ message: 'PDF готов и скачивается', value: 100 });
 }

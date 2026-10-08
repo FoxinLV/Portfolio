@@ -7,9 +7,16 @@ import { usePortfolio } from '../context/PortfolioContext';
 import { EMPTY_FILTERS, type ProjectFilters } from '../types/project';
 import { shortDate } from '../utils/dates';
 import { applyFilters, groupByYear, statistics } from '../utils/projects';
-import { downloadProjectsPdf } from '../utils/projectsPdf';
+import { downloadProjectsPdf, type ProjectPdfProgress } from '../utils/projectsPdf';
 
 type ProjectsView = 'list' | 'grid' | 'timeline';
+
+function projectCountLabel(count: number) {
+  const modulo100 = count % 100;
+  const modulo10 = count % 10;
+  const noun = modulo100 >= 11 && modulo100 <= 14 ? 'проектов' : modulo10 === 1 ? 'проект' : modulo10 >= 2 && modulo10 <= 4 ? 'проекта' : 'проектов';
+  return `${count} ${noun}`;
+}
 
 export function ProjectsPage() {
   const { projects, projectsLoading, projectsError, retryProjects, career, profile } = usePortfolio();
@@ -18,7 +25,7 @@ export function ProjectsPage() {
   const [view, setView] = useState<ProjectsView>('list');
   const [pdfMode, setPdfMode] = useState(false);
   const [selectedProjects, setSelectedProjects] = useState<Set<string>>(() => new Set());
-  const [pdfProgress, setPdfProgress] = useState('');
+  const [pdfProgress, setPdfProgress] = useState<ProjectPdfProgress | null>(null);
   const [pdfError, setPdfError] = useState('');
   const careerFilters = useMemo(() => {
     const projectCompanies = new Map<string, string[]>();
@@ -54,17 +61,18 @@ export function ProjectsPage() {
     return next;
   });
   const selectFiltered = () => setSelectedProjects((current) => new Set([...current, ...filtered.map((project) => project.id)]));
-  const closePdfMode = () => { setPdfMode(false); setSelectedProjects(new Set()); setPdfError(''); setPdfProgress(''); };
+  const closePdfMode = () => { setPdfMode(false); setSelectedProjects(new Set()); setPdfError(''); setPdfProgress(null); };
   const exportPdf = async () => {
     if (!selected.length || pdfProgress) return;
     setPdfError('');
-    setPdfProgress('Подготавливаем данные');
+    setPdfProgress({ message: 'Подотавливаем данные', value: 4 });
     try {
       await downloadProjectsPdf({ projects: selected, career, profile, onProgress: setPdfProgress });
-      setPdfProgress('');
+      await new Promise((resolve) => window.setTimeout(resolve, 650));
+      setPdfProgress(null);
     } catch (error) {
       console.error(error);
-      setPdfProgress('');
+      setPdfProgress(null);
       setPdfError('Не удалось сформировать PDF. Проверьте доступ к изображениям и попробуйте ещё раз.');
     }
   };
@@ -101,7 +109,7 @@ export function ProjectsPage() {
         <button type="button" onClick={selectFiltered} disabled={!filtered.length || Boolean(pdfProgress)}>Выбрать показанные ({filtered.length})</button>
         <button type="button" onClick={() => setSelectedProjects(new Set())} disabled={!selected.length || Boolean(pdfProgress)}>Очистить</button>
         <button type="button" onClick={closePdfMode} disabled={Boolean(pdfProgress)}>Отмена</button>
-        <button className="button button--primary" type="button" onClick={exportPdf} disabled={!selected.length || Boolean(pdfProgress)} aria-busy={Boolean(pdfProgress)}><Icon name="download" />{pdfProgress || 'Скачать PDF'}</button>
+        <button className="button button--primary" type="button" onClick={exportPdf} disabled={!selected.length || Boolean(pdfProgress)} aria-busy={pdfProgress ? true : undefined}><Icon name="download" />Скачать PDF</button>
       </div>
       {pdfError && <p role="alert">{pdfError}</p>}
     </section>}
@@ -116,6 +124,15 @@ export function ProjectsPage() {
       </section>
       <Filters projects={projects} companies={careerFilters.companies} filters={filters} setFilters={setFilters} mobileOpen={mobileFilters} closeMobile={() => setMobileFilters(false)} />
     </div>
+    {pdfProgress && <div className="project-pdf-progress-backdrop" role="presentation">
+      <section className="project-pdf-progress-dialog" role="dialog" aria-modal="true" aria-labelledby="project-pdf-progress-title" aria-describedby="project-pdf-progress-message">
+        <span className="project-pdf-progress-icon"><Icon name={pdfProgress.value === 100 ? 'check' : 'file'} /></span>
+        <div className="project-pdf-progress-heading"><div><p>PDF-каталог</p><h2 id="project-pdf-progress-title">{pdfProgress.value === 100 ? 'Каталог готов' : 'Формируем каталог'}</h2></div><strong>{pdfProgress.value}%</strong></div>
+        <p id="project-pdf-progress-message" aria-live="polite">{pdfProgress.message}</p>
+        <div className="project-pdf-progress-track" role="progressbar" aria-label="Ход формирования PDF" aria-valuemin={0} aria-valuemax={100} aria-valuenow={pdfProgress.value}><i style={{ width: `${pdfProgress.value}%` }} /></div>
+        <small>{projectCountLabel(selected.length)} • окно закроется автоматически</small>
+      </section>
+    </div>}
   </div>;
 }
 

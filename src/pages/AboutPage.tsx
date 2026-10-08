@@ -5,11 +5,19 @@ import { SmartImage } from '../components/SmartImage';
 import { EXTERNAL_LINKS } from '../config/externalLinks';
 import { usePortfolio } from '../context/PortfolioContext';
 import type { TechnologyGroup, TechnologyItem } from '../types/profile';
+import type { TechnologyCatalog } from '../types/technology';
 import { portfolioAssetUrl } from '../utils/storageUrl';
 
 const workIcons = ['compass', 'database', 'chart', 'users'];
 
-function technologyGroups(items: string[] | TechnologyGroup[]): TechnologyGroup[] {
+function technologyGroups(items: string[] | TechnologyGroup[], catalog: TechnologyCatalog | null): TechnologyGroup[] {
+  if (catalog?.technologies.length) return [...catalog.categories]
+    .sort((first, second) => first.order - second.order)
+    .map((category) => ({
+      category: category.name,
+      items: catalog.technologies.filter((item) => item.category === category.id)
+        .sort((first, second) => first.order - second.order || first.name.localeCompare(second.name, 'ru'))
+    })).filter((group) => group.items.length);
   if (items.length === 0) return [];
   if (typeof items[0] !== 'string') return items as TechnologyGroup[];
 
@@ -42,7 +50,7 @@ function approachItems(value?: string) {
 }
 
 export function AboutPage() {
-  const { profile, profileLoading, profileError, retryProfile, projects } = usePortfolio();
+  const { profile, profileLoading, profileError, retryProfile, projects, technologyCatalog } = usePortfolio();
 
   useEffect(() => {
     document.title = 'Обо мне — Виталий Лифанов';
@@ -52,7 +60,7 @@ export function AboutPage() {
   if (profileLoading) return <div className="page about-page"><Loader cards={2} /></div>;
   if (profileError || !profile) return <div className="page about-page"><ErrorState title="Не удалось загрузить профиль" message={profileError === 'Адрес Object Storage не настроен' ? 'Укажите адрес Object Storage в переменной VITE_STORAGE_BASE_URL.' : 'Проверьте подключение и повторите попытку.'} onRetry={retryProfile} /></div>;
 
-  const technologies = technologyGroups(profile.technologies);
+  const technologies = technologyGroups(profile.technologies, technologyCatalog);
   const projectCount = projects.length;
   const principles = approachItems(profile.approach);
 
