@@ -31,6 +31,8 @@ describe('project PDF definition', () => {
     const documentText = JSON.stringify(definition.content);
 
     expect(documentText).toContain('1 проект');
+    expect(documentText).toContain('Оглавление');
+    expect(documentText).toContain('"tocItem":"projects"');
     expect(documentText).toContain('Тестовый проект');
     expect(documentText).toContain('Полное описание');
     expect(documentText).toContain('React');

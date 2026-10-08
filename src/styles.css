@@ -407,12 +407,12 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
 .chronology-year-cloud { position: absolute; z-index: 2; top: 72px; right: clamp(45px, 8vw, 130px); width: 330px; height: 255px; }.chronology-year-line { position: absolute; top: 16px; bottom: 12px; left: 54px; width: 2px; background: linear-gradient(#5fa2fa22, #74afffcc, #5fa2fa22); }.chronology-year-cloud > div { position: absolute; top: calc(var(--year-index) * 61px); left: calc(var(--year-index) * 13px); display: grid; grid-template-columns: 16px 72px 1fr; align-items: center; gap: 12px; min-width: 240px; padding: 10px 14px; border: 1px solid #77a4d747; border-radius: 10px; background: #0a2943d9; box-shadow: 0 12px 30px #04111f35; backdrop-filter: blur(8px); }.chronology-year-cloud i { z-index: 1; width: 11px; height: 11px; border: 3px solid #173f63; border-radius: 50%; background: #72afff; box-shadow: 0 0 0 2px #72afff; }.chronology-year-cloud strong { font-size: 18px; }.chronology-year-cloud small { color: #c2d2e1; font-size: 14px; font-weight: 650; }
 .chronology-hero-stats { position: absolute; z-index: 3; right: clamp(30px, 6vw, 80px); bottom: 34px; left: clamp(30px, 6vw, 80px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }.chronology-hero-stats article { display: flex; align-items: center; gap: 16px; min-width: 0; min-height: 96px; padding: 19px 21px; border: 1px solid #7594b45e; border-radius: 12px; background: #09253ddd; box-shadow: inset 0 1px #ffffff0d; }.chronology-hero-stats svg { flex: none; width: 25px; color: #68a8fc; }.chronology-hero-stats strong, .chronology-hero-stats span { display: block; }.chronology-hero-stats strong { overflow: hidden; font-size: 29px; letter-spacing: -.04em; text-overflow: ellipsis; white-space: nowrap; }.chronology-hero-stats span { margin-top: 5px; color: #aebfd0; font-size: 13px; line-height: 1.35; }
 .chronology-content { max-width: 1560px; margin: 0 auto; padding: 54px clamp(30px, 6vw, 80px) 80px; scroll-margin-top: 20px; }
-.chronology-table { overflow: hidden; border: 1px solid #dfe6ee; border-radius: 14px; background: #fff; box-shadow: 0 14px 40px #172b4309; }
+.chronology-table { overflow: visible; border: 1px solid #dfe6ee; border-radius: 14px; background: #fff; box-shadow: 0 14px 40px #172b4309; }
 .chronology-table-head, .chronology-row { display: grid; grid-template-columns: 110px minmax(240px, 1.2fr) minmax(180px, .8fr) minmax(260px, 1.3fr); }
-.chronology-table-head { color: #7d8998; background: #f3f6fa; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.chronology-table-head { border-radius: 14px 14px 0 0; color: #7d8998; background: #f3f6fa; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .chronology-table-head span { padding: 14px 18px; }
 .chronology-row { border-top: 1px solid #e6ebf1; }
-.chronology-row > h2 { position: sticky; top: 24px; align-self: start; margin: 0; padding: 22px 18px; color: #1767ef; background: #fff; font-size: 25px; line-height: 1; letter-spacing: -.04em; }
+.chronology-row > h2 { position: sticky; z-index: 5; top: 24px; align-self: start; margin: 0; padding: 22px 18px; color: #1767ef; background: #fff; box-shadow: 8px 0 18px #173b6210; font-size: 25px; line-height: 1; letter-spacing: -.04em; }
 .chronology-cell { min-width: 0; padding: 18px; border-left: 1px solid #edf0f4; }
 .chronology-projects { display: grid; align-content: start; gap: 6px; }
 .chronology-projects a { display: grid; grid-template-columns: 1fr 18px; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 8px; color: #26374a; font-size: 13px; font-weight: 700; line-height: 1.35; transition: .2s; }
@@ -438,14 +438,14 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
 @media (max-width: 900px) {
   .chronology-hero { min-height: 660px; padding: 76px 25px 170px; }.chronology-hero-copy h1 { font-size: 58px; }.chronology-hero-stats { right: 25px; bottom: 28px; left: 25px; grid-template-columns: repeat(2, minmax(0, 1fr)); }.chronology-content { padding: 34px 25px 60px; }
   .chronology-table-head { display: none; }.chronology-table { overflow: visible; border: 0; background: transparent; box-shadow: none; }
-  .chronology-row { display: grid; grid-template-columns: 92px 1fr; overflow: hidden; border: 1px solid #dfe6ee; border-radius: 12px; background: #fff; box-shadow: 0 10px 30px #172b4308; }
-  .chronology-row + .chronology-row { margin-top: 14px; }.chronology-row > h2 { grid-row: 1 / 4; padding: 22px 16px; }
+  .chronology-row { display: grid; grid-template-columns: 92px 1fr; overflow: visible; border: 1px solid #dfe6ee; border-radius: 12px; background: #fff; box-shadow: 0 10px 30px #172b4308; }
+  .chronology-row + .chronology-row { margin-top: 14px; }.chronology-row > h2 { top: 68px; grid-row: 1 / 4; padding: 22px 16px; border-radius: 11px 0 0 11px; }
   .chronology-cell { border-left: 1px solid #edf0f4; }.chronology-cell + .chronology-cell { border-top: 1px solid #edf0f4; }
   .chronology-cell::before { content: attr(data-label); display: block; margin-bottom: 10px; color: #8995a3; font-size: 9px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
 }
 @media (max-width: 560px) {
   .chronology-hero { min-height: 0; padding: 80px 20px 32px; }.chronology-hero-copy .eyebrow { font-size: 10px; }.chronology-hero-copy h1 { font-size: 46px; }.chronology-hero-copy > p:last-of-type { margin-top: 20px; font-size: 14px; }.chronology-hero-actions { align-items: stretch; flex-direction: column; gap: 13px; }.chronology-hero-actions .button { justify-content: center; width: 100%; font-size: 14px; }.chronology-hero-actions > a:last-child { justify-content: center; font-size: 14px; }.chronology-hero-stats { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 30px; }.chronology-hero-stats article { min-height: 88px; gap: 11px; padding: 14px; }.chronology-hero-stats svg { width: 21px; }.chronology-hero-stats strong { font-size: 24px; }.chronology-hero-stats span { font-size: 12px; }.chronology-content { padding-inline: 20px; }
-  .chronology-row { grid-template-columns: 1fr; }.chronology-row > h2 { position: static; grid-row: auto; padding: 17px 18px; border-bottom: 1px solid #edf0f4; background: #f5f8fc; }
+  .chronology-row { grid-template-columns: 1fr; }.chronology-row > h2 { position: sticky; top: 64px; grid-row: auto; padding: 15px 18px; border: 1px solid #dce6f1; border-radius: 10px; background: #f5f8fcf5; box-shadow: 0 8px 22px #183b5a1a; backdrop-filter: blur(8px); }
   .chronology-cell { padding: 16px 18px; border-left: 0; }.chronology-projects a { padding-inline: 0; }
 }
 @media (max-width: 380px) {

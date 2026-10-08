@@ -216,6 +216,21 @@ export function buildProjectsPdfDefinition(source: Omit<ProjectPdfSource, 'onPro
     ],
     margin: [0, 170, 0, 0],
     pageBreak: 'after'
+  }, {
+    toc: {
+      id: 'projects',
+      title: {
+        stack: [
+          { text: 'НАВИГАЦИЯ', style: 'coverKicker' },
+          { text: 'Оглавление', style: 'tocTitle', margin: [0, 12, 0, 7] },
+          { text: 'Нажмите на название, чтобы перейти к проекту.', style: 'tocHint', margin: [0, 0, 0, 24] }
+        ]
+      },
+      textMargin: [0, 0, 0, 11],
+      textStyle: 'tocEntry',
+      numberStyle: 'tocNumber'
+    },
+    pageBreak: 'after'
   }];
 
   sorted.forEach((project, projectIndex) => {
@@ -223,7 +238,7 @@ export function buildProjectsPdfDefinition(source: Omit<ProjectPdfSource, 'onPro
     const contexts = careerContexts(project.id, source.career);
     content.push(
       { text: `${String(projectIndex + 1).padStart(2, '0')} / ${String(sorted.length).padStart(2, '0')}  •  ${project.type.name.toLocaleUpperCase('ru-RU')}`, style: 'projectKicker', pageBreak: projectIndex ? 'before' : undefined },
-      { text: project.title, style: 'projectTitle', margin: [0, 8, 0, 5], tocItem: true },
+      { text: project.title, id: `project-${project.id}`, style: 'projectTitle', margin: [0, 8, 0, 5], tocItem: 'projects', tocStyle: 'tocEntry', tocNumberStyle: 'tocNumber', tocMargin: [0, 0, 0, 11] },
       { text: project.shortDescription, style: 'lead', margin: [0, 0, 0, 13] }
     );
     if (projectAssets.cover) content.push({ image: projectAssets.cover, fit: [515, 280], alignment: 'center', margin: [0, 0, 0, 13] });
@@ -257,6 +272,10 @@ export function buildProjectsPdfDefinition(source: Omit<ProjectPdfSource, 'onPro
       coverTitle: { fontSize: 39, bold: true, color: '#0e263e', lineHeight: 1.04 },
       coverAuthor: { fontSize: 17, bold: true, color: '#46627e' },
       coverMeta: { fontSize: 11, color: '#75879a' },
+      tocTitle: { fontSize: 31, bold: true, color: '#10263d', lineHeight: 1.05 },
+      tocHint: { fontSize: 10.5, color: '#71859a' },
+      tocEntry: { fontSize: 11.5, bold: true, color: '#24425f', lineHeight: 1.25 },
+      tocNumber: { fontSize: 10.5, bold: true, color: '#1768e8' },
       projectKicker: { fontSize: 8.5, bold: true, color: '#1768e8', characterSpacing: 1.2 },
       projectTitle: { fontSize: 25, bold: true, color: '#10263d', lineHeight: 1.08 },
       lead: { fontSize: 11.5, color: '#566b80', lineHeight: 1.35 },
