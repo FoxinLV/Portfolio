@@ -327,8 +327,8 @@ function CareerList({ title, items }: { title: string; items?: string[] }) {
 
 function CareerProject({ assignment, project }: { assignment: CareerProjectAssignment; project: Project }) {
   const cover = project.cover ? projectAssetUrl(project.storagePath, project.cover) : '';
-  return <Link className="career-project-card" to={`/projects/${project.id}`}>
-    {cover ? <SmartImage src={cover} alt="" /> : <span className="career-project-placeholder"><Icon name="projects" /></span>}
+  return <Link className={`career-project-card ${cover ? '' : 'career-project-card--without-cover'}`} to={`/projects/${project.id}`}>
+    {cover && <SmartImage src={cover} alt="" />}
     <span><strong>{project.title}</strong><small>{assignment.role || project.type.name}</small>{assignment.contribution && <em>{assignment.contribution}</em>}</span><Icon name="arrow" />
   </Link>;
 }
