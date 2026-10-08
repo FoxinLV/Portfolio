@@ -76,7 +76,27 @@ export function CareerPage() {
   if (!career) return <div className="page career-page"><div className="career-state state-card"><span className="state-code">…</span><h1>Карьерная история готовится</h1><p>Пока можно посмотреть реализованные проекты.</p><Link className="button button--primary" to="/projects">К проектам</Link></div></div>;
 
   const engagements = [...career.engagements].sort((a, b) => b.startDate.localeCompare(a.startDate) || (b.order ?? 0) - (a.order ?? 0));
-  const organizationMap = new Map(career.organizations.map((item) => [item.id, item]));
+  const organizations = [...career.organizations].sort((first, second) => {
+    const firstRoles = engagements.filter((item) => item.organizationId === first.id);
+    const secondRoles = engagements.filter((item) => item.organizationId === second.id);
+    const firstActive = firstRoles.some((item) => !item.endDate);
+    const secondActive = secondRoles.some((item) => !item.endDate);
+    if (firstActive !== secondActive) return secondActive ? 1 : -1;
+    const newestStart = (items: CareerEngagement[]) => items.reduce(
+      (latest, item) => item.startDate > latest ? item.startDate : latest,
+      '',
+    );
+    const latestEnd = (items: CareerEngagement[]) => items.reduce(
+      (latest, item) => item.endDate && item.endDate > latest ? item.endDate : latest,
+      '',
+    );
+    const byDate = firstActive && secondActive
+      ? newestStart(secondRoles).localeCompare(newestStart(firstRoles))
+      : latestEnd(secondRoles).localeCompare(latestEnd(firstRoles))
+        || newestStart(secondRoles).localeCompare(newestStart(firstRoles));
+    return byDate || (first.order ?? 0) - (second.order ?? 0) || first.name.localeCompare(second.name, 'ru');
+  });
+  const organizationMap = new Map(organizations.map((item) => [item.id, item]));
   const assignmentMap = new Map<string, CareerProjectAssignment[]>();
   for (const assignment of career.projectAssignments) assignmentMap.set(assignment.engagementId, [...(assignmentMap.get(assignment.engagementId) ?? []), assignment]);
   const linkedProjects = new Set(career.projectAssignments.filter((item) => projectMap.has(item.projectId)).map((item) => item.projectId));
@@ -96,7 +116,7 @@ export function CareerPage() {
       </div>
       <div className="career-stats">
         {career.settings.showExperienceSummary && <CareerStat value={experience} label="календарного опыта" />}
-        <CareerStat value={String(career.organizations.length)} label="организаций" />
+        <CareerStat value={String(organizations.length)} label="организаций" />
         <CareerStat value={String(engagements.length)} label="должностей и ролей" />
         <CareerStat value={String(linkedProjects.size)} label="связанных проектов" />
         {career.settings.showParallelWork && activeCount > 1 && <CareerStat value={String(activeCount)} label="активные роли сейчас" />}
@@ -121,7 +141,7 @@ export function CareerPage() {
 
       {activeView === 'organizations' && <section className="career-section career-organizations">
         <div className="career-section-heading"><p className="eyebrow eyebrow--dark">Компании</p><h2>Опыт по компаниям</h2><p>Должности, общий период и реализованные проекты собраны в одном месте.</p></div>
-        <div className="organization-grid">{career.organizations.map((organization) => <OrganizationCard key={organization.id} organization={organization} engagements={engagements.filter((item) => item.organizationId === organization.id)} assignmentMap={assignmentMap} />)}</div>
+        <div className="organization-grid">{organizations.map((organization) => <OrganizationCard key={organization.id} organization={organization} engagements={engagements.filter((item) => item.organizationId === organization.id)} assignmentMap={assignmentMap} />)}</div>
       </section>}
 
       <section className="career-resume-panel"><div><p className="eyebrow">Резюме</p><h2>Полная версия профессионального опыта</h2><p>PDF автоматически собирается из актуальных разделов «Обо мне», «Карьера» и «Образование».</p></div><ResumeActions career={career} /></section>
@@ -317,7 +337,7 @@ function OrganizationCard({ organization, engagements, assignmentMap }: { organi
   const projectCount = new Set(engagements.flatMap((item) => (assignmentMap.get(item.id) ?? []).map((assignment) => assignment.projectId))).size;
   return <article className="organization-card">
     <div className="organization-head"><OrganizationMark organization={organization} /><div><h3>{organization.name}</h3><span>{organization.industry?.name || organization.kind}</span></div></div>
-    {organization.description && <p>{organization.description}</p>}
+    {organization.description && <p className="organization-description">{organization.description}</p>}
     <div className={`organization-summary ${projectCount ? '' : 'organization-summary--without-projects'}`}><strong>{durationLabel(monthsInUnion(engagements))}</strong><span>в компании</span><strong>{engagements.length}</strong><span>должностей</span>{projectCount > 0 && <><strong>{projectCount}</strong><span>проектов</span></>}</div>
     {engagements.length > 0 && <div className="organization-roles"><h4>Должности</h4>{[...engagements].sort((a, b) => b.startDate.localeCompare(a.startDate)).map((engagement) => <Link key={engagement.id} to={`/career?engagement=${encodeURIComponent(engagement.id)}`}><span><strong>{engagement.title}</strong><small>{periodLabel(engagement)}</small></span>{engagement.transitionFrom && <em>Переход</em>}<Icon name="arrow" /></Link>)}</div>}
     {organization.facts?.length ? <div className="organization-facts">{organization.facts.map((fact) => <span key={fact.label}><small>{fact.label}</small>{fact.value}</span>)}</div> : null}
