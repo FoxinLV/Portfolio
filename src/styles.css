@@ -683,4 +683,5 @@ a.technology-chip:hover { border-color: #76a4ff; transform: translateY(-1px); }
   .projects-page .mobile-project-date { display: inline-flex; grid-column: 2; align-items: center; justify-self: start; gap: 6px; margin: 0 0 8px; padding: 5px 9px; border: 1px solid #d5e2f1; border-radius: 7px; color: #58708a; background: #fff; box-shadow: 0 4px 12px #173b6210; font-size: 11px; font-weight: 750; line-height: 1; }
   .projects-page .mobile-project-date svg { width: 13px; height: 13px; color: #1768e8; }
   .projects-page .timeline-item > .project-card { grid-column: 2; }
+  .chronology-page .chronology-row > h2, .projects-page .timeline-year > h2 { display: flex; align-items: center; height: 39px; min-height: 39px; padding-top: 0; padding-bottom: 0; border-radius: 7px; font-size: 21px; line-height: 1; }
 }
