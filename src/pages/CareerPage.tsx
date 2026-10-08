@@ -143,6 +143,25 @@ function ResumeActions({ career }: { career: NonNullable<ReturnType<typeof usePo
   </div>;
 }
 
+const ganttGroupDefinitions = [
+  { id: 'management', title: 'Руководство и управление', description: 'Стратегия, организация, команда', icon: 'users' },
+  { id: 'development', title: 'Аналитика и разработка', description: 'Веб-сервисы, автоматизация, данные', icon: 'code' },
+  { id: 'aviation', title: 'Беспилотная авиация', description: 'Эксплуатация БВС, полёты, техническое сопровождение', icon: 'rocket' },
+  { id: 'early', title: 'Ранние проекты', description: 'Разработка, автоматизация, специализированные решения', icon: 'career' }
+] as const;
+
+type GanttGroupId = typeof ganttGroupDefinitions[number]['id'];
+
+function ganttGroupFor(engagement: CareerEngagement, organization?: CareerOrganization): GanttGroupId {
+  const source = [engagement.title, engagement.summary, organization?.name, organization?.industry?.name, ...(engagement.technologies || []), ...(engagement.skills || [])]
+    .filter(Boolean).join(' ').toLocaleLowerCase('ru-RU');
+  const words = new Set(source.replace(/[^\p{L}\p{N}]+/gu, ' ').split(/\s+/).filter(Boolean));
+  if (['учредитель', 'руководитель', 'директор', 'начальник', 'управляющий'].some((word) => words.has(word))) return 'management';
+  if (['бпла', 'бвс', 'бас', 'беспилотный', 'беспилотных', 'авиация', 'авиационный', 'пилот', 'дрон'].some((word) => words.has(word))) return 'aviation';
+  if (engagement.endDate && monthIndex(engagement.endDate) < monthIndex('2023-07-01')) return 'early';
+  return 'development';
+}
+
 function CareerGantt({ engagements, organizationMap }: { engagements: CareerEngagement[]; organizationMap: Map<string, CareerOrganization> }) {
   if (!engagements.length) return null;
   const now = new Date();
@@ -153,34 +172,59 @@ function CareerGantt({ engagements, organizationMap }: { engagements: CareerEnga
   const firstYear = Math.floor(start / 12);
   const lastYear = Math.floor(end / 12);
   const years = Array.from({ length: lastYear - firstYear + 1 }, (_, index) => {
-    const year = firstYear + index;
+    const year = lastYear - index;
     const segmentStart = Math.max(start, year * 12);
     const segmentEnd = Math.min(end, year * 12 + 11);
     return {
       year,
-      left: ((segmentStart - start) / total) * 100,
+      left: ((end - segmentEnd) / total) * 100,
       width: ((segmentEnd - segmentStart + 1) / total) * 100
     };
   });
+  const ganttWidth = 300 + years.length * 180;
+  const groups = ganttGroupDefinitions.map((definition) => {
+    const laneEnds: number[] = [];
+    const items = engagements
+      .filter((engagement) => ganttGroupFor(engagement, organizationMap.get(engagement.organizationId)) === definition.id)
+      .sort((first, second) => first.startDate.localeCompare(second.startDate))
+      .map((engagement, colorIndex) => {
+        const roleStart = monthIndex(engagement.startDate);
+        const roleEnd = engagement.endDate ? monthIndex(engagement.endDate) : currentMonth;
+        let lane = laneEnds.findIndex((laneEnd) => roleStart > laneEnd);
+        if (lane === -1) { lane = laneEnds.length; laneEnds.push(roleEnd); } else laneEnds[lane] = roleEnd;
+        return { engagement, roleStart, roleEnd, lane, colorIndex };
+      });
+    return { ...definition, items, laneCount: Math.max(1, laneEnds.length) };
+  }).filter((group) => group.items.length > 0);
 
   return <div className="career-gantt-shell">
     <div className="career-gantt-scroll" tabIndex={0} aria-label="Диаграмма карьерных периодов. На узком экране прокручивается по горизонтали.">
-      <div className="career-gantt">
-        <div className="career-gantt-header"><strong>Должность и компания</strong><div className="career-gantt-scale">{years.map((item) => <span key={item.year} style={{ left: `${item.left}%`, width: `${item.width}%` }}>{item.year}</span>)}</div></div>
-        <div className="career-gantt-rows">{engagements.map((engagement) => {
-          const roleStart = monthIndex(engagement.startDate);
-          const roleEnd = engagement.endDate ? monthIndex(engagement.endDate) : currentMonth;
-          const organization = organizationMap.get(engagement.organizationId);
-          const left = ((roleStart - start) / total) * 100;
-          const width = Math.max(1.4, ((roleEnd - roleStart + 1) / total) * 100);
-          return <Link className="career-gantt-row" to={`/career?engagement=${encodeURIComponent(engagement.id)}`} key={engagement.id} style={{ '--career-accent': engagement.accentColor || '#1768f2' } as React.CSSProperties}>
-            <span className="career-gantt-label"><strong>{engagement.title}</strong><span>{organization?.name || engagement.organizationId}</span><small>{periodLabel(engagement)} · {durationLabel(monthsInUnion([engagement]))}</small></span>
-            <span className="career-gantt-track">
-              {years.slice(1).map((item) => <i aria-hidden="true" key={item.year} style={{ left: `${item.left}%` }} />)}
-              <b style={{ left: `${left}%`, width: `${width}%` }}><span>{engagement.endDate ? durationLabel(monthsInUnion([engagement])) : 'Сейчас'}</span></b>
-            </span>
-          </Link>;
-        })}</div>
+      <div className="career-gantt" style={{ minWidth: `${ganttWidth}px` }}>
+        <div className="career-gantt-header"><span aria-hidden="true" /><div className="career-gantt-scale">{years.map((item) => <span key={item.year} style={{ left: `${item.left}%`, width: `${item.width}%` }}>{item.year}</span>)}</div></div>
+        <div className="career-gantt-groups">{groups.map((group) => <section className={`career-gantt-group career-gantt-group--${group.id}`} key={group.id}>
+          <header><span><Icon name={group.icon} /></span><div><h3>{group.title}</h3><p>{group.description}</p></div></header>
+          <div className="career-gantt-track" style={{ '--gantt-lanes': group.laneCount } as React.CSSProperties}>
+            {years.map((item, index) => <i aria-hidden="true" className={index % 2 ? 'career-gantt-year career-gantt-year--alternate' : 'career-gantt-year'} key={item.year} style={{ left: `${item.left}%`, width: `${item.width}%` }} />)}
+            {group.items.map(({ engagement, roleStart, roleEnd, lane, colorIndex }) => {
+              const organization = organizationMap.get(engagement.organizationId);
+              const left = ((end - roleEnd) / total) * 100;
+              const right = ((roleStart - start) / total) * 100;
+              const width = Math.max(1.4, ((roleEnd - roleStart + 1) / total) * 100);
+              const anchorRight = left > 50;
+              return <Link
+                className="career-gantt-card"
+                to={`/career?engagement=${encodeURIComponent(engagement.id)}`}
+                key={engagement.id}
+                style={{ '--gantt-left': anchorRight ? 'auto' : `${left}%`, '--gantt-right': anchorRight ? `${right}%` : 'auto', '--gantt-width': `${width}%`, '--gantt-lane': lane, '--career-accent': engagement.accentColor || `var(--gantt-color-${(colorIndex % 5) + 1})` } as React.CSSProperties}
+              >
+                <strong>{organization?.name || engagement.organizationId}</strong>
+                <span>{engagement.title}</span>
+                <small>{periodLabel(engagement)} · {durationLabel(monthsInUnion([engagement]))}</small>
+                <Icon name="arrow" />
+              </Link>;
+            })}
+          </div>
+        </section>)}</div>
       </div>
     </div>
     <p className="career-gantt-hint"><Icon name="timeline" />На узком экране диаграмму можно прокручивать по горизонтали</p>
