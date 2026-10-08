@@ -33,8 +33,9 @@ export interface ProjectFilters {
   type: string;
   technology: string;
   direction: string;
+  company: string;
 }
 
 export const EMPTY_FILTERS: ProjectFilters = {
-  query: '', year: '', type: '', technology: '', direction: ''
+  query: '', year: '', type: '', technology: '', direction: '', company: ''
 };

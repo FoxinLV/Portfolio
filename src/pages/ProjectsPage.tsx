@@ -11,11 +11,34 @@ import { applyFilters, groupByYear, statistics } from '../utils/projects';
 type ProjectsView = 'list' | 'grid' | 'timeline';
 
 export function ProjectsPage() {
-  const { projects, projectsLoading, projectsError, retryProjects } = usePortfolio();
+  const { projects, projectsLoading, projectsError, retryProjects, career } = usePortfolio();
   const [filters, setFilters] = useState<ProjectFilters>(EMPTY_FILTERS);
   const [mobileFilters, setMobileFilters] = useState(false);
   const [view, setView] = useState<ProjectsView>('list');
-  const filtered = useMemo(() => applyFilters(projects, filters), [projects, filters]);
+  const careerFilters = useMemo(() => {
+    const projectCompanies = new Map<string, string[]>();
+    const companyProjects = new Map<string, Set<string>>();
+    const engagementMap = new Map(career?.engagements.map((item) => [item.id, item]) ?? []);
+    for (const assignment of career?.projectAssignments ?? []) {
+      const companyId = engagementMap.get(assignment.engagementId)?.organizationId;
+      if (!companyId) continue;
+      const projectCompanyIds = projectCompanies.get(assignment.projectId) ?? [];
+      if (!projectCompanyIds.includes(companyId)) projectCompanyIds.push(companyId);
+      projectCompanies.set(assignment.projectId, projectCompanyIds);
+      const companyProjectIds = companyProjects.get(companyId) ?? new Set<string>();
+      companyProjectIds.add(assignment.projectId);
+      companyProjects.set(companyId, companyProjectIds);
+    }
+    const projectIds = new Set(projects.map((project) => project.id));
+    const companies = (career?.organizations ?? []).flatMap((organization) => {
+      const linked = [...(companyProjects.get(organization.id) ?? [])].filter((projectId) => projectIds.has(projectId));
+      if (!linked.length) return [];
+      const roles = career?.engagements.filter((item) => item.organizationId === organization.id) ?? [];
+      return [{ id: organization.id, name: organization.name, projects: linked.length, active: roles.some((item) => !item.endDate), latest: roles.reduce((date, item) => item.startDate > date ? item.startDate : date, '') }];
+    }).sort((first, second) => Number(second.active) - Number(first.active) || second.latest.localeCompare(first.latest) || first.name.localeCompare(second.name, 'ru'));
+    return { projectCompanies, companies };
+  }, [career, projects]);
+  const filtered = useMemo(() => applyFilters(projects, filters, careerFilters.projectCompanies), [projects, filters, careerFilters]);
   const grouped = useMemo(() => groupByYear(filtered), [filtered]);
   const stats = useMemo(() => statistics(projects), [projects]);
   const reset = () => setFilters(EMPTY_FILTERS);
@@ -53,7 +76,7 @@ export function ProjectsPage() {
         {!projectsLoading && !projectsError && Object.entries(grouped).sort(([a], [b]) => Number(b) - Number(a)).map(([year, yearProjects]) =>
           <section className="timeline-year" key={year} aria-labelledby={`year-${year}`}><h2 id={`year-${year}`}>{year}</h2><div className="timeline-items">{yearProjects.map((project) => <div className="timeline-item" key={project.id}><div className="timeline-date"><span>{shortDate(project.date)}</span><i /></div><ProjectCard project={project} /></div>)}</div></section>)}
       </section>
-      <Filters projects={projects} filters={filters} setFilters={setFilters} mobileOpen={mobileFilters} closeMobile={() => setMobileFilters(false)} />
+      <Filters projects={projects} companies={careerFilters.companies} filters={filters} setFilters={setFilters} mobileOpen={mobileFilters} closeMobile={() => setMobileFilters(false)} />
     </div>
   </div>;
 }

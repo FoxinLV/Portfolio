@@ -1,12 +1,13 @@
-import type { Project, ProjectFilters } from '../types/project';
+import { EMPTY_FILTERS, type Project, type ProjectFilters } from '../types/project';
 import { projectYear } from '../utils/dates';
 import { uniqueBy } from '../utils/projects';
 import { technologyName } from '../utils/projectTechnology';
 import { Icon } from './Icon';
 
-interface Props { projects: Project[]; filters: ProjectFilters; setFilters: (value: ProjectFilters) => void; mobileOpen: boolean; closeMobile: () => void }
+interface CompanyOption { id: string; name: string; projects: number }
+interface Props { projects: Project[]; companies: CompanyOption[]; filters: ProjectFilters; setFilters: (value: ProjectFilters) => void; mobileOpen: boolean; closeMobile: () => void }
 
-export function Filters({ projects, filters, setFilters, mobileOpen, closeMobile }: Props) {
+export function Filters({ projects, companies, filters, setFilters, mobileOpen, closeMobile }: Props) {
   const years = [...new Set(projects.map((project) => projectYear(project.date)))].sort((a, b) => b - a);
   const types = uniqueBy(projects.map((project) => project.type), (item) => item.id).sort((a, b) => a.name.localeCompare(b.name, 'ru'));
   const directions = uniqueBy(projects.map((project) => project.direction), (item) => item.id).sort((a, b) => a.name.localeCompare(b.name, 'ru'));
@@ -16,13 +17,14 @@ export function Filters({ projects, filters, setFilters, mobileOpen, closeMobile
   return <>
     <aside id="projects-filters" className={`filters-panel ${mobileOpen ? 'filters-panel--open' : ''}`} aria-label="Фильтры проектов">
       <div className="filter-mobile-title"><strong>Фильтры</strong><button onClick={closeMobile} aria-label="Закрыть фильтры"><Icon name="close" /></button></div>
-      <div className="filter-panel-title"><h2><Icon name="search" />Фильтры</h2><button disabled={!active} onClick={() => setFilters({ query: '', year: '', type: '', technology: '', direction: '' })}>Сбросить</button></div>
+      <div className="filter-panel-title"><h2><Icon name="search" />Фильтры</h2><button disabled={!active} onClick={() => setFilters(EMPTY_FILTERS)}>Сбросить</button></div>
       <label className="search-field"><span>Поиск</span><div><Icon name="search"/><input value={filters.query} onChange={(event) => update('query', event.target.value)} placeholder="Название или технология" /></div></label>
       <Select label="Год" value={filters.year} onChange={(value) => update('year', value)} options={years.map(String)} names={years.map(String)} all="Все годы" />
       <Select label="Тип системы" value={filters.type} onChange={(value) => update('type', value)} options={types.map((item) => item.id)} names={types.map((item) => item.name)} all="Все типы" />
+      <Select label="Компания" value={filters.company} onChange={(value) => update('company', value)} options={companies.map((item) => item.id)} names={companies.map((item) => `${item.name} · ${item.projects}`)} all="Все компании" />
       <Select label="Технология" value={filters.technology} onChange={(value) => update('technology', value)} options={technologies} names={technologies} all="Все технологии" />
       <Select label="Направление" value={filters.direction} onChange={(value) => update('direction', value)} options={directions.map((item) => item.id)} names={directions.map((item) => item.name)} all="Все направления" />
-      <button className="reset-button" disabled={!active} onClick={() => setFilters({ query: '', year: '', type: '', technology: '', direction: '' })}>Сбросить фильтры</button>
+      <button className="reset-button" disabled={!active} onClick={() => setFilters(EMPTY_FILTERS)}>Сбросить фильтры</button>
       <button className="button button--primary filter-submit" onClick={closeMobile}><Icon name="search" />Показать проекты<Icon name="arrow" /></button>
     </aside>
   </>;

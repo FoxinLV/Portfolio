@@ -2,7 +2,7 @@ import type { Project, ProjectFilters } from '../types/project';
 import { projectYear } from './dates';
 import { technologyName } from './projectTechnology';
 
-export function applyFilters(projects: Project[], filters: ProjectFilters) {
+export function applyFilters(projects: Project[], filters: ProjectFilters, projectCompanies: ReadonlyMap<string, readonly string[]> = new Map()) {
   const query = filters.query.trim().toLocaleLowerCase('ru-RU');
   return projects.filter((project) => {
     const haystack = [project.title, project.shortDescription, project.description ?? '', project.type.name,
@@ -11,7 +11,8 @@ export function applyFilters(projects: Project[], filters: ProjectFilters) {
       (!filters.year || String(projectYear(project.date)) === filters.year) &&
       (!filters.type || project.type.id === filters.type) &&
       (!filters.technology || project.technologies.some((technology) => technologyName(technology) === filters.technology)) &&
-      (!filters.direction || project.direction.id === filters.direction);
+      (!filters.direction || project.direction.id === filters.direction) &&
+      (!filters.company || projectCompanies.get(project.id)?.includes(filters.company));
   });
 }
 
