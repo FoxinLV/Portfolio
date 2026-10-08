@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ErrorState, Loader } from '../components/Feedback';
 import { Icon } from '../components/Icon';
@@ -163,58 +163,92 @@ function ganttGroupFor(engagement: CareerEngagement, organization?: CareerOrgani
 }
 
 function CareerGantt({ engagements, organizationMap }: { engagements: CareerEngagement[]; organizationMap: Map<string, CareerOrganization> }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const ganttSignature = engagements.map((item) => `${item.id}:${item.startDate}:${item.endDate || 'now'}`).join('|');
+
+  useEffect(() => {
+    const scroll = scrollRef.current;
+    if (!scroll) return;
+    const frame = requestAnimationFrame(() => { scroll.scrollLeft = scroll.scrollWidth - scroll.clientWidth; });
+    return () => cancelAnimationFrame(frame);
+  }, [ganttSignature]);
+
   if (!engagements.length) return null;
   const now = new Date();
   const currentMonth = now.getFullYear() * 12 + now.getMonth();
   const start = Math.min(...engagements.map((item) => monthIndex(item.startDate)));
-  const end = Math.max(...engagements.map((item) => item.endDate ? monthIndex(item.endDate) : currentMonth));
-  const total = Math.max(1, end - start + 1);
+  const previousByNext = new Map<string, string>();
+  engagements.forEach((next) => {
+    const explicitPrevious = next.transitionFrom?.engagementId && engagements.find((item) => item.id === next.transitionFrom?.engagementId);
+    const previous = explicitPrevious || engagements.find((item) => item.id !== next.id && item.organizationId === next.organizationId && item.endDate && monthIndex(item.endDate) === monthIndex(next.startDate));
+    if (previous) previousByNext.set(next.id, previous.id);
+  });
+  const transitionEndByRole = new Map<string, number>();
+  previousByNext.forEach((previousId, nextId) => {
+    const next = engagements.find((item) => item.id === nextId);
+    if (next) transitionEndByRole.set(previousId, monthIndex(next.startDate));
+  });
+  const connectedRoleIds = new Set<string>([...previousByNext.keys(), ...previousByNext.values()]);
+  const visualRoleEnd = (item: CareerEngagement) => transitionEndByRole.get(item.id) ?? (item.endDate ? monthIndex(item.endDate) + 1 : currentMonth + 1);
+  const end = Math.max(...engagements.map(visualRoleEnd));
+  const total = Math.max(1, end - start);
   const firstYear = Math.floor(start / 12);
-  const lastYear = Math.floor(end / 12);
+  const lastYear = Math.floor((end - 1) / 12);
   const years = Array.from({ length: lastYear - firstYear + 1 }, (_, index) => {
-    const year = lastYear - index;
+    const year = firstYear + index;
     const segmentStart = Math.max(start, year * 12);
-    const segmentEnd = Math.min(end, year * 12 + 11);
+    const segmentEnd = Math.min(end, (year + 1) * 12);
     return {
       year,
-      left: ((end - segmentEnd) / total) * 100,
-      width: ((segmentEnd - segmentStart + 1) / total) * 100
+      left: ((segmentStart - start) / total) * 100,
+      width: ((segmentEnd - segmentStart) / total) * 100
     };
   });
-  const ganttWidth = 300 + years.length * 180;
+  const ganttWidth = 300 + years.length * 220;
+  const groupByEngagement = new Map(engagements.map((item) => [item.id, ganttGroupFor(item, organizationMap.get(item.organizationId))]));
+  for (let pass = 0; pass < engagements.length; pass += 1) {
+    previousByNext.forEach((previousId, nextId) => {
+      const previousGroup = groupByEngagement.get(previousId);
+      if (previousGroup) groupByEngagement.set(nextId, previousGroup);
+    });
+  }
   const groups = ganttGroupDefinitions.map((definition) => {
     const laneEnds: number[] = [];
+    const laneByEngagement = new Map<string, number>();
     const items = engagements
-      .filter((engagement) => ganttGroupFor(engagement, organizationMap.get(engagement.organizationId)) === definition.id)
+      .filter((engagement) => groupByEngagement.get(engagement.id) === definition.id)
       .sort((first, second) => first.startDate.localeCompare(second.startDate))
       .map((engagement, colorIndex) => {
         const roleStart = monthIndex(engagement.startDate);
-        const roleEnd = engagement.endDate ? monthIndex(engagement.endDate) : currentMonth;
-        let lane = laneEnds.findIndex((laneEnd) => roleStart > laneEnd);
+        const roleEnd = visualRoleEnd(engagement);
+        const previousLane = laneByEngagement.get(previousByNext.get(engagement.id) || '');
+        let lane = previousLane !== undefined && roleStart >= laneEnds[previousLane] ? previousLane : laneEnds.findIndex((laneEnd) => roleStart >= laneEnd);
         if (lane === -1) { lane = laneEnds.length; laneEnds.push(roleEnd); } else laneEnds[lane] = roleEnd;
-        return { engagement, roleStart, roleEnd, lane, colorIndex };
+        laneByEngagement.set(engagement.id, lane);
+        return { engagement, roleStart, roleEnd, lane, colorIndex, connected: previousByNext.has(engagement.id), inChain: connectedRoleIds.has(engagement.id) };
       });
     return { ...definition, items, laneCount: Math.max(1, laneEnds.length) };
   }).filter((group) => group.items.length > 0);
 
   return <div className="career-gantt-shell">
-    <div className="career-gantt-scroll" tabIndex={0} aria-label="Диаграмма карьерных периодов. На узком экране прокручивается по горизонтали.">
+    <div className="career-gantt-scroll" ref={scrollRef} tabIndex={0} aria-label="Диаграмма карьерных периодов. На узком экране прокручивается по горизонтали.">
       <div className="career-gantt" style={{ minWidth: `${ganttWidth}px` }}>
         <div className="career-gantt-header"><span aria-hidden="true" /><div className="career-gantt-scale">{years.map((item) => <span key={item.year} style={{ left: `${item.left}%`, width: `${item.width}%` }}>{item.year}</span>)}</div></div>
         <div className="career-gantt-groups">{groups.map((group) => <section className={`career-gantt-group career-gantt-group--${group.id}`} key={group.id}>
           <header><span><Icon name={group.icon} /></span><div><h3>{group.title}</h3><p>{group.description}</p></div></header>
           <div className="career-gantt-track" style={{ '--gantt-lanes': group.laneCount } as React.CSSProperties}>
             {years.map((item, index) => <i aria-hidden="true" className={index % 2 ? 'career-gantt-year career-gantt-year--alternate' : 'career-gantt-year'} key={item.year} style={{ left: `${item.left}%`, width: `${item.width}%` }} />)}
-            {group.items.map(({ engagement, roleStart, roleEnd, lane, colorIndex }) => {
+            {group.items.map(({ engagement, roleStart, roleEnd, lane, colorIndex, connected, inChain }) => {
               const organization = organizationMap.get(engagement.organizationId);
-              const left = ((end - roleEnd) / total) * 100;
-              const right = ((roleStart - start) / total) * 100;
-              const width = Math.max(1.4, ((roleEnd - roleStart + 1) / total) * 100);
+              const left = ((roleStart - start) / total) * 100;
+              const right = ((end - roleEnd) / total) * 100;
+              const width = Math.max(1.4, ((roleEnd - roleStart) / total) * 100);
               const anchorRight = left > 50;
               return <Link
-                className="career-gantt-card"
+                className={`career-gantt-card ${inChain ? 'career-gantt-card--chain' : ''} ${connected ? 'career-gantt-card--connected' : ''}`}
                 to={`/career?engagement=${encodeURIComponent(engagement.id)}`}
                 key={engagement.id}
+                title={`${organization?.name || engagement.organizationId} — ${engagement.title}. ${periodLabel(engagement)} · ${durationLabel(monthsInUnion([engagement]))}`}
                 style={{ '--gantt-left': anchorRight ? 'auto' : `${left}%`, '--gantt-right': anchorRight ? `${right}%` : 'auto', '--gantt-width': `${width}%`, '--gantt-lane': lane, '--career-accent': engagement.accentColor || `var(--gantt-color-${(colorIndex % 5) + 1})` } as React.CSSProperties}
               >
                 <strong>{organization?.name || engagement.organizationId}</strong>
