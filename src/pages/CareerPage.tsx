@@ -55,7 +55,7 @@ export function CareerPage() {
   const { career, careerLoading, careerError, retryCareer, projects } = usePortfolio();
   const [searchParams] = useSearchParams();
   const selected = searchParams.get('engagement');
-  const [view, setView] = useState<'timeline' | 'organizations' | null>(null);
+  const [view, setView] = useState<'timeline' | 'organizations' | 'gantt'>('timeline');
 
   useEffect(() => {
     document.title = 'Карьера — Виталий Лифанов';
@@ -82,7 +82,7 @@ export function CareerPage() {
   const linkedProjects = new Set(career.projectAssignments.filter((item) => projectMap.has(item.projectId)).map((item) => item.projectId));
   const activeCount = engagements.filter((item) => !item.endDate).length;
   const experience = durationLabel(monthsInUnion(engagements));
-  const activeView = view ?? career.settings.defaultView;
+  const activeView = view;
 
   return <div className="page career-page">
     <header className="career-hero">
@@ -106,13 +106,13 @@ export function CareerPage() {
     <main className="career-content">
       <nav className="career-view-switch" aria-label="Вид карьерной истории">
         <div><strong>Как показать опыт</strong><span>Выберите удобную группировку</span></div>
-        <div role="group"><button type="button" className={activeView === 'timeline' ? 'active' : ''} aria-pressed={activeView === 'timeline'} onClick={() => setView('timeline')}><Icon name="career" /><span><strong>По должностям</strong><small>От новых к старым</small></span></button><button type="button" className={activeView === 'organizations' ? 'active' : ''} aria-pressed={activeView === 'organizations'} onClick={() => setView('organizations')}><Icon name="projects" /><span><strong>По компаниям</strong><small>Все роли вместе</small></span></button></div>
+        <div role="group"><button type="button" className={activeView === 'timeline' ? 'active' : ''} aria-pressed={activeView === 'timeline'} onClick={() => setView('timeline')}><Icon name="career" /><span><strong>По должностям</strong><small>От новых к старым</small></span></button><button type="button" className={activeView === 'organizations' ? 'active' : ''} aria-pressed={activeView === 'organizations'} onClick={() => setView('organizations')}><Icon name="projects" /><span><strong>По компаниям</strong><small>Все роли вместе</small></span></button><button type="button" className={activeView === 'gantt' ? 'active' : ''} aria-pressed={activeView === 'gantt'} onClick={() => setView('gantt')}><Icon name="chart" /><span><strong>Диаграмма Ганта</strong><small>Карьера во времени</small></span></button></div>
       </nav>
 
-      <section className="career-section career-gantt-section">
+      {activeView === 'gantt' && <section className="career-section career-gantt-section">
         <div className="career-section-heading"><p className="eyebrow eyebrow--dark">Диаграмма Ганта</p><h2>Карьера во времени</h2><p>Продолжительность должностей и пересечения параллельной работы на одной временной шкале. Нажмите на строку, чтобы открыть подробности роли.</p></div>
         <CareerGantt engagements={engagements} organizationMap={organizationMap} />
-      </section>
+      </section>}
 
       {activeView === 'timeline' && <section className="career-section">
         <div className="career-section-heading"><p className="eyebrow eyebrow--dark">Хронология</p><h2>Профессиональный путь</h2><p>Параллельные роли показаны независимо, а общий стаж не суммирует пересекающиеся периоды дважды.</p></div>
