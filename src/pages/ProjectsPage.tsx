@@ -106,10 +106,10 @@ export function ProjectsPage() {
     {pdfMode && <section className="project-pdf-toolbar" aria-label="Экспорт выбранных проектов в PDF">
       <div><span className="project-pdf-toolbar-icon"><Icon name="file" /></span><div><strong>Проекты для PDF</strong><small>{selected.length ? `Выбрано: ${selected.length}` : 'Отметьте проекты в списке'}</small></div></div>
       <div className="project-pdf-toolbar-actions">
-        <button type="button" onClick={selectFiltered} disabled={!filtered.length || Boolean(pdfProgress)}>Выбрать показанные ({filtered.length})</button>
-        <button type="button" onClick={() => setSelectedProjects(new Set())} disabled={!selected.length || Boolean(pdfProgress)}>Очистить</button>
-        <button type="button" onClick={closePdfMode} disabled={Boolean(pdfProgress)}>Отмена</button>
-        <button className="button button--primary" type="button" onClick={exportPdf} disabled={!selected.length || Boolean(pdfProgress)} aria-busy={pdfProgress ? true : undefined}><Icon name="download" />Скачать PDF</button>
+        <button className="project-pdf-action project-pdf-action--select" type="button" onClick={selectFiltered} disabled={!filtered.length || Boolean(pdfProgress)}>Выбрать все <span>({filtered.length})</span></button>
+        <button className="project-pdf-action" type="button" onClick={() => setSelectedProjects(new Set())} disabled={!selected.length || Boolean(pdfProgress)}>Очистить</button>
+        <button className="project-pdf-action project-pdf-action--cancel" type="button" onClick={closePdfMode} disabled={Boolean(pdfProgress)}>Отмена</button>
+        <button className="button button--primary project-pdf-download" type="button" onClick={exportPdf} disabled={!selected.length || Boolean(pdfProgress)} aria-busy={pdfProgress ? true : undefined}><Icon name="download" /><span>Скачать PDF</span></button>
       </div>
       {pdfError && <p role="alert">{pdfError}</p>}
     </section>}
